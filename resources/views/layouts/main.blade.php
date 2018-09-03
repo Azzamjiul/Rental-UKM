@@ -28,6 +28,13 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
 
       @yield('style')
+
+      <style media="screen">
+
+      .page-header{
+        min-height: 40px;
+      }
+      </style>
   </head>
   <body>
     <div class="page">
@@ -128,9 +135,9 @@
           </div>
           <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
           <ul class="list-unstyled">
-                    <li class="active"><a href="index.html"> <i class="icon-home"></i>Beranda </a></li>
-                    <li><a href="tables.html"> <i class="icon-grid"></i>Transaksi </a></li>
-                    <li><a href="{{route('inventaris')}}"> <i class="fa fa-bar-chart"></i>Inventaris </a></li>
+                    <li class="" id="beranda"><a href="{{url('/')}}"> <i class="icon-home"></i>Beranda </a></li>
+                    <li id="transaksi"><a href="tables.html"> <i class="icon-grid"></i>Transaksi </a></li>
+                    <li id="inventaris"><a href="{{route('inventaris')}}"> <i class="fa fa-bar-chart"></i>Inventaris </a></li>
                     <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
                     <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Example dropdown </a>
                       <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
@@ -164,5 +171,7 @@
     <script src="{{asset('js/charts-home.js')}}"></script>
     <!-- Main File-->
     <script src="{{asset('js/front.js')}}"></script>
+
+    @yield('script')
   </body>
 </html>
