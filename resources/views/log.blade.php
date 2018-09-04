@@ -19,6 +19,27 @@
       </h2>
     </div>
   </header>
+
+  <div class="container-fluid">
+    @if (session('success'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <p>{{session('success')}}</p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  @endif
+
+  @if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <p>{{session('error')}}</p>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  @endif
+  </div>
+  
   <div class="container-fluid">
     <div class="alert alert-info">
       Log adalah pencatatan untuk pemasukan dan pengeluaran.<br>
@@ -59,6 +80,7 @@
                     </button>
                 </div>
                 <form method="POST" id="masuk" autocomplete="off">
+                  {{ csrf_field() }}
                 <div class="modal-body">
                     <div class="form-group">
                       <label for="deskripsiMasuk">Deskripsi</label>
@@ -93,6 +115,7 @@
                     </button>
                 </div>
                 <form method="POST" id="keluar" autocomplete="off">
+                  {{ csrf_field() }}
                 <div class="modal-body">
                     <div class="form-group">
                       <label for="deskripsiKeluar">Deskripsi</label>
@@ -129,69 +152,17 @@
   });
 
   $("#pemasukan").click( () => {
+    $('#masuk').attr('action', '{{route('log.pemasukan')}}');
     $("#modalPemasukan").modal('show');
   });
 
   $("#pengeluaran").click( () => {
+    $('#keluar').attr('action', '{{route('log.pengeluaran')}}');
     $("#modalPengeluaran").modal('show');
   });
 
   $(function() {
-    $.ajaxSetup({
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      }
-    });
 
-    $("#masuk" ).submit(function(e) {
-      e.preventDefault();
-      var _token      = $("input[name='_token']").val();
-      var description = $("textarea[name='deskripsiMasuk']").val();
-      var price       = $("input[name='jumlahMasuk']").val();
-      $.ajax({
-        url: '{{route('log.pemasukan')}}',
-        type: "POST",
-        data: {_token:_token, description:description, price:price},
-        success: function (data) {
-          if($.isEmptyObject(data.error)){
-            $("input").val('');
-            $('#modalPemasukan').modal('hide');
-//            printAlert("Terimakasih atas laporan anda",1);
-          }else{
-            printErrorMsg(data.error);
-          }
-        },
-        error: function (data) {
-          var errors = data.responseJSON;
-          alert(errors);
-        }
-      });
-    });
-
-    $("#keluar" ).submit(function(e) {
-      e.preventDefault();
-      var _token      = $("input[name='_token']").val();
-      var description = $("textarea[name='deskripsiKeluar']").val();
-      var price       = $("input[name='jumlahKeluar']").val();
-      $.ajax({
-        url: '{{route('log.pengeluaran')}}',
-        type: "POST",
-        data: {_token:_token, description:description, price:price},
-        success: function (data) {
-          if($.isEmptyObject(data.error)){
-            $("input").val('');
-            $('#modalPengeluaran').modal('hide');
-//            printAlert("Terimakasih atas laporan anda",1);
-          }else{
-            printErrorMsg(data.error);
-          }
-        },
-        error: function (data) {
-          var errors = data.responseJSON;
-          alert(errors);
-        }
-      });
-    });
   });  
 </script>
 @endsection

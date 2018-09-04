@@ -35,10 +35,10 @@ class AdminController extends Controller
     {
       try {
         Kas::create([
-          'description' => $request->description,
-          'price' => $request->price,
+          'description' => $request->deskripsiMasuk,
+          'price' => $request->jumlahMasuk,
           'type' => 'pemasukan',
-          'date' => Carbon::now()
+          'date' => Carbon::now() //timezone jakarta
         ]);
       } catch (\Exception $e) {
         return redirect('/log')->with('error', 'Pemasukan gagal disimpan!');
@@ -50,10 +50,10 @@ class AdminController extends Controller
     {
       try {
         Kas::create([
-          'description' => $request->description,
-          'price' => $request->price,
+          'description' => $request->deskripsiKeluar,
+          'price' => $request->jumlahKeluar,
           'type' => 'pengeluaran',
-          'date' => Carbon::now()
+          'date' => Carbon::now() //timezone jakarta
         ]);
       } catch (\Exception $e) {
         return redirect('/log')->with('error', 'Pengeluaran gagal disimpan!');

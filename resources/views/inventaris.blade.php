@@ -61,7 +61,7 @@
   </div>
   <section class="list-produk">
     <div class="container-fluid">
-      <form class="card card-sm">
+      <form class="card card-sm" autocomplete="off">
          <div class="card-body row no-gutters align-items-center">
             <div class="col">
              <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Cari barang . . ." name="keywords">
@@ -81,7 +81,6 @@
           @endif
        @endif
       <div class="row">
-
 
         @foreach ($products as $p)
           <div class="col-sm-4 col-md-3">
@@ -132,7 +131,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="#" method="POST">
+        <form action="#" method="POST" autocomplete="off">
           {{ csrf_field() }}
           <input type="hidden" name="_method" value="" id="method">
           <input type="hidden" name="id_product" value="" id="id_product">
