@@ -91,8 +91,8 @@
                 <p>
                   {{-- kalo deskripsinya panjang dikasi ... --}}
                   @php
-                  if(strlen($p->description) > 20){
-                    echo $string = substr($p->name, 0, 20) . "...";
+                  if(strlen($p->description) > 50){
+                    echo $string = substr($p->description, 0, 50) . "...";
                   }else {
                     echo $p->description;
                   }
@@ -100,22 +100,19 @@
                 </p>
                 <small>Rp. {{$p->price}}</small>
                  <br><small>
-                  Sisa stok: {{$p->quantity}}
+                  Sisa stok: {{$p->quantity - $p->on_rent}}/{{$p->quantity}}
                 </small>
               </div>
+              <form class="" action="{{route('delete.product')}}" method="post" id="form-id-{{$p->id_product}}">
+                {{ csrf_field() }}
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="id_product" value="{{$p->id_product}}">
+              </form>
               <div class="card-footer">
-                <div class="row">
-                  <button product-id="{{$p->id_product}}" type="button" name="button" class="edit btn mr-1"><i class="fa fa-pencil edit" aria-hidden="true"></i></button>
-                  <form class="" action="{{route('delete.product')}}" method="post">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="id_product" value="{{$p->id_product}}">
-                    <button id="delete"type="submit" class="btn" name="button">
-                      <i class="fa fa-trash-o delete" aria-hidden="true"></i>
-                    </button>
-                  </form>
-                </div>
-
+                <button product-id="{{$p->id_product}}" type="button" name="button" class="edit btn"><i class="fa fa-pencil edit" aria-hidden="true"></i></button>
+                <button product-id="{{$p->id_product}}" class="btn delete" type="button" name="button">
+                  <i class="fa fa-trash-o delete" aria-hidden="true"></i>
+                </button>
               </div>
             </div>
           </div>
@@ -176,11 +173,21 @@
 <script type="text/javascript">
   $("#inventaris").addClass("active");
 
-  $("#new_product").click( () => {
+  $("#new_product").click( function() {
     $('form').attr('action', '{{route('add.new.product')}}');
-    $('form').attr('method', '{{route('add.new.product')}}');
     $(".modal.product").modal('show');
   });
+
+  $(".delete").click( function() {
+    id_product = $(this).attr('product-id');
+    console.log(id_product)
+    alertify.confirm('Warning', "Anda yakin akan menghapus barang ini?",
+      function(){
+        $("#form-id-" + id_product).submit();
+      },
+      function(){
+    });
+  })
 
   //fetch data produk ketika mau edit
   $(".edit").click( function(){

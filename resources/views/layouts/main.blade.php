@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Rental Barang</title>
+    <title>Arta</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="all,follow">
@@ -23,9 +23,10 @@
     <link rel="stylesheet" href="{{asset('css/custom.css')}}">
     <!-- Favicon-->
     <link rel="shortcut icon" href="{{asset('img/favicon.ico')}}">
-    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+
+    <link rel="stylesheet" href="{{asset('css/alertify.min.css')}}">
+
+    <link rel="stylesheet" href="{{asset('css/alertify.default.css')}}">
 
       @yield('style')
 
@@ -52,8 +53,9 @@
             <div class="navbar-holder d-flex align-items-center justify-content-between">
               <!-- Navbar Header-->
               <div class="navbar-header">
-                <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
-                  <div class="brand-text d-none d-lg-inline-block"><span>Rental </span><strong>Barang</strong></div>
+                <!-- Navbar Brand --><a href="{{url('/')}}" class="navbar-brand d-none d-sm-inline-block">
+                  <div class="brand-text d-none d-lg-inline-block"><span><strong>Arta</strong> <small>Kesempurnaan Moment Anda</small></span>
+                  </div>
                   <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
                 <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
               </div>
@@ -137,7 +139,7 @@
           <ul class="list-unstyled">
                     <li class="" id="beranda"><a href="{{url('/')}}"> <i class="icon-home"></i>Beranda </a></li>
                     <li id="transaksi"><a href="tables.html"> <i class="icon-grid"></i>Transaksi </a></li>
-                    <li id="inventaris"><a href="{{route('inventaris')}}"> <i class="fa fa-bar-chart"></i>Inventaris </a></li>
+                    <li id="inventaris"><a href="{{route('inventaris')}}"> <i class="fa fa-suitcase"></i>Inventaris </a></li>
                     <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
                     <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Example dropdown </a>
                       <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
@@ -171,6 +173,8 @@
     <script src="{{asset('js/charts-home.js')}}"></script>
     <!-- Main File-->
     <script src="{{asset('js/front.js')}}"></script>
+    <script src="{{asset('js/alertify.min.js')}}"></script>
+
 
     @yield('script')
   </body>

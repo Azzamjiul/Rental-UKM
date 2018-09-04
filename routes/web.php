@@ -23,3 +23,6 @@ Route::post('/add/barang', 'AdminController@addProduct')->name('add.new.product'
 Route::delete('/delete/barang', 'AdminController@deleteProduct')->name('delete.product');
 Route::get('/find/barang', 'AdminController@findProduct')->name('find.product');
 Route::put('/update/barang', 'AdminController@updateProduct')->name('update.product');
+Route::get('/login', function(){
+  return view('login');
+});

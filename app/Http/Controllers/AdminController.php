@@ -15,10 +15,10 @@ class AdminController extends Controller
     public function inventaris(Request $request){
       if (!empty($request->keywords)) {
         $products = Product::where('name','like','%'.$request->keywords.'%')
-        ->orWhere('description','like','%'.$request->keywords.'%')->paginate(12);
+        ->orWhere('description','like','%'.$request->keywords.'%')->where('deleted', 0)->paginate(12);
         $keywords = $request->keywords;
       }else {
-        $products = Product::paginate(12);
+        $products = Product::where('deleted', 0)->paginate(12);
         $keywords = 'empty';
       }
       return view('inventaris', ['products' => $products->appends(Input::except('page')), 'keywords' => $keywords]);
@@ -45,7 +45,7 @@ class AdminController extends Controller
 
     public function deleteProduct(Request $request){
       try {
-        Product::find($request->id_product)->delete();
+        Product::where('id_product', $request->id_product)->update(['deleted' => 1]);
       } catch (\Exception $e) {
         return redirect('/inventaris')->with('error', 'Barang gagal
         dihapus!');
