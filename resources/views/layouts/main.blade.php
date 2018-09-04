@@ -140,6 +140,7 @@
                     <li class="" id="beranda"><a href="{{url('/')}}"> <i class="icon-home"></i>Beranda </a></li>
                     <li id="transaksi"><a href="tables.html"> <i class="icon-grid"></i>Transaksi </a></li>
                     <li id="inventaris"><a href="{{route('inventaris')}}"> <i class="fa fa-suitcase"></i>Inventaris </a></li>
+                    <li id="log"><a href="{{route('bukuBesar')}}"> <i class="fa fa-book"></i>Log </a></li>
                     <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
                     <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Example dropdown </a>
                       <ul id="exampledropdownDropdown" class="collapse list-unstyled ">

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Product;
+use App\Kas;
+use DateTime;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -22,6 +25,40 @@ class AdminController extends Controller
         $keywords = 'empty';
       }
       return view('inventaris', ['products' => $products->appends(Input::except('page')), 'keywords' => $keywords]);
+    }
+
+    public function bukuBesar(Request $request){
+      return view('log');
+    }
+
+    public function pemasukan(Request $request)
+    {
+      try {
+        Kas::create([
+          'description' => $request->description,
+          'price' => $request->price,
+          'type' => 'pemasukan',
+          'date' => Carbon::now()
+        ]);
+      } catch (\Exception $e) {
+        return redirect('/log')->with('error', 'Pemasukan gagal disimpan!');
+      }
+      return redirect('/log')->with('success', 'Pemasukan berhasil disimpan!');
+    }
+
+    public function pengeluaran(Request $request)
+    {
+      try {
+        Kas::create([
+          'description' => $request->description,
+          'price' => $request->price,
+          'type' => 'pengeluaran',
+          'date' => Carbon::now()
+        ]);
+      } catch (\Exception $e) {
+        return redirect('/log')->with('error', 'Pengeluaran gagal disimpan!');
+      }
+      return redirect('/log')->with('success', 'Pengeluaran berhasil disimpan!');
     }
 
     //utk nambah barang baru
