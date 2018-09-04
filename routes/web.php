@@ -19,3 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/inventaris', 'AdminController@inventaris')->name('inventaris');
+Route::post('/add/barang', 'AdminController@addProduct')->name('add.new.product');
+Route::delete('/delete/barang', 'AdminController@deleteProduct')->name('delete.product');
+Route::get('/find/barang', 'AdminController@findProduct')->name('find.product');
+Route::put('/update/barang', 'AdminController@updateProduct')->name('update.product');

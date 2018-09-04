@@ -20,6 +20,7 @@ class ProductTable extends Migration
             $table->text('name');
             $table->text('description');
             $table->double('price', 10, 2);
+            $table->text('category');
         });
     }
 

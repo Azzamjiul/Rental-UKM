@@ -22,6 +22,7 @@ class InvoiceTable extends Migration
             $table->double('total_price', 10, 2);
             $table->integer('status');
             $table->double('dp', 10, 2);
+            $table->string('admin', 255);
         });
     }
 

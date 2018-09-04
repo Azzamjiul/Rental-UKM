@@ -13,10 +13,10 @@ class ForeignKeys extends Migration
      */
     public function up()
     {
-        Schema::table('product', function(Blueprint $table){
-          $table->unsignedInteger('id_category');
-          $table->foreign('id_category')->references('id_category')->on('category');
-        });
+        // Schema::table('product', function(Blueprint $table){
+        //   $table->unsignedInteger('id_category');
+        //   $table->foreign('id_category')->references('id_category')->on('category');
+        // });
         Schema::table('file', function(Blueprint $table){
           $table->unsignedInteger('id_product');
           $table->foreign('id_product')->references('id_product')->on('product');

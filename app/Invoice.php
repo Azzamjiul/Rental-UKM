@@ -8,7 +8,8 @@ class Invoice extends Model
 {
   protected $fillable = [
       'rent_date', 'deadline_date', 'cust_name',
-      'cust_phone', 'total_price', 'status', 'dp'
+      'cust_phone', 'total_price', 'status', 'dp',
+      'admin'
   ];
 
   protected $table = 'invoice';
