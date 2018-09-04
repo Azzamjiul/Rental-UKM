@@ -17,6 +17,7 @@ class ProductTable extends Migration
             $table->increments('id_product')->unsigned();
             // $table->integer('id_category');
             $table->integer('quantity');
+            $table->integer('on_rent')->default(0);
             $table->text('name');
             $table->text('description');
             $table->double('price', 10, 2);

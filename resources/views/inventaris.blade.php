@@ -89,6 +89,7 @@
               <div class="card-body">
                 <h5>{{$p->name}}</h5>
                 <p>
+                  {{-- kalo deskripsinya panjang dikasi ... --}}
                   @php
                   if(strlen($p->description) > 20){
                     echo $string = substr($p->name, 0, 20) . "...";
@@ -98,6 +99,9 @@
                   @endphp
                 </p>
                 <small>Rp. {{$p->price}}</small>
+                 <br><small>
+                  Sisa stok: {{$p->quantity}}
+                </small>
               </div>
               <div class="card-footer">
                 <div class="row">
@@ -178,6 +182,7 @@
     $(".modal.product").modal('show');
   });
 
+  //fetch data produk ketika mau edit
   $(".edit").click( function(){
     id_product = $(this).attr('product-id');
     $.ajax({
