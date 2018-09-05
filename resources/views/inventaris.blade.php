@@ -140,8 +140,8 @@
             <input type="text" class="form-control" required id="product_name" placeholder="Nama produk" name="product_name">
           </div>
           <div class="form-group">
-            <label for="product_description">Deskripsi barang</label>
-            <textarea class="form-control" id="product_description" required placeholder="Deskripsi barang" name="product_description"></textarea>
+            <label for="product_description">Keterangan barang</label>
+            <textarea class="form-control" id="product_description" required placeholder="Keterangan barang" name="product_description"></textarea>
           </div>
           <?php // TODO: dikasi regex rupiah!! ?>
           <div class="form-group">

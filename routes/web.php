@@ -29,3 +29,5 @@ Route::put('/update/barang', 'AdminController@updateProduct')->name('update.prod
 Route::get('/login', function(){
   return view('login');
 });
+Route::get('/transaksi', 'AdminController@transaksi')->name('transaksi');
+Route::post('/transaction', 'AdminController@newTransaction')->name('new.transaction');

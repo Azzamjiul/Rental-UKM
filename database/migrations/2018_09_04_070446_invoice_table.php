@@ -15,12 +15,15 @@ class InvoiceTable extends Migration
     {
         Schema::create('invoice', function (Blueprint $table) {
             $table->increments('id_invoice')->unsigned();
+            $table->dateTime('invoice_date');
             $table->dateTime('rent_date');
             $table->dateTime('deadline_date');
             $table->string('cust_name', 255);
             $table->string('cust_phone', 14);
+            $table->text('address');
             $table->double('total_price', 10, 2);
-            $table->integer('status');
+            $table->double('discount', 10, 2);
+            $table->integer('status')->default(0);
             $table->double('dp', 10, 2);
             $table->string('admin', 255);
         });

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Product;
 use App\Kas;
+use App\Invoice;
 use DateTime;
 use Carbon\Carbon;
 
@@ -118,6 +119,43 @@ class AdminController extends Controller
       return redirect('/inventaris')->with('success', 'Barang berhasil
       diperbaruhi!');
 
+    }
+
+    public function transaksi(){
+      $products = Product::where('deleted', 0)->get();
+      return view('transaksi', ['products' => $products]);
+    }
+
+    public function newTransaction(Request $request){
+      try {
+        $dp=$request->total_price_hidden;
+        $discount = 0;
+        if ($request->dp != null || $request->dp > 0) {
+          $dp = $request->dp;
+        }
+        if ($request->discount != null || $request->discount > 0) {
+          $discount = $request->$discount;
+        }
+
+        // return $request->all();
+// return $dp;
+        $invoice = Invoice::create([
+          'invoice_date' => Carbon::now(), //timezone jakarta/.
+          'rent_date' => $request->start_date,
+          'deadline_date' => $request->end_date,
+          'cust_name' => $request->cust_name,
+          'address' => $request->address,
+          'cust_phone' => $request->cust_phone,
+          'dp' => $dp,
+          'total_price' => $request->total_price_hidden,
+          'status' => 0,
+          'admin' => 'Penjual Arta',
+          'discount' => $discount
+        ]);
+      } catch (\Exception $e) {
+        return $e->getMessage();
+      }
+      return response()->json(['message'=>'success', $invoice], 201);
     }
 
 }
