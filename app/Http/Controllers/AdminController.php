@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\Product;
 use App\Kas;
+use App\Rent;
 use App\Invoice;
 use DateTime;
 use Carbon\Carbon;
@@ -127,6 +128,7 @@ class AdminController extends Controller
     }
 
     public function newTransaction(Request $request){
+
       try {
         $dp=$request->total_price_hidden;
         $discount = 0;
@@ -136,11 +138,10 @@ class AdminController extends Controller
         if ($request->discount != null || $request->discount > 0) {
           $discount = $request->$discount;
         }
-
-        // return $request->all();
-// return $dp;
+        // return $products = json_decode($request->products);
+        $now =  Carbon::now();
         $invoice = Invoice::create([
-          'invoice_date' => Carbon::now(), //timezone jakarta/.
+          'invoice_date' => $now, //timezone jakarta/.
           'rent_date' => $request->start_date,
           'deadline_date' => $request->end_date,
           'cust_name' => $request->cust_name,
@@ -152,8 +153,23 @@ class AdminController extends Controller
           'admin' => 'Penjual Arta',
           'discount' => $discount
         ]);
+
+
+        $products = json_decode($request->products);
+
+        for ($i=0; $i < count($products) ; $i++) {
+          Rent::create([
+            'id_invoice' => $invoice->id_invoice,
+            'id_product' => $products[$i]->id_product,
+            'prod_quantity' => $products[$i]->chose,
+            'sum_price' => $products[$i]->chose * $products[$i]->price
+          ]);
+        }
+
       } catch (\Exception $e) {
-        return $e->getMessage();
+        // return $e->getMessage();
+        return response()->json($e->getMessage(), 500);
+
       }
       return response()->json(['message'=>'success', $invoice], 201);
     }

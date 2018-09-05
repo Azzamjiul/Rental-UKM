@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
   protected $fillable = [
-      'rent_date', 'deadline_date', 'cust_name',
-      'cust_phone', 'total_price', 'status', 'dp',
-      'admin', 'address', 'invoice_date', 'discount'  
+      'address', 'admin', 'cust_name',
+      'cust_phone', 'deadline_date', 'discount', 'dp',
+      'id_invoice', 'invoice_date', 'rent_date', 'status',
+      'total_price'  
   ];
 
   protected $table = 'invoice';

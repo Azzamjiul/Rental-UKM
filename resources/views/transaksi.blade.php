@@ -74,7 +74,7 @@
             <div class="card-body">
               <h4 id="total_price">Total: Rp 0</h4>
               <hr>
-                <form>
+                <form id="myForm">
                   <div class="form-group">
                     <label for="nama_penyewa">Nama penyewa</label>
                     <input type="text" class="form-control" id="nama_penyewa" placeholder="Nama penyewa" required name="cust_name">
@@ -131,7 +131,6 @@
                 <button class="btn btn-primary" type="submit" name="button">Lanjutkan</button>
 
                 <input type="hidden" name="total_price_hidden" value="" id="total_price_hidden">
-
                 </form>
             </div>
           </div>
@@ -147,18 +146,37 @@
   $(document).ready(function(){
 
     var selected_products = [];
-    var product = {
-      id_product: '',
-      product_quantity: '',
-      sum_price: ''
-    };
+    var selected_products_objects = [];
+
+    function Product(){
+      this.id_product= '';
+      this.price = '';
+      this.chose = 0;
+    }
+
+    // var product = {
+    //   id_product: '',
+    //   price: '',
+    //   chose: 0
+    // };
 
     var total_price = 0;
+
+    function searchProducts(id_prod, quantity){
+      for (var i = 0; i < selected_products_objects.length; i++) {
+        if (selected_products_objects[i].id_product == id_prod) {
+          selected_products_objects[i].chose += quantity;
+          return;
+          // return selected_products_objects;
+        }
+      }
+    }
 
     $(".add-to-cart").click(function(){
       id_product = $(this).attr('product-id');
       quantity = $("#product-quantity-id-" + id_product).text();
       quantity_chosen = $("#product-chosen-id-" + id_product).val();
+
 
       if (parseInt(quantity_chosen) > $("#product-chosen-id-" + id_product).attr('max')) {
         // console.log("max is " + $("#product-chosen-id-" + id_product).attr('max'))
@@ -173,15 +191,23 @@
       price = parseInt($("#product-price-id-" + id_product).text().slice(2)) * parseInt(quantity_chosen);
       total_price+=price;
 
+      //cek udah ada di cart belum?
       if (selected_products.includes(id_product)) {
         // console.log("1")
+        searchProducts(id_product, parseInt(quantity_chosen));
+        // product.chose += parseInt(quantity_chosen);
         incart_quantity = $("#in-cart-quantity-product-"+id_product).text();
         $("#in-cart-quantity-product-"+id_product).text(parseInt(incart_quantity) + parseInt(quantity_chosen));
+        console.log("udah pernah")
       }else {
         selected_products.push(id_product);
-        // console.log("2")
-        // $(".cart").append(
-        //   '<div class="card in-cart-product"><div class="card-body"><div class="row"><div class="col-sm-6">'+product_name+'</div><div class="col-sm-6" id="in-cart-quantity-product-'+id_product+'">'+quantity_chosen+'</div></div></div></div>');
+
+        product = new Product();
+        product.id_product = id_product;
+        product.chose += parseInt(quantity_chosen);
+        product.price = $("#product-price-id-" + id_product).text().slice(2);
+        selected_products_objects.push(product);
+        console.log("quantity chosen ", quantity_chosen)
 
         html = '<tr>'+
           '<td>'+product_name+'</td>'+
@@ -198,6 +224,7 @@
       $("#product-chosen-id-" + id_product).val(1)
       $("#total_price").text("Total: Rp " + ribuan);
       $("#total_price_hidden").val(total_price);
+      console.log(selected_products_objects);
     });
 
     $.ajaxSetup({
@@ -209,10 +236,17 @@
     $("form").submit(e => {
       e.preventDefault();
       //cek bayar uang muka
+      var myForm = document.getElementById('myForm');
+      formData = new FormData(myForm);
+
+      formData.append('products', JSON.stringify(selected_products_objects));
+
       $.ajax({
           url: '{{route('new.transaction')}}',
           method: "POST",
-          data: $("form").serialize(),
+          processData: false,
+          contentType: false,
+          data: formData,
           success: data => {
 
           },
