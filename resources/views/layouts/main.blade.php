@@ -23,10 +23,10 @@
     <link rel="stylesheet" href="{{asset('css/custom.css')}}">
     <!-- Favicon-->
     <link rel="shortcut icon" href="{{asset('img/favicon.ico')}}">
-
     <link rel="stylesheet" href="{{asset('css/alertify.min.css')}}">
-
     <link rel="stylesheet" href="{{asset('css/alertify.default.css')}}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.dataTables.min.css">
 
       @yield('style')
 
@@ -112,9 +112,11 @@
     <script src="{{asset('vendor/popper.js/umd/popper.min.js')}}"> </script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('vendor/jquery.cookie/jquery.cookie.js')}}"> </script>
-    {{-- <script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script>
-    <script src="{{asset('vendor/jquery-validation/jquery.validate.min.js')}}"></script> --}}
-    {{-- <script src="{{asset('js/charts-home.js')}}"></script> --}}
+    <script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script>
+    <script src="{{asset('vendor/jquery-validation/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('js/charts-home.js')}}"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.js"></script>
     <!-- Main File-->
     <script src="{{asset('js/front.js')}}"></script>
     <script src="{{asset('js/alertify.min.js')}}"></script>

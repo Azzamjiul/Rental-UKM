@@ -33,6 +33,11 @@ class AdminController extends Controller
       return view('log');
     }
 
+    public function getKas(){
+      $packets = Kas::select('id_kas','description','date','price','type')->orderBy('date', 'desc')->get();
+      return response()->json(['data'=>$packets]);
+    }
+
     public function pemasukan(Request $request)
     {
       try {
