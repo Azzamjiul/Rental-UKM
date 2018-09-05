@@ -69,7 +69,32 @@
       </div>
     </section>
   </div>
-
+  <br>
+  <div class="container-fluid">
+    <p>Data Pemasukan dan Pengeluaran</p>
+    <table id="tableLog" class="display" style="width:100%">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Deskripsi</th>
+          <th>Jenis</th>
+          <th>Jumlah</th>
+          <th>Waktu</th>
+        </tr>
+      </thead>
+      <tbody><?php $no=1; ?>
+        @foreach($kas as $u)
+        <tr>
+          <td>{{$no++}}</td>
+          <td class="text-capitalize">{{$u->description}}</td>
+          <td class="text-capitalize">{{$u->type}}</td>
+          <td>Rp. {{$u->price}}</td>
+          <td>{{$u->date}}</td>
+        </tr>
+        @endforeach
+      </tbody>
+    </table>    
+  </div>
     <div class="modal fade" id="modalPemasukan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -149,6 +174,8 @@
       $(function() {
          $(".angka").numericInput({ allowFloat: true, allowNegative: false });
       });
+
+      $('#tableLog').DataTable();
   });
 
   $("#pemasukan").click( () => {
@@ -160,9 +187,5 @@
     $('#keluar').attr('action', '{{route('log.pengeluaran')}}');
     $("#modalPengeluaran").modal('show');
   });
-
-  $(function() {
-
-  });  
 </script>
 @endsection

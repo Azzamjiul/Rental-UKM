@@ -28,7 +28,8 @@ class AdminController extends Controller
     }
 
     public function bukuBesar(Request $request){
-      return view('log');
+      $kas = Kas::all();
+      return view('log', compact('kas'));
     }
 
     public function pemasukan(Request $request)
