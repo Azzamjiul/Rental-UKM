@@ -21,6 +21,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/inventaris', 'AdminController@inventaris')->name('inventaris');
 Route::get('/log', 'AdminController@bukuBesar')->name('bukuBesar');
 Route::get('/log/get-kas', 'AdminController@getKas')->name('get.kas');
+Route::delete('/log/delete', 'AdminController@deleteKas')->name('log.deleteKas');
+Route::post('/log/edit', 'AdminController@editKas')->name('log.editKas');
 Route::post('/log/masuk', 'AdminController@pemasukan')->name('log.pemasukan');
 Route::post('/log/keluar', 'AdminController@pengeluaran')->name('log.pengeluaran');
 Route::post('/add/barang', 'AdminController@addProduct')->name('add.new.product');
@@ -30,5 +32,3 @@ Route::put('/update/barang', 'AdminController@updateProduct')->name('update.prod
 Route::get('/login', function(){
   return view('login');
 });
-Route::get('/transaksi', 'AdminController@transaksi')->name('transaksi');
-Route::post('/transaction', 'AdminController@newTransaction')->name('new.transaction');
