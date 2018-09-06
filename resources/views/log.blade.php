@@ -33,7 +33,7 @@
 
   <div class="container-fluid">
     @if (session('success'))
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
         <p>{{session('success')}}</p>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -42,7 +42,7 @@
     @endif
 
     @if (session('error'))
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
         <p>{{session('error')}}</p>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -54,7 +54,7 @@
   </div>
   
   <div class="container-fluid">
-    <div class="alert alert-info">
+    <div class="alert alert-info mt-4">
       Log adalah pencatatan untuk pemasukan dan pengeluaran.<br>
       <strong>Pemasukan</strong> untuk semua jenis pemasukan kecuali penyewaan, karena telah otomatis tercatat sebagai pemasukan.<br>
       <strong>Pengeluaran</strong> untuk semua jenis pengeluaran.
@@ -282,7 +282,7 @@
     var id = $(this).data('id');
     console.log(id);
     $("#deleteKas").val(id);
-    alertify.confirm('Warning', "Anda yakin akan menghapus catatan kas ini?",
+    alertify.confirm('Warning', "Anda yakin akan menghapus catatan kas ini?<br><br><h6 class='text-danger'>nb:Catatan yang telah dihapus tidak dapat dikembalikan!</h6>",
       function(){
         $("#formDelete").submit();
       },
