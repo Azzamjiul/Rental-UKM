@@ -20,6 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/inventaris', 'AdminController@inventaris')->name('inventaris');
 Route::get('/log', 'AdminController@bukuBesar')->name('bukuBesar');
+Route::get('/log/get-kas', 'AdminController@getKas')->name('get.kas');
 Route::post('/log/masuk', 'AdminController@pemasukan')->name('log.pemasukan');
 Route::post('/log/keluar', 'AdminController@pengeluaran')->name('log.pengeluaran');
 Route::post('/add/barang', 'AdminController@addProduct')->name('add.new.product');

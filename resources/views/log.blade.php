@@ -50,7 +50,7 @@
       <div class="container-fluid">
         <div class="row justify-content-center">
           <div class="col-6 col-md-3">
-            <div class="card" id="pemasukan">
+            <div class="card" id="pemasukan" style="cursor: pointer;">
               <div class="card-body text-center">
                 <h5>PEMASUKAN</h5>
                 <i class="big-icon fa fa-sign-in"></i>
@@ -58,7 +58,7 @@
             </div>
           </div>
           <div class="col-6 col-md-3">
-            <div class="card" id="pengeluaran">
+            <div class="card" id="pengeluaran" style="cursor: pointer;">
               <div class="card-body text-center">
                 <h5>PENGELUARAN</h5>
                 <i class="big-icon fa fa-sign-out"></i>
@@ -72,28 +72,22 @@
   <br>
   <div class="container-fluid">
     <p>Data Pemasukan dan Pengeluaran</p>
-    <table id="tableLog" class="display" style="width:100%">
-      <thead>
-        <tr>
-          <th>No</th>
-          <th>Deskripsi</th>
-          <th>Jenis</th>
-          <th>Jumlah</th>
-          <th>Waktu</th>
-        </tr>
-      </thead>
-      <tbody><?php $no=1; ?>
-        @foreach($kas as $u)
-        <tr>
-          <td>{{$no++}}</td>
-          <td class="text-capitalize">{{$u->description}}</td>
-          <td class="text-capitalize">{{$u->type}}</td>
-          <td>Rp. {{$u->price}}</td>
-          <td>{{$u->date}}</td>
-        </tr>
-        @endforeach
-      </tbody>
-    </table>    
+    <div class="table-responsive">
+      <table id="tableLog" class="table table-striped">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Deskripsi</th>
+            <th>Jumlah</th>
+            <th>Waktu</th>
+            <th>Jenis</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
   </div>
     <div class="modal fade" id="modalPemasukan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -164,6 +158,39 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="POST" id="masuk" autocomplete="off">
+                  {{ csrf_field() }}
+                <div class="modal-body">
+                    <div class="form-group">
+                      <label for="deskripsiMasuk">Deskripsi</label>
+                      <textarea class="form-control" id="deskripsiMasuk" required name="deskripsiMasuk"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="jumlahMasuk">Jumlah Pemasukan</label>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">Rp</div>
+                        </div>
+                        <input type="text" class="angka form-control" id="jumlahMasuk" required name="jumlahMasuk">
+                      </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+              </form>
+        </div>
+    </div>
 @endsection
 
 @section('script')
@@ -175,7 +202,54 @@
          $(".angka").numericInput({ allowFloat: true, allowNegative: false });
       });
 
-      $('#tableLog').DataTable();
+        var table1;
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        table1 = $('#tableLog').DataTable({
+        stateSave: true,
+        language: {
+          searchPlaceholder: "Cari data"
+        },
+        ajax: "{{route('get.kas')}}",
+        columns:[
+            {
+               "data": "id",
+              render: function (data, type, row, meta) {
+                  return meta.row + meta.settings._iDisplayStart + 1;
+              }
+            },
+            {data: "description", orderable: false},
+            {data: "price", orderable: false},
+            {data: "date", render: function(data, type, row){
+              var options = {hour:'numeric',minute:'numeric', year: 'numeric', month: 'long', day: 'numeric' };
+              var today  = new Date(data);
+              return today.toLocaleDateString("id", options);
+              }
+            },
+            {data: "type", orderable: false, render: function(data, type, row){
+                if (row.type == "pemasukan"){
+                  return "<button class='btn btn-sm btn-success' style='cursor:context-menu;width:120px' disabled>Pemasukan</button>";
+                }else{
+                  return "<button class='btn btn-sm btn-info' style='cursor:context-menu;width:120px' disabled>Pengeluaran</button>";
+                }
+              },
+            },
+            {render: function(data, type, row){
+              return "<button type='button' name='button' class='btn dataMod' data-toggle='modal' data-target='#modalEdit' data-id="+row.id_kas+"><i class='fa fa-pencil edit' aria-hidden='true'></i></button>";
+              }
+            },
+        ]
+      });
+  });
+
+  $(".dataMod").click(function() {
+      var pesan = $(this).data('id');
+      $("#resMod").html(pesan);
   });
 
   $("#pemasukan").click( () => {
