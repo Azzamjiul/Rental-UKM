@@ -8,7 +8,18 @@
     .big-icon {
         font-size: 32px;
     }
-
+    .edit{
+      color: orange;
+    }
+    .edit:hover{
+      transform: scale(1.1);
+    }
+    .delete{
+      color: red;
+    }
+    .delete:hover{
+      transform: scale(1.1);
+    }
   </style>
 @endsection
 
@@ -28,16 +39,18 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-  @endif
+    @endif
 
-  @if (session('error'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      <p>{{session('error')}}</p>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
+    @if (session('error'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <p>{{session('error')}}</p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    @endif
+
+
   </div>
   
   <div class="container-fluid">
@@ -89,6 +102,11 @@
       </table>
     </div>
   </div>
+  <form action="{{route('log.deleteKas')}}" method="post" id="formDelete">
+    {{ csrf_field() }}
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" id="deleteKas" name="id_kas">
+  </form>
     <div class="modal fade" id="modalPemasukan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -162,31 +180,32 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle"></h5>
+                    <h5 class="modal-title type-kas text-capitalize" id="exampleModalCenterTitle"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" id="masuk" autocomplete="off">
+                <form method="POST" id="editMasuk" autocomplete="off">
                   {{ csrf_field() }}
                 <div class="modal-body">
                     <div class="form-group">
-                      <label for="deskripsiMasuk">Deskripsi</label>
-                      <textarea class="form-control" id="deskripsiMasuk" required name="deskripsiMasuk"></textarea>
+                      <label for="deskripsiEdit">Deskripsi</label>
+                      <textarea class="form-control" id="deskripsiEdit" required name="deskripsiEdit"></textarea>
                     </div>
                     <div class="form-group">
-                      <label for="jumlahMasuk">Jumlah Pemasukan</label>
+                      <label for="jumlahEdit">Jumlah</label>
                       <div class="input-group">
                         <div class="input-group-prepend">
                           <div class="input-group-text">Rp</div>
                         </div>
-                        <input type="text" class="angka form-control" id="jumlahMasuk" required name="jumlahMasuk">
+                        <input type="text" class="angka form-control" id="jumlahEdit" required name="jumlahEdit">
                       </div>
                     </div>
+                    <input type="hidden" id="resMod" name="id_kas">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" id="submitEdit" class="btn btn-primary">Edit</button>
                 </div>
               </form>
         </div>
@@ -239,18 +258,37 @@
                 }
               },
             },
-            {render: function(data, type, row){
-              return "<button type='button' name='button' class='btn dataMod' data-toggle='modal' data-target='#modalEdit' data-id="+row.id_kas+"><i class='fa fa-pencil edit' aria-hidden='true'></i></button>";
+            {orderable: false,render: function(data, type, row){
+              return "<button type='button' name='button' class='btn edit dataMod' data-toggle='modal' data-target='#modalEdit' data-types="+row.type+" data-deskripsi="+row.description+" data-price="+row.price+" data-id="+row.id_kas+"><i class='fa fa-pencil edit' aria-hidden='true'></i></button>&nbsp;<button data-id="+row.id_kas+" class='btn delete' type='button'><i class='fa fa-trash-o delete' aria-hidden='true'></i></button>";
               }
             },
         ]
       });
   });
 
-  $(".dataMod").click(function() {
-      var pesan = $(this).data('id');
-      $("#resMod").html(pesan);
+  $(document).on('click', '.dataMod', function(){
+      var id = $(this).data('id');
+      var type = $(this).data('types');
+      var deskripsi = $(this).data('deskripsi');
+      var price = $(this).data('price');
+      $("#resMod").val(id);
+      $(".type-kas").html(type);
+      $("#deskripsiEdit").val(deskripsi);
+      $("#jumlahEdit").val(price);
+      $('#editMasuk').attr('action', '{{route('log.editKas')}}');
   });
+
+  $(document).on('click', '.delete', function(){
+    var id = $(this).data('id');
+    console.log(id);
+    $("#deleteKas").val(id);
+    alertify.confirm('Warning', "Anda yakin akan menghapus catatan kas ini?",
+      function(){
+        $("#formDelete").submit();
+      },
+      function(){
+    });
+  })
 
   $("#pemasukan").click( () => {
     $('#masuk').attr('action', '{{route('log.pemasukan')}}');

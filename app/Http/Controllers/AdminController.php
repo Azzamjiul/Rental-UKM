@@ -38,6 +38,31 @@ class AdminController extends Controller
       return response()->json(['data'=>$packets]);
     }
 
+    public function editKas(Request $request)
+    {
+      try {
+        Kas::where('id_kas', $request->id_kas)
+        ->update([
+          'description' => $request->deskripsiEdit,
+          'price' => $request->jumlahEdit,
+        ]);
+      } catch (\Exception $e) {
+        return redirect('/log')->with('error', 'Pemasukan gagal diedit!');
+      }
+      return redirect('/log')->with('success', 'Pemasukan berhasil diedit!');
+    }
+
+    public function deleteKas(Request $request){
+      try {
+        Kas::where('id_kas', $request->id_kas)->delete();
+      } catch (\Exception $e) {
+        return redirect('/log')->with('error', 'Catatan kas gagal
+        dihapus!');
+      }
+      return redirect('/log')->with('success', 'Catatan kas berhasil
+      dihapus!');
+    }
+
     public function pemasukan(Request $request)
     {
       try {
