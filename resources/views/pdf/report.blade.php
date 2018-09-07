@@ -1,3 +1,8 @@
+<style type="text/css">
+    .uppercase::first-letter {
+        text-transform: capitalize;
+    }
+</style>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -13,7 +18,9 @@
             </style>
   
             <div style="font-family:Arial; font-size:12px;">
-                <center><h2>Buku Besar HISTORIS TRANSAKSI</h2></center>  
+                <center><h2>Buku Besar HISTORIS TRANSAKSI<br>
+                    <?php if(isset($bulan)){ echo date('F', mktime(0, 0, 0, $bulan, 10)); } ?> {{$tahun}}
+                </h2></center>  
             </div>
             <br>
             <table class="tg">
@@ -22,17 +29,28 @@
                 <th class="tg-3wr7">Alamat<br></th>
                 <th class="tg-3wr7">Tanggal Pesanan<br></th>
                 <th class="tg-3wr7">Macam/Jumlah Pesanan<br></th>
-                <th class="tg-3wr7">Keterangan<br></th>
+                <th class="tg-3wr7">Total<br></th>                
               </tr>
-              @foreach ($report as $u)
+              <?php $index=0; ?>
+              @for($i=0 ; $i < count($sum) ; $i++)
+              <?php $temp=$index; ?>
               <tr>
-                <td class="tg-rv4w" width="15%" align="center">{{ $u->cust_name }}</td>
-                <td class="tg-rv4w" width="15%" align="center">{{ $u->address }}</td>
-                <td class="tg-rv4w" width="15%">{{ $u->rent_date }}</td>
-                <td class="tg-rv4w" width="15%" align="right">Rp.{{ $u->price }} ,-</td>
+                <td class="tg-rv4w uppercase" width="15%" align="center">{{ $report[$temp]->cust_name }}</td>
+                <td class="tg-rv4w uppercase" width="30%" align="center">{{ $report[$temp]->address }}</td>
+                <td class="tg-rv4w" width="15%">{{ Carbon\Carbon::parse($report[$temp]->rent_date)->format('d M Y') }}</td>
+                <td class="tg-rv4w uppercase" width="25%">
+                  @for($j=0 ; $j < $sum[$i]->sum_invoice ; $j++)
+                    - {{$report[$index]->name}} / {{$report[$index++]->prod_quantity}} <br>
+                  @endfor
+                </td>
+                <td class="tg-rv4w" width="15%" align="right">{{ $report[$temp]->total_price }} </td>
               </tr>
-              @endforeach
+              @endfor
             </table>
         </body>
     </head>
 </html>
+SELECT invoice.id_invoice, COUNT(invoice.id_invoice)
+FROM invoice
+LEFt JOIN rent ON invoice.id_invoice = rent.id_invoice
+group by invoice.id_invoice;

@@ -1,3 +1,8 @@
+<style type="text/css">
+    .uppercase::first-letter {
+        text-transform: capitalize;
+    }
+</style>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -28,13 +33,13 @@
               @foreach ($kas as $u)
               <tr>
                 <td class="tg-rv4w" width="15%" align="center">{{ Carbon\Carbon::parse($u->date)->format('d M Y') }}</td>
-                <td class="tg-rv4w" width="55%">{{ $u->description }}</td>
+                <td class="tg-rv4w uppercase" width="55%">{{ $u->description }}</td>
                 @if($u->type=="pemasukan")
-                  <td class="tg-rv4w" width="15%" align="right">Rp.{{ $u->price }} ,-</td>
+                  <td class="tg-rv4w" width="15%" align="right">{{ $u->price }} </td>
                   <td class="tg-rv4w" width="15%" align="center"> - </td>                  
                 @else
                   <td class="tg-rv4w" width="15%" align="center"> - </td>                  
-                  <td class="tg-rv4w" width="15%" align="right">Rp.{{ $u->price }} ,-</td>
+                  <td class="tg-rv4w" width="15%" align="right">{{ $u->price }} </td>
                 @endif
               </tr>
               @endforeach
