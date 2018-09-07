@@ -31,7 +31,7 @@
 
   <div class="container-fluid">
     @if (session('success'))
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
         <p>{{session('success')}}</p>
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -40,7 +40,7 @@
   @endif
 
   @if (session('error'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <div class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
       <p>{{session('error')}}</p>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -52,12 +52,11 @@
 
 
   <div class="container-fluid">
-  <div class="alert alert-info">
-    Berikut adalah list barang yang terdaftar di sistem.<br>
-    Untuk <strong>edit</strong> klik tombol warna oren.<br>
-    Untuk <strong>hapus</strong> klik tombol warna merah.
-  </div>
-
+    <div class="alert alert-info mt-4">
+      Berikut adalah list barang yang terdaftar di sistem.<br>
+      Untuk <strong>edit</strong> klik tombol warna oren.<br>
+      Untuk <strong>hapus</strong> klik tombol warna merah.
+    </div>
   </div>
   <section class="list-produk">
     <div class="container-fluid">

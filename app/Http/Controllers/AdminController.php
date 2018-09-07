@@ -93,6 +93,10 @@ class AdminController extends Controller
       return redirect('/log')->with('success', 'Pengeluaran berhasil disimpan!');
     }
 
+    public function report(Request $request){
+      return view('report');
+    }
+
     //utk nambah barang baru
     public function addProduct(Request $request){
       try {
@@ -181,7 +185,7 @@ class AdminController extends Controller
           'total_price' => $request->total_price_hidden,
           'status' => 0,
           'admin' => 'Penjual Arta',
-          'discount' => $discount
+          'discount' => 0
         ]);
 
 
