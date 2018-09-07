@@ -161,6 +161,11 @@ class AdminController extends Controller
       return view('transaksi', ['products' => $products]);
     }
 
+    public function productsForTransaction(){
+      $products = Product::where('deleted', 0)->get();
+      return response()->json(['data' => $products], 200);
+    }
+
     public function newTransaction(Request $request){
 
       try {
@@ -198,6 +203,9 @@ class AdminController extends Controller
             'prod_quantity' => $products[$i]->chose,
             'sum_price' => $products[$i]->chose * $products[$i]->price
           ]);
+          $p = Product::find($products[$i]->id_product);
+          $p->on_rent = $p->on_rent + $products[$i]->chose;
+          $p->save();
         }
 
       } catch (\Exception $e) {
@@ -206,6 +214,14 @@ class AdminController extends Controller
 
       }
       return response()->json(['message'=>'success', $invoice, $products], 201);
+    }
+
+    public function invoice($id){
+      $invoice = Invoice::find($id);
+      $rents = Rent::where('id_invoice', $id)->get();
+
+      // $invoice = Invoice::where()
+      return view('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents]);
     }
 
 }

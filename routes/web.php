@@ -39,3 +39,7 @@ Route::get('/login', function(){
 });
 Route::get('/transaksi', 'AdminController@transaksiPage')->name('transaksi');
 Route::post('/transaction', 'AdminController@newTransaction')->name('new.transaction');
+Route::get('/lihat/nota/{id}', 'AdminController@invoice');
+Route::get('/nota', function(){
+  return view('pdf.invoice');
+});

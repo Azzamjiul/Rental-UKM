@@ -16,4 +16,8 @@ class Product extends Model
   protected $primaryKey = 'id_product';
   public $timestamps = false;
 
+  public function rents(){
+    return $this->hasMany('App\Rent', 'id_product', 'id_product');
+  }
+
 }

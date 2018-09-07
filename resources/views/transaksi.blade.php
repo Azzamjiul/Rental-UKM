@@ -25,8 +25,8 @@
     <div class="row">
       <div class="col-md-7">
         <h3>Pilihan Barang</h3>
-        <div class="card">
-          <table class="table">
+        <div class="card" style="padding: 20px;">
+          <table class="table products">
             <thead>
               <tr>
                 <th scope="col">NAMA</th>
@@ -63,7 +63,7 @@
                   <th scope="col">JUMLAH BARANG</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="cart_body">
 
 
 
@@ -142,7 +142,7 @@
 
 <div class="container-fluid">
   <div class="modal fade after-transaction" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel"></h5>
@@ -151,11 +151,9 @@
           </button>
         </div>
         <div class="modal-body">
+          <h3>Transaksi Pemesanan Berhasil!</h3>
+          <a href="#" class="btn btn-success see-invoice" target="_blank">Klik untuk melihat nota!</a>
 
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
   </div>
@@ -172,6 +170,7 @@
 
     var selected_products = [];
     var selected_products_objects = [];
+    var invoice_id;
 
     function Product(){
       this.name= '';
@@ -179,12 +178,6 @@
       this.price = '';
       this.chose = 0;
     }
-
-    // var product = {
-    //   id_product: '',
-    //   price: '',
-    //   chose: 0
-    // };
 
     var total_price = 0;
 
@@ -261,12 +254,20 @@
     });
 
     $("form").submit(e => {
+
+      if (selected_products.length == 0) {
+        alertify.error("Mohon untuk memilih barang.")
+        return false;
+      }
+
+      html_content = '';
       e.preventDefault();
       //cek bayar uang muka
       var myForm = document.getElementById('myForm');
       formData = new FormData(myForm);
 
       formData.append('products', JSON.stringify(selected_products_objects));
+
 
       $.ajax({
           url: '{{route('new.transaction')}}',
@@ -278,16 +279,32 @@
           success: data => {
               if (data.message == "success") {
                 $(".after-transaction").modal('show');
+                invoice_id = data[0].id_invoice;
+                var url = '{{url('/lihat/nota')}}/' + invoice_id;
+                $(".see-invoice").attr('href', url);
               }
+              $("#cart_body").text("");
+              total_price = 0;
+              $("#total_price").text("Total: Rp 0");
+              selected_products_objects.splice(0,selected_products_objects.length);
+              selected_products.splice(0,selected_products.length);
+              $("form")[0].reset();
           },
           error: data => {
-
+            newData = JSON.parse(data.responseText)
+            alert(newData.message + ", file: " + newData.file
+            + ", line: " + newData.line);
           }
       });
 
     });
 
-
+    table1 = $('table.products').DataTable({
+    stateSave: true,
+    language: {
+      searchPlaceholder: "Cari barang ..."
+    }
+  });
 
   });
 </script>
