@@ -127,7 +127,7 @@ class AdminController extends Controller
       try {
         $product = Product::find($request->id_product);
       } catch (\Exception $e) {
-        return response()->json($e->getMessage());
+        return response()->json($e->getMessage(), 500);
       }
       return response()->json($product, 200);
     }
@@ -201,7 +201,7 @@ class AdminController extends Controller
         return response()->json($e->getMessage(), 500);
 
       }
-      return response()->json(['message'=>'success', $invoice], 201);
+      return response()->json(['message'=>'success', $invoice, $products], 201);
     }
 
 }

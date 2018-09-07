@@ -151,7 +151,7 @@
           </button>
         </div>
         <div class="modal-body">
-          ...
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -174,6 +174,7 @@
     var selected_products_objects = [];
 
     function Product(){
+      this.name= '';
       this.id_product= '';
       this.price = '';
       this.chose = 0;
@@ -201,7 +202,7 @@
       id_product = $(this).attr('product-id');
       quantity = $("#product-quantity-id-" + id_product).text();
       quantity_chosen = $("#product-chosen-id-" + id_product).val();
-
+      product_name = $("#product-name-id-" + id_product).text();
 
       if (parseInt(quantity_chosen) > $("#product-chosen-id-" + id_product).attr('max')) {
         // console.log("max is " + $("#product-chosen-id-" + id_product).attr('max'))
@@ -229,10 +230,11 @@
 
         product = new Product();
         product.id_product = id_product;
+        product.name = product_name;
         product.chose += parseInt(quantity_chosen);
         product.price = $("#product-price-id-" + id_product).text().slice(2);
         selected_products_objects.push(product);
-        console.log("quantity chosen ", quantity_chosen)
+        // console.log("quantity chosen ", quantity_chosen)
 
         html = '<tr>'+
           '<td>'+product_name+'</td>'+
@@ -283,7 +285,7 @@
           }
       });
 
-    })
+    });
 
 
 
