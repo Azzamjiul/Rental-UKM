@@ -2,6 +2,9 @@
 
 @section('style')
   <style media="screen">
+    .uppercase::first-letter {
+        text-transform: capitalize;
+    }
     .list-produk .card:hover{
       box-shadow: 0 4px 8px 0 rgba(0,0,0,0.12), 0 2px 4px 0 rgba(0,0,0,0.08);
     }
@@ -63,7 +66,7 @@
       <form class="card card-sm" autocomplete="off">
          <div class="card-body row no-gutters align-items-center">
             <div class="col">
-             <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Cari barang . . ." name="keywords">
+             <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Cari barang . . ." name="keywords" required>
             </div>
             <div class="col-auto">
               <button class="btn btn-lg btn-success" type="submit">Cari</button>
@@ -82,15 +85,16 @@
       <div class="row">
 
         @foreach ($products as $p)
-          <div class="col-sm-4 col-md-3">
-            <div class="card">
+          <div class="col-sm-4 col-md-3 my-3">
+            <div class="card card h-100">
               <div class="card-body">
-                <h5>{{$p->name}}</h5>
-                <p>
+              <h5 class="card-title uppercase">{{$p->name}}</h5>
+<!--                 <h5 style="">{{$p->name}}</h5> -->
+                <p class="card-text uppercase">
                   {{-- kalo deskripsinya panjang dikasi ... --}}
                   @php
-                  if(strlen($p->description) > 50){
-                    echo $string = substr($p->description, 0, 50) . "...";
+                  if(strlen($p->description) > 40){
+                    echo $string = substr($p->description, 0, 40) . "...";
                   }else {
                     echo $p->description;
                   }
@@ -124,7 +128,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Barang baru</h5>
+        <h5 class="modal-title titleMod">Barang baru</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -172,6 +176,10 @@
   $("#inventaris").addClass("active");
 
   $("#new_product").click( function() {
+    $('input[name=product_name]').val(" ");
+    $('input[name=product_price]').val(" ");
+    $('input[name=product_quantity]').val("0");
+    $('textarea[name=product_description]').val(" ");
     $('form').attr('action', '{{route('add.new.product')}}');
     $(".modal.product").modal('show');
   });

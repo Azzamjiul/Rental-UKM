@@ -62,18 +62,20 @@
     <section class="list-produk">
       <div class="container-fluid">
         <div class="row justify-content-center">
-          <div class="col-6 col-md-3">
+          <div class="col-8 col-md-3">
             <div class="card" id="pemasukan" style="cursor: pointer;">
               <div class="card-body text-center">
-                <h5>PEMASUKAN</h5>
+                <h5 class="d-none d-sm-block">PEMASUKAN</h5>
+                <h6 class="d-block d-sm-none">PEMASUKAN</h6>
                 <i class="big-icon fa fa-sign-in"></i>
               </div>
             </div>
           </div>
-          <div class="col-6 col-md-3">
+          <div class="col-8 col-md-3">
             <div class="card" id="pengeluaran" style="cursor: pointer;">
               <div class="card-body text-center">
-                <h5>PENGELUARAN</h5>
+                <h5 class="d-none d-sm-block">PENGELUARAN</h5>
+                <h6 class="d-block d-sm-none">PENGELUARAN</h6>                
                 <i class="big-icon fa fa-sign-out"></i>
               </div>
             </div>
@@ -253,13 +255,20 @@
             {data: "type", orderable: false, render: function(data, type, row){
                 if (row.type == "pemasukan"){
                   return "<button class='btn btn-sm btn-success' style='cursor:context-menu;width:120px' disabled>Pemasukan</button>";
-                }else{
+                }else if(row.type == "pengeluaran"){
                   return "<button class='btn btn-sm btn-info' style='cursor:context-menu;width:120px' disabled>Pengeluaran</button>";
+                }else{
+                  return "<button class='btn btn-sm btn-primary' style='cursor:context-menu;width:120px' disabled>Peminjaman</button>";
                 }
               },
             },
-            {orderable: false,render: function(data, type, row){
-              return "<button type='button' name='button' class='btn edit dataMod' data-toggle='modal' data-target='#modalEdit' data-types="+row.type+" data-deskripsi="+row.description+" data-price="+row.price+" data-id="+row.id_kas+"><i class='fa fa-pencil edit' aria-hidden='true'></i></button>&nbsp;<button data-id="+row.id_kas+" class='btn delete' type='button'><i class='fa fa-trash-o delete' aria-hidden='true'></i></button>";
+            {orderable: false, className : "text-center",render: function(data, type, row){
+              if (row.type == "peminjaman"){
+                return "";
+              }
+              else{
+                return "<button type='button' name='button' class='btn edit dataMod' data-toggle='modal' data-target='#modalEdit' data-types="+row.type+" data-deskripsi="+row.description+" data-price="+row.price+" data-id="+row.id_kas+"><i class='fa fa-pencil edit' aria-hidden='true'></i></button>&nbsp;<button data-id="+row.id_kas+" class='btn delete' type='button'><i class='fa fa-trash-o delete' aria-hidden='true'></i></button>";
+              }
               }
             },
         ]
@@ -268,6 +277,7 @@
 
   $(document).on('click', '.dataMod', function(){
       var id = $(this).data('id');
+      console.log(id);
       var type = $(this).data('types');
       var deskripsi = $(this).data('deskripsi');
       var price = $(this).data('price');
