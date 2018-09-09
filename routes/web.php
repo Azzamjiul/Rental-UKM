@@ -28,6 +28,8 @@ Route::get('/report/invoices/{tahun}/{bulan}', 'PdfController@getPdfInvoices');
 Route::get('/report/invoices/download/{tahun}/{bulan}', 'PdfController@downloadPdfInvoices');
 Route::get('/historis/get-historis', 'AdminController@getHistory')->name('get.history');
 Route::get('/log/get-kas', 'AdminController@getKas')->name('get.kas');
+Route::get('/cek/inventaris', 'AdminController@cekInventaris')->name('cek.inventaris');
+Route::get('/cek/inventaris/list', 'AdminController@getInventaris')->name('get.gods');
 Route::delete('/log/delete', 'AdminController@deleteKas')->name('log.deleteKas');
 Route::post('/log/edit', 'AdminController@editKas')->name('log.editKas');
 Route::post('/log/masuk', 'AdminController@pemasukan')->name('log.pemasukan');

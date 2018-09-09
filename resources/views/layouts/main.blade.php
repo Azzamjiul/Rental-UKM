@@ -91,6 +91,7 @@
                     <li id="inventaris"><a href="{{route('inventaris')}}"> <i class="fa fa-suitcase"></i>Inventaris </a></li>
                     <li id="log"><a href="{{route('bukuBesar')}}"> <i class="fa fa-book"></i>Log </a></li>
                     <li id="historis"><a href="{{route('historis')}}"> <i class="fa fa-address-book"></i>Historis </a></li>
+                    <li id="check"><a href="{{route('cek.inventaris')}}"> <i class="fa fa-calendar"></i>Cek barang </a></li>
                     <li id="report"><a href="{{route('report')}}"> <i class="fa fa-file-pdf-o"></i>Report </a></li>
                     <li><a href="login.html"> <i class="icon-interface-windows"></i>Login page </a></li>
           </ul>

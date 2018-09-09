@@ -37,6 +37,10 @@ class AdminController extends Controller
       return view('historis');
     }
 
+    public function cekInventaris(Request $request){
+      return view('cek');
+    }
+
     public function getHistory(){
       $packets = Invoice::select('id_invoice', 'rent_date','cust_name', 'total_price', 'type')->orderBy('rent_date', 'asc')->get();
       return response()->json(['data'=>$packets]);
@@ -44,6 +48,11 @@ class AdminController extends Controller
 
     public function getKas(){
       $packets = Kas::select('id_kas','description','date','price','type')->orderBy('date', 'desc')->get();
+      return response()->json(['data'=>$packets]);
+    }
+
+    public function getInventaris(){
+      $packets = Product::select('id_product','quantity','on_rent','name', 'price')->get();
       return response()->json(['data'=>$packets]);
     }
 
@@ -411,77 +420,77 @@ class AdminController extends Controller
 
     public function sellProducts(Request $request){
 
-            $ngutang = 0;
-            $lunas = 1;
-            try {
-              $dp=$request->total_price_hidden;
-              $discount = 0;
-              if ($request->dp != null || $request->dp > 0) {
-                $dp = $request->dp;
-                $ngutang = 1;
-                $lunas = 0;
-              }
-              if ($request->discount != null || $request->discount > 0) {
-                $discount = $request->$discount;
-              }
+        $ngutang = 0;
+        $lunas = 1;
+        try {
+          $dp=$request->total_price_hidden;
+          $discount = 0;
+          if ($request->dp != null || $request->dp > 0) {
+            $dp = $request->dp;
+            $ngutang = 1;
+            $lunas = 0;
+          }
+          if ($request->discount != null || $request->discount > 0) {
+            $discount = $request->$discount;
+          }
 
-              $now =  Carbon::now();
-              $invoice = Invoice::create([
-                'id_invoice' => 'ARTA-'.str_random(4),
-                'invoice_date' => $now, //timezone jakarta/.
-                'rent_date' => $now,
-                'deadline_date' => $now,
-                'cust_name' => $request->cust_name,
-                'address' => $request->address,
-                'cust_phone' => $request->cust_phone,
-                'dp' => $dp,
-                'total_price' => $request->total_price_hidden,
-                'status' => $lunas, //1 berarti udah lunas
-                'admin' => 'Penjual Arta',
-                'discount' => 0,
-                'description' => $request->product_description,
-                'type' => 'jual'
-              ]);
+          $now =  Carbon::now();
+          $invoice = Invoice::create([
+            'id_invoice' => 'ARTA-'.str_random(4),
+            'invoice_date' => $now, //timezone jakarta/.
+            'rent_date' => $now,
+            'deadline_date' => $now,
+            'cust_name' => $request->cust_name,
+            'address' => $request->address,
+            'cust_phone' => $request->cust_phone,
+            'dp' => $dp,
+            'total_price' => $request->total_price_hidden,
+            'status' => $lunas, //1 berarti udah lunas
+            'admin' => 'Penjual Arta',
+            'discount' => 0,
+            'description' => $request->product_description,
+            'type' => 'jual'
+          ]);
 
-              $product_name = '';
+          $product_name = '';
 
-              $products = json_decode($request->products);
-              //rent baru utk produk yang dipinjam
-              for ($i=0; $i < count($products) ; $i++) {
-                $product_name.=$products[$i]->name.', ';
-                Rent::create([
-                  'id_invoice' => $invoice->id_invoice,
-                  'id_product' => $products[$i]->id_product,
-                  'prod_quantity' => $products[$i]->chose,
-                  'sum_price' => $products[$i]->chose * $products[$i]->price
-                ]);
-                $p = Product::find($products[$i]->id_product);
-                $p->quantity = $p->quantity - $products[$i]->chose;
-                $p->save();
-              }
-              $pemasukan = 0;
-              if ($ngutang) {
-                $pemasukan = $dp;
-                $desc = 'Uang Muka';
-              }else {
-                $pemasukan = $request->total_price_hidden;
-                $desc = 'Lunas';
-              }
+          $products = json_decode($request->products);
+          //rent baru utk produk yang dipinjam
+          for ($i=0; $i < count($products) ; $i++) {
+            $product_name.=$products[$i]->name.', ';
+            Rent::create([
+              'id_invoice' => $invoice->id_invoice,
+              'id_product' => $products[$i]->id_product,
+              'prod_quantity' => $products[$i]->chose,
+              'sum_price' => $products[$i]->chose * $products[$i]->price
+            ]);
+            $p = Product::find($products[$i]->id_product);
+            $p->quantity = $p->quantity - $products[$i]->chose;
+            $p->save();
+          }
+          $pemasukan = 0;
+          if ($ngutang) {
+            $pemasukan = $dp;
+            $desc = 'Uang Muka';
+          }else {
+            $pemasukan = $request->total_price_hidden;
+            $desc = 'Lunas';
+          }
 
-              //tambahin ke tabel kas sebagai Pemasukan
-              Kas::create([
-                'description' =>'PENJUALAN | '. $desc.' |ID NOTA: '. $invoice->id_invoice.' | '. $product_name,
-                'price' => $pemasukan,
-                'type' => 'pemasukan',
-                'date' => $now
-              ]);
+          //tambahin ke tabel kas sebagai Pemasukan
+          Kas::create([
+            'description' =>'PENJUALAN | '. $desc.' |ID NOTA: '. $invoice->id_invoice.' | '. $product_name,
+            'price' => $pemasukan,
+            'type' => 'pemasukan',
+            'date' => $now
+          ]);
 
-            } catch (\Exception $e) {
-              // return $e->getMessage();
-              return response()->json($e->getMessage(), 500);
+        } catch (\Exception $e) {
+          // return $e->getMessage();
+          return response()->json($e->getMessage(), 500);
 
-            }
-            return response()->json(['message'=>'success', $invoice, $products], 201);
+        }
+        return response()->json(['message'=>'success', $invoice, $products], 201);
     }
 
 }
