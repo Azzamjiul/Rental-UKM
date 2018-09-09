@@ -167,17 +167,19 @@ class AdminController extends Controller
     }
 
     public function newTransaction(Request $request){
-
+      $ngutang = 0;
       try {
         $dp=$request->total_price_hidden;
         $discount = 0;
         if ($request->dp != null || $request->dp > 0) {
           $dp = $request->dp;
+          $ngutang = 1;
         }
         if ($request->discount != null || $request->discount > 0) {
           $discount = $request->$discount;
         }
         // return $products = json_decode($request->products);
+        //bikin nota
         $now =  Carbon::now();
         $invoice = Invoice::create([
           'invoice_date' => $now, //timezone jakarta/.
@@ -193,10 +195,12 @@ class AdminController extends Controller
           'discount' => 0
         ]);
 
+        $product_name = '';
 
         $products = json_decode($request->products);
-
+        //rent baru utk produk yang dipinjam
         for ($i=0; $i < count($products) ; $i++) {
+          $product_name.=$products[$i]->name.', ';
           Rent::create([
             'id_invoice' => $invoice->id_invoice,
             'id_product' => $products[$i]->id_product,
@@ -207,6 +211,22 @@ class AdminController extends Controller
           $p->on_rent = $p->on_rent + $products[$i]->chose;
           $p->save();
         }
+        $pemasukan = 0;
+        if ($ngutang) {
+          $pemasukan = $dp;
+          $desc = 'Uang Muka';
+        }else {
+          $pemasukan = $request->total_price_hidden;
+          $desc = 'Lunas';
+        }
+
+        //tambahin ke tabel kas sebagai Pemasukan
+        Kas::create([
+          'description' => $desc.' | ID NOTA: '. $invoice->id_invoice.' | '. $product_name,
+          'price' => $pemasukan,
+          'type' => 'pemasukan',
+          'date' => Carbon::now() //timezone jakarta
+        ]);
 
       } catch (\Exception $e) {
         // return $e->getMessage();
@@ -220,7 +240,6 @@ class AdminController extends Controller
       $invoice = Invoice::find($id);
       $rents = Rent::where('id_invoice', $id)->get();
 
-      // $invoice = Invoice::where()
       return view('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents]);
     }
 
