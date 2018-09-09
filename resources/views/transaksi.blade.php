@@ -25,6 +25,9 @@
 
 <section class="point-of-sale">
   <div class="container-fluid">
+    <div class="alert alert-info mt-4">
+      <strong>Penyewaan</strong> adalah tempat menyewa barang. Pilih barang yang diinginkan oleh penyewa, lalu isi data disebelah kanan.<br>
+    </div>
     <div class="row">
       <div class="col-md-7">
         <h3>Pilihan Barang</h3>

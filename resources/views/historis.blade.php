@@ -62,6 +62,7 @@
             <th>No</th>
             <th>Pelanggan</th>
             <th>Waktu</th>
+            <th>Tipe</th>
             <th>Total</th>
             <th>Lihat</th>
           </tr>
@@ -110,6 +111,13 @@
               return today.toLocaleDateString("id", options);
               }
             },
+            {data: 'type', render: function(data, type, row){
+              if (data == 'sewa') {
+                return "Penyewaan";
+              }else {
+                return "Penjualan";
+              }
+            }},
             {data: "total_price", className : "text-right"},
             {orderable: false, className : "text-center",render: function(data, type, row){
                 return "<a class='btn btn-sm see' target='_blank' href='lihat/nota/"+row.id_invoice+"' role='button'><i class='fa fa-eye see' aria-hidden='true'></i></a>";

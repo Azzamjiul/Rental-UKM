@@ -215,7 +215,8 @@ class AdminController extends Controller
           'status' => $lunas, //1 berarti udah lunas
           'admin' => 'Penjual Arta',
           'discount' => 0,
-          'description' => $request->product_description
+          'description' => $request->product_description,
+          'type' => 'sewa'
         ]);
 
         $product_name = '';
@@ -282,7 +283,7 @@ class AdminController extends Controller
       $type = $invoice->type;
       $rents = Rent::where('id_invoice', $invoice->ref_id)->get();
 
-      return view('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type]);
+      return view('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type, 'new' => 1]);
     }
 
     public function pengembalianBarang(){

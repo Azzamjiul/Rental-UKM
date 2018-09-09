@@ -138,10 +138,12 @@
           </thead>
           <tbody>
             @if ($type == 'sewa')
-              <tr>
-                <td>TERHITUNG MULAI: {{date_format(date_create($invoice->rent_date), 'd/m/Y')}}</td>
-                <td>TERHITUNG SAMPAI: {{date_format(date_create($invoice->deadline_date), 'd/m/Y')}}</td>
-              </tr>
+              @if (!isset($new))
+                <tr>
+                  <td>TERHITUNG MULAI: {{date_format(date_create($invoice->rent_date), 'd/m/Y')}}</td>
+                  <td>TERHITUNG SAMPAI: {{date_format(date_create($invoice->deadline_date), 'd/m/Y')}}</td>
+                </tr>
+              @endif            
             @endif
 
             <tr>

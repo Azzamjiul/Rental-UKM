@@ -14,6 +14,9 @@
   </header>
 
 <div class="container-fluid">
+  <div class="alert alert-info mt-4">
+    <strong>Pengembalian</strong> adalah tempat mengembalikan barang serta melunaskan pembayaran penyewaan yang belum lunas.<br>
+  </div>
   <div class="card">
     <div class="card-body">
       <table  class="table table-striped">
