@@ -42,7 +42,7 @@ class AdminController extends Controller
     }
 
     public function getHistory(){
-      $packets = Invoice::select('id_invoice', 'rent_date','cust_name', 'total_price', 'type')->orderBy('rent_date', 'asc')->get();
+      $packets = Invoice::select('id_invoice', 'rent_date','cust_name', 'total_price', 'type', 'ref_id')->orderBy('rent_date', 'asc')->get();
       return response()->json(['data'=>$packets]);
     }
 
@@ -259,25 +259,17 @@ class AdminController extends Controller
       }
       return response()->json(['message'=>'success', $invoice, $products], 201);
     }
-    //sewa
+    //nota transaksi
     public function invoice($id){
-      $invoice = Invoice::where('ref_id', $id)->first();
 
-      //ini yang sebelumnya uang muka tapi udah lunas
-      if (0) {
-        $rents = Rent::where('id_invoice', $id)->get();
-      }
-      else {
-        $invoice = Invoice::find($id);
-        $rents = Rent::where('id_invoice', $id)->get();
-      }
-
+      $invoice = Invoice::find($id);
+      $rents = Rent::where('id_invoice', $id)->get();
       $type = $invoice->type;
 
 
       return view('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents, 'type' => $type]);
     }
-    //nota pelunasan sewa
+    //nota pelunasan
     public function newInvoice($id){
       $invoice = Invoice::find($id);
       $type = $invoice->type;

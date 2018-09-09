@@ -120,7 +120,12 @@
             }},
             {data: "total_price", className : "text-right"},
             {orderable: false, className : "text-center",render: function(data, type, row){
+              if (row.ref_id != null) {
+                return "<a class='btn btn-sm see' target='_blank' href='lihat/nota-baru/"+row.id_invoice+"' role='button'><i class='fa fa-eye see' aria-hidden='true'></i></a>";
+
+              }else {
                 return "<a class='btn btn-sm see' target='_blank' href='lihat/nota/"+row.id_invoice+"' role='button'><i class='fa fa-eye see' aria-hidden='true'></i></a>";
+              }
               }
             },
         ]

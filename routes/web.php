@@ -56,3 +56,5 @@ Route::put('/return-products', 'AdminController@returnProduct')->name('return.pr
 Route::put('/pay-fully', 'AdminController@payFully')->name('pay.fully');
 Route::get('/transaksi-jual-beli', 'AdminController@transaksiJualPage');
 Route::post('/sell-item', 'AdminController@sellProducts')->name('new.transaction.sell');
+Route::get('/download/nota/{id}', 'PdfController@downloadPdfInvoice');
+Route::get('/download/nota-baru/{id}', 'PdfController@downloadPdfInvoicePelunasan');

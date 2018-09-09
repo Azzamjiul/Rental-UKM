@@ -4,8 +4,12 @@
     <meta charset="utf-8">
     <title></title>
     <style media="screen">
+
+    body{
+      font-size: 11px;
+    }
       .container{
-        width: 50%;
+        width: 100%;
       }
 
       p strong{
@@ -58,12 +62,12 @@
         ID NOTA: {{$invoice->id_invoice}}<br>
         {{date_format(date_create($invoice->invoice_date), 'd-m-Y H:i')}}
          <table class="barang" style="width: 100%">
-          <thead>
+          <tr>
             <th class="barang">BANYAK-NYA</th>
             <th class="barang">NAMA BARANG</th>
             <th class="barang">HARGA</th>
             <th class="barang">JUMLAH</th>
-          </thead>
+          </tr>
           <tbody>
             @foreach ($rents as $p)
               <tr>
@@ -75,7 +79,6 @@
               </tr>
             @endforeach
 
-            <tr>
               <tr>
                 <td class="kosong"></td>
                 <td class="kosong"></td>
@@ -84,7 +87,6 @@
                 <td class="kosong"></td>
 
               </tr>
-            </tr>
             <tr>
               <td class="">Keterangan: {{$invoice->description}}</td>
               <td class=""></td>
@@ -132,10 +134,10 @@
       <div class="footer">
 
         <table class="" style="width: 100%">
-          <thead>
+          <tr>
             <th></th>
             <th></th>
-          </thead>
+          </tr>
           <tbody>
             @if ($type == 'sewa')
               @if (!isset($new))
@@ -143,13 +145,13 @@
                   <td>TERHITUNG MULAI: {{date_format(date_create($invoice->rent_date), 'd/m/Y')}}</td>
                   <td>TERHITUNG SAMPAI: {{date_format(date_create($invoice->deadline_date), 'd/m/Y')}}</td>
                 </tr>
-              @endif            
+              @endif
             @endif
 
             <tr>
             <td>{{$invoice->cust_name}}
-              <br>PENYEWA</td>
-            <td>Kauman, {{date_format(date_create($invoice->invoice_date), 'd-m-Y')}}</td>
+              <br><br>Penyewa </td>
+            <td><br><br>Kauman, {{date_format(date_create($invoice->invoice_date), 'd-m-Y')}}</td>
 
             </tr>
           </tbody>
