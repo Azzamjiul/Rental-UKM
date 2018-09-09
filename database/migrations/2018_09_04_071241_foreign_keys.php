@@ -22,7 +22,7 @@ class ForeignKeys extends Migration
           $table->foreign('id_product')->references('id_product')->on('product');
         });
         Schema::table('rent', function(Blueprint $table){
-          $table->unsignedInteger('id_invoice');
+          $table->string('id_invoice');
           $table->unsignedInteger('id_product');
           $table->foreign('id_invoice')->references('id_invoice')->on('invoice');
           $table->foreign('id_product')->references('id_product')->on('product');

@@ -146,9 +146,16 @@
             <label for="product_description">Keterangan barang</label>
             <textarea class="form-control" id="product_description" required placeholder="Keterangan barang" name="product_description"></textarea>
           </div>
+          <div class="form-group">
+            <label for="type">Tipe barang</label><br>
+            <select class="" name="type" id="type">
+              <option value="jual">Jual</option>
+              <option value="sewa">Sewa</option>
+            </select>
+          </div>
           <?php // TODO: dikasi regex rupiah!! ?>
           <div class="form-group">
-            <label for="product_price">Harga sewa</label>
+            <label for="product_price">Harga jual/ sewa</label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <div class="input-group-text">Rp</div>
@@ -208,6 +215,7 @@
         $("#product_price").val(data.price);
         $("#product_description").val(data.description);
         $("#product_quantity").val(data.quantity);
+        $("#type").val(data.type);
         $(".modal.product").modal('show');
         $("input#id_product").val(data.id_product)
         $('form').attr('action', '{{route('update.product')}}');

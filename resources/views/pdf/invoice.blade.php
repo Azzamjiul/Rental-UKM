@@ -69,8 +69,8 @@
               <tr>
                 <td class="barang">{{$p->prod_quantity}}</td>
                 <td class="barang">{{$p->product->name}}</td>
-                <td class="barang">Rp {{$p->sum_price / $p->prod_quantity}}</td>
-                <td class="barang">Rp {{$p->sum_price}}</td>
+                <td class="barang">Rp {{number_format(($p->sum_price / $p->prod_quantity),2,',','.')}}</td>
+                <td class="barang">Rp {{number_format(($p->sum_price),2,',','.')}}</td>
 
               </tr>
             @endforeach
@@ -86,10 +86,10 @@
               </tr>
             </tr>
             <tr>
-              <td class=""></td>
+              <td class="">Keterangan: {{$invoice->description}}</td>
               <td class=""></td>
               <td class="title" style="text-align: center"><strong>TOTAL HARGA</strong></td>
-              <td class="barang">Rp {{$invoice->total_price}}</td>
+              <td class="barang">Rp {{number_format(($invoice->total_price),2,',','.')}}</td>
 
             </tr>
             <tr>
@@ -101,7 +101,7 @@
                   if ($invoice->dp == $invoice->total_price)
                     echo "LUNAS";
                   else
-                    echo $invoice->dp;
+                    echo "Rp ".number_format(($invoice->dp),2,',','.');
 
                 @endphp
 
@@ -116,7 +116,7 @@
                   if ($invoice->dp == $invoice->total_price) {
                     echo "LUNAS";
                   }else {
-                    echo $invoice->total_price - $invoice->dp;
+                    echo "Rp ".  number_format(($invoice->total_price - $invoice->dp),2,',','.');
                   }
                 @endphp
 
@@ -137,10 +137,13 @@
             <th></th>
           </thead>
           <tbody>
-            <tr>
-              <td>TERHITUNG MULAI: {{date_format(date_create($invoice->rent_date), 'd/m/Y')}}</td>
-              <td>TERHITUNG SAMPAI: {{date_format(date_create($invoice->deadline_date), 'd/m/Y')}}</td>
-            </tr>
+            @if ($type == 'sewa')
+              <tr>
+                <td>TERHITUNG MULAI: {{date_format(date_create($invoice->rent_date), 'd/m/Y')}}</td>
+                <td>TERHITUNG SAMPAI: {{date_format(date_create($invoice->deadline_date), 'd/m/Y')}}</td>
+              </tr>
+            @endif
+
             <tr>
             <td>{{$invoice->cust_name}}
               <br>PENYEWA</td>

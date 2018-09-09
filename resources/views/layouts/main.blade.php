@@ -81,19 +81,17 @@
           <!-- Sidebar Navidation Menus-->
           <span class="heading">Main</span>
           <ul class="list-unstyled">
-                    <li class="" id="beranda"><a href="{{url('/')}}"> <i class="icon-home"></i>Beranda </a></li>
-                    <li id="transaksi"><a href="{{route('transaksi')}}"> <i class="fa fa-handshake-o"></i>Transaksi </a></li>
+                    <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"><i class="fa fa-handshake-o"></i>Transaksi </a>
+                      <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                        <li id="pembelian"><a href="{{url('/transaksi-jual-beli')}}">Penjualan Barang </a></li>
+                        <li id="transaksi"><a href="{{route('transaksi')}}">Penyewaan Barang </a></li>
+                        <li><a href="{{url('/pengembalian')}}">Pengembalian Barang</a></li>
+                      </ul>
+                    </li>
                     <li id="inventaris"><a href="{{route('inventaris')}}"> <i class="fa fa-suitcase"></i>Inventaris </a></li>
                     <li id="log"><a href="{{route('bukuBesar')}}"> <i class="fa fa-book"></i>Log </a></li>
                     <li id="historis"><a href="{{route('historis')}}"> <i class="fa fa-address-book"></i>Historis </a></li>
                     <li id="report"><a href="{{route('report')}}"> <i class="fa fa-file-pdf-o"></i>Report </a></li>
-                    <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Example dropdown </a>
-                      <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                        <li><a href="#">Page</a></li>
-                        <li><a href="#">Page</a></li>
-                        <li><a href="#">Page</a></li>
-                      </ul>
-                    </li>
                     <li><a href="login.html"> <i class="icon-interface-windows"></i>Login page </a></li>
           </ul>
           <span class="heading">Extras</span>

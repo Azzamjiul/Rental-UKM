@@ -22,6 +22,7 @@ class ProductTable extends Migration
             $table->text('description');
             $table->double('price', 10, 2);
             $table->text('category');
+            $table->string('type', 15);
             $table->integer('deleted')->default(0);
         });
     }

@@ -14,7 +14,8 @@ class InvoiceTable extends Migration
     public function up()
     {
         Schema::create('invoice', function (Blueprint $table) {
-            $table->increments('id_invoice')->unsigned();
+            $table->string('id_invoice')->index();;
+            $table->string('ref_id')->nullable();
             $table->dateTime('invoice_date');
             $table->dateTime('rent_date');
             $table->dateTime('deadline_date');
@@ -26,6 +27,8 @@ class InvoiceTable extends Migration
             $table->integer('status')->default(0);
             $table->double('dp', 10, 2);
             $table->string('admin', 255);
+            $table->text('description')->nullable();
+            $table->string('type', 15);
         });
     }
 

@@ -14,7 +14,7 @@
     }
     .see:hover{
       transform: scale(1.1);
-    }    
+    }
   </style>
 @endsection
 
@@ -47,7 +47,7 @@
 
 
   </div>
-  
+
   <div class="container-fluid">
     <div class="alert alert-info mt-4">
       <strong>Historis</strong> adalah data Peminjaman dan Penjualan.<br>
@@ -63,7 +63,7 @@
             <th>Pelanggan</th>
             <th>Waktu</th>
             <th>Total</th>
-            <th>Edit</th>
+            <th>Lihat</th>
           </tr>
         </thead>
         <tbody>

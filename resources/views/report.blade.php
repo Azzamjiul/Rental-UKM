@@ -40,7 +40,7 @@
 
 
   </div>
-  
+
   <div class="container-fluid">
     <div class="alert alert-info mt-4">
       Report adalah laporan untuk melihat data pemasukan/pengeluaran serta data peminjaman.<br>
@@ -64,7 +64,7 @@
               <div class="card-body text-center">
                 <h5 class="d-none d-sm-block">PEMINJAMAN</h5>
                 <h6 class="d-block d-sm-none">PEMINJAMAN</h6>
-                <i class="big-icon fa fa-handshake-o""></i>
+                <i class="big-icon fa fa-handshake-o"></i>
               </div>
             </div>
           </div>
@@ -121,7 +121,7 @@
                       </select>
                     </div>
                     <div align="center">
-                      <a class="btn btn-outline-primary" role="button" id="seeLog"><i class="fa fa-eye"></i></a>                      
+                      <a class="btn btn-outline-primary" role="button" id="seeLog"><i class="fa fa-eye"></i></a>
                       <a class="btn btn-outline-primary" role="button" id="downloadLog"><i class="fa fa-download"></i></a>
                     </div>
                 </div>
@@ -178,7 +178,7 @@
                       </select>
                     </div>
                     <div align="center">
-                      <a class="btn btn-outline-primary" role="button" id="seeReport"><i class="fa fa-eye"></i></a>                      
+                      <a class="btn btn-outline-primary" role="button" id="seeReport"><i class="fa fa-eye"></i></a>
                       <a class="btn btn-outline-primary" role="button" id="downloadReport"><i class="fa fa-download"></i></a>
                     </div>
                 </div>

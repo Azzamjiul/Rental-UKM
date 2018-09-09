@@ -52,7 +52,7 @@
 
 
   </div>
-  
+
   <div class="container-fluid">
     <div class="alert alert-info mt-4">
       Log adalah pencatatan untuk pemasukan dan pengeluaran.<br>
@@ -75,7 +75,7 @@
             <div class="card" id="pengeluaran" style="cursor: pointer;">
               <div class="card-body text-center">
                 <h5 class="d-none d-sm-block">PENGELUARAN</h5>
-                <h6 class="d-block d-sm-none">PENGELUARAN</h6>                
+                <h6 class="d-block d-sm-none">PENGELUARAN</h6>
                 <i class="big-icon fa fa-sign-out"></i>
               </div>
             </div>
@@ -245,7 +245,9 @@
               }
             },
             {data: "description", orderable: false},
-            {data: "price", orderable: false},
+            {data: "price", orderable: false, render: function(data, type, row){
+              return 'Rp ' + data;
+            }},
             {data: "date", render: function(data, type, row){
               var options = {hour:'numeric',minute:'numeric', year: 'numeric', month: 'long', day: 'numeric' };
               var today  = new Date(data);

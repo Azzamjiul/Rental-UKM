@@ -42,6 +42,15 @@ Route::get('/login', function(){
 Route::get('/transaksi', 'AdminController@transaksiPage')->name('transaksi');
 Route::post('/transaction', 'AdminController@newTransaction')->name('new.transaction');
 Route::get('/lihat/nota/{id}', 'AdminController@invoice');
+Route::get('/lihat/nota-baru/{id}', 'AdminController@newInvoice');
+
 Route::get('/nota', function(){
   return view('pdf.invoice');
 });
+Route::get('/pengembalian', 'AdminController@pengembalianBarang');
+Route::get('/barang-yang-belum-dikembalikan', 'AdminController@getOnRentInvoices')->name('on.rent.invoices');
+Route::get('/items-on-rent', 'AdminController@getItemsOnRent')->name('get.items.on.rent');
+Route::put('/return-products', 'AdminController@returnProduct')->name('return.products');
+Route::put('/pay-fully', 'AdminController@payFully')->name('pay.fully');
+Route::get('/transaksi-jual-beli', 'AdminController@transaksiJualPage');
+Route::post('/sell-item', 'AdminController@sellProducts')->name('new.transaction.sell');

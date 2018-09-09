@@ -18,7 +18,7 @@
 @section('content')
 <header class="page-header mb-3">
   <div class="container-fluid">
-    <h2>Transaksi Sewa</h2>
+    <h2>Transaksi Jual Barang</h2>
   </div>
 
 </header>
@@ -80,24 +80,16 @@
               <hr>
                 <form id="myForm">
                   <div class="form-group">
-                    <label for="nama_penyewa">Nama penyewa</label>
-                    <input type="text" class="form-control" id="nama_penyewa" placeholder="Nama penyewa" required name="cust_name">
+                    <label for="nama_penyewa">Nama pembeli</label>
+                    <input type="text" class="form-control" id="nama_penyewa" placeholder="Nama pembeli" required name="cust_name">
                   </div>
                   <div class="form-group">
                     <label for="address">Alamat</label>
-                    <textarea class="form-control" id="address" placeholder="Alamat penyewa" name="address" required></textarea>
+                    <textarea class="form-control" id="address" placeholder="Alamat pembeli" name="address" required></textarea>
                   </div>
                   <div class="form-group">
                     <label for="address">No. Telepon</label>
                     <input type="text" class="angka form-control" id="cust_phone" placeholder="No. Telepon" name="cust_phone" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="start_date">Terhitung mulai</label>
-                    <input type="date" class="form-control" id="start_date" required name="start_date">
-                  </div>
-                  <div class="form-group">
-                    <label for="end_date">Terhitung sampai</label>
-                    <input type="date" class="form-control" id="end_date" required name="end_date">
                   </div>
                   <div class="form-group">
                     <label for="dp">Uang muka</label>
@@ -315,7 +307,7 @@
       formData.append('products', JSON.stringify(selected_products_objects));
 
       $.ajax({
-          url: '{{route('new.transaction')}}',
+          url: '{{route('new.transaction.sell')}}',
           method: "POST",
           processData: false,
           contentType: false,
