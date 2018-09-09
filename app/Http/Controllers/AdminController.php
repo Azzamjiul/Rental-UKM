@@ -33,6 +33,15 @@ class AdminController extends Controller
       return view('log');
     }
 
+    public function historis(Request $request){
+      return view('historis');
+    }
+
+    public function getHistory(){
+      $packets = Invoice::select('id_invoice', 'rent_date','cust_name', 'total_price')->orderBy('rent_date', 'asc')->get();
+      return response()->json(['data'=>$packets]);
+    }
+
     public function getKas(){
       $packets = Kas::select('id_kas','description','date','price','type')->orderBy('date', 'desc')->get();
       return response()->json(['data'=>$packets]);
@@ -226,6 +235,13 @@ class AdminController extends Controller
           'price' => $pemasukan,
           'type' => 'pemasukan',
           'date' => Carbon::now() //timezone jakarta
+        ]);
+
+        Kas::create([
+          'description' => 'peminjaman dari '.$request->cust_name,
+          'price' => $request->total_price_hidden,
+          'type' => 'peminjaman',
+          'date' => $request->start_date
         ]);
 
       } catch (\Exception $e) {

@@ -2,6 +2,9 @@
 
 @section('style')
 <style media="screen">
+  .uppercase::first-letter {
+    text-transform: capitalize;
+  }
   .card.in-cart-product{
     margin-bottom: 0;
     border-bottom: 1px solid #eef5f9;
@@ -38,12 +41,12 @@
             <tbody>
               @foreach ($products as $p)
                 <tr>
-                  <td id="product-name-id-{{$p->id_product}}">{{$p->name}}</td>
+                  <td class="uppercase" id="product-name-id-{{$p->id_product}}">{{$p->name}}</td>
                   <td id="product-price-id-{{$p->id_product}}">Rp {{$p->price}}</td>
-                  <td id="product-quantity-id-{{$p->id_product}}">{{$p->quantity - $p->on_rent}}</td>
-                  <td>
-                    <input type="number" name="" value="1" min="1" max="{{$p->quantity - $p->on_rent}}" id="product-chosen-id-{{$p->id_product}}">
-                    <button type="submit" name="button" class="btn add-to-cart" product-id={{$p->id_product}}><i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                  <td align="center" id="product-quantity-id-{{$p->id_product}}">{{$p->quantity - $p->on_rent}}</td>
+                  <td align="center">
+                    <input type="number" name="" value="1" min="1" max="{{$p->quantity - $p->on_rent}}" id="product-chosen-id-{{$p->id_product}}" style="width: 50%" class="angka">
+                    <button type="submit" name="button" class="btn btn-sm add-to-cart" product-id={{$p->id_product}}><i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
                   </td>
                 </tr>
               @endforeach
@@ -85,7 +88,7 @@
                   </div>
                   <div class="form-group">
                     <label for="address">No. Telepon</label>
-                    <textarea class="form-control" id="cust_phone" placeholder="No. Telepon" name="cust_phone" required></textarea>
+                    <input type="text" class="angka form-control" id="cust_phone" placeholder="No. Telepon" name="cust_phone" required>
                   </div>
                   <div class="form-group">
                     <label for="start_date">Terhitung mulai</label>
@@ -101,7 +104,7 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text">Rp</div>
                       </div>
-                      <input type="text" class="form-control" id="dp" placeholder="Uang muka" name="dp">
+                      <input type="text" class="angka form-control" id="dp" placeholder="Uang muka" name="dp">
                     </div>
                   </div>
                   <div class="form-group">
@@ -110,7 +113,7 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text">Rp</div>
                       </div>
-                      <input type="text" class="form-control" id="cash" placeholder="Tunai" required name="cash">
+                      <input type="text" class="angka form-control" id="cash" placeholder="Tunai" required name="cash">
                     </div>
                   </div>
                   <div class="form-group">
@@ -119,7 +122,7 @@
                       <div class="input-group-prepend">
                         <div class="input-group-text">Rp</div>
                       </div>
-                      <input type="text" class="form-control" id="discount" placeholder="Opsional" name="discount">
+                      <input type="text" class="angka form-control" id="discount" placeholder="Opsional" name="discount">
                     </div>
                   </div>
 
@@ -167,6 +170,12 @@
 @section('script')
 <script type="text/javascript">
   $(document).ready(function(){
+
+    (function(b){var c={allowFloat:false,allowNegative:false};b.fn.numericInput=function(e){var f=b.extend({},c,e);var d=f.allowFloat;var g=f.allowNegative;this.keypress(function(j){var i=j.which;var h=b(this).val();if(i>0&&(i<48||i>57)){if(d==true&&i==46){if(g==true&&a(this)==0&&h.charAt(0)=="-"){return false}if(h.match(/[.]/)){return false}}else{if(g==true&&i==45){if(h.charAt(0)=="-"){return false}if(a(this)!=0){return false}}else{if(i==8){return true}else{return false}}}}else{if(i>0&&(i>=48&&i<=57)){if(g==true&&h.charAt(0)=="-"&&a(this)==0){return false}}}});return this};function a(d){if(d.selectionStart){return d.selectionStart}else{if(document.selection){d.focus();var f=document.selection.createRange();if(f==null){return 0}var e=d.createTextRange(),g=e.duplicate();e.moveToBookmark(f.getBookmark());g.setEndPoint("EndToStart",e);return g.text.length}}return 0}}(jQuery));
+
+    $(function() {
+       $(".angka").numericInput({ allowFloat: true, allowNegative: false });
+    });
 
     var selected_products = [];
     var selected_products_objects = [];

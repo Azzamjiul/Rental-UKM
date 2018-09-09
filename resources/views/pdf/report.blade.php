@@ -27,16 +27,16 @@
               <tr>
                 <th class="tg-3wr7">Nama<br></th>
                 <th class="tg-3wr7">Alamat<br></th>
-                <th class="tg-3wr7">Tanggal Pesanan<br></th>
-                <th class="tg-3wr7">Macam/Jumlah Pesanan<br></th>
+                <th class="tg-3wr7">Tgl Pesanan<br></th>
+                <th class="tg-3wr7">Macam/Jml Pesanan<br></th>
                 <th class="tg-3wr7">Total<br></th>                
               </tr>
               <?php $index=0; ?>
               @for($i=0 ; $i < count($sum) ; $i++)
               <?php $temp=$index; ?>
               <tr>
-                <td class="tg-rv4w uppercase" width="15%" align="center">{{ $report[$temp]->cust_name }}</td>
-                <td class="tg-rv4w uppercase" width="30%" align="center">{{ $report[$temp]->address }}</td>
+                <td class="tg-rv4w uppercase" width="15%">{{ $report[$temp]->cust_name }}</td>
+                <td class="tg-rv4w uppercase" width="30%">{{ $report[$temp]->address }}</td>
                 <td class="tg-rv4w" width="15%">{{ Carbon\Carbon::parse($report[$temp]->rent_date)->format('d M Y') }}</td>
                 <td class="tg-rv4w uppercase" width="25%">
                   @for($j=0 ; $j < $sum[$i]->sum_invoice ; $j++)

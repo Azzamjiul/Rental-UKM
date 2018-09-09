@@ -34,7 +34,7 @@
               <tr>
                 <td class="tg-rv4w" width="15%" align="center">{{ Carbon\Carbon::parse($u->date)->format('d M Y') }}</td>
                 <td class="tg-rv4w uppercase" width="55%">{{ $u->description }}</td>
-                @if($u->type=="pemasukan")
+                @if($u->type=="pemasukan" or $u->type=="peminjaman")
                   <td class="tg-rv4w" width="15%" align="right">{{ $u->price }} </td>
                   <td class="tg-rv4w" width="15%" align="center"> - </td>                  
                 @else

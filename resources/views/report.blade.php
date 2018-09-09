@@ -50,18 +50,20 @@
     <section class="list-produk">
       <div class="container-fluid">
         <div class="row justify-content-center">
-          <div class="col-6 col-md-3">
+          <div class="col-8 col-md-3">
             <div class="card" id="logs" style="cursor: pointer;">
               <div class="card-body text-center">
-                <h5>LOG</h5>
+                <h5 class="d-none d-sm-block">LOG</h5>
+                <h6 class="d-block d-sm-none">LOG</h6>
                 <i class="big-icon fa fa-book"></i>
               </div>
             </div>
           </div>
-          <div class="col-6 col-md-3">
+          <div class="col-8 col-md-3">
             <div class="card" id="reports" style="cursor: pointer;">
               <div class="card-body text-center">
-                <h5>PEMINJAMAN</h5>
+                <h5 class="d-none d-sm-block">PEMINJAMAN</h5>
+                <h6 class="d-block d-sm-none">PEMINJAMAN</h6>
                 <i class="big-icon fa fa-handshake-o""></i>
               </div>
             </div>
