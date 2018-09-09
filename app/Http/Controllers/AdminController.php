@@ -37,6 +37,10 @@ class AdminController extends Controller
       return view('historis');
     }
 
+    public function cekInventaris(Request $request){
+      return view('cek');
+    }
+
     public function getHistory(){
       $packets = Invoice::select('id_invoice', 'rent_date','cust_name', 'total_price')->orderBy('rent_date', 'asc')->get();
       return response()->json(['data'=>$packets]);
@@ -44,6 +48,11 @@ class AdminController extends Controller
 
     public function getKas(){
       $packets = Kas::select('id_kas','description','date','price','type')->orderBy('date', 'desc')->get();
+      return response()->json(['data'=>$packets]);
+    }
+
+    public function getInventaris(){
+      $packets = Product::select('id_product','quantity','on_rent','name', 'price')->get();
       return response()->json(['data'=>$packets]);
     }
 
@@ -237,12 +246,12 @@ class AdminController extends Controller
           'date' => Carbon::now() //timezone jakarta
         ]);
 
-        Kas::create([
-          'description' => 'peminjaman dari '.$request->cust_name,
-          'price' => $request->total_price_hidden,
-          'type' => 'peminjaman',
-          'date' => $request->start_date
-        ]);
+        // Kas::create([
+        //   'description' => 'peminjaman dari '.$request->cust_name,
+        //   'price' => $request->total_price_hidden,
+        //   'type' => 'peminjaman',
+        //   'date' => $request->start_date
+        // ]);
 
       } catch (\Exception $e) {
         // return $e->getMessage();
