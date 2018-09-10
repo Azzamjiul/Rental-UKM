@@ -69,6 +69,32 @@
         </div>
       </div>
     </div>
+    <p class="text-info text-center">Barang yang tersedia / dapat disewakan pada {{ $tanggal}}</p><br>
+    
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-12">
+        <div class="table-responsive">
+          <table id="tableBarang" class="table table-striped">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Stok</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($products as $u)
+              <tr>
+                <th>{{$u->id_product}}</th>
+                <th>{{$u->name}}</th>
+                <th>{{$u->quantity}}</th>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>        
+      </div>
+    </div>
   </div>
 @endsection
 
@@ -93,8 +119,17 @@
   });
 
     $(document).on('click', '#tanggal', function(){
-      var url2 = '{{url('/cek/inventaris/list')}}/' + $('#cek_tanggal').val();
+      var url2 = '{{url('cek/inventaris/list')}}/' + $('#cek_tanggal').val();
       $("#tanggal").attr('href', url2);
+    });
+
+    var table1;
+
+    table1 = $('#tableBarang').DataTable({
+        stateSave: true,
+        language: {
+          searchPlaceholder: "Cari barang"
+        },
     });
 
 </script>

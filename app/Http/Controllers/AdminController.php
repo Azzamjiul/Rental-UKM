@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
 use App\Product;
 use App\Kas;
 use App\Rent;
+use App\User;
 use App\Invoice;
 use DateTime;
 use Carbon\Carbon;
@@ -51,9 +53,29 @@ class AdminController extends Controller
       return response()->json(['data'=>$packets]);
     }
 
-    public function getInventaris(){
-      $packets = Product::select('id_product','quantity','on_rent','name', 'price')->get();
-      return response()->json(['data'=>$packets]);
+    public function getInventaris($tanggal){
+      $products  = Product::select('id_product','quantity','name', 'price')->where('type', 'sewa')->get();
+      $data = $products;
+
+      $rents = DB::table('rent')
+      ->leftJoin('invoice', 'rent.id_invoice', '=', 'invoice.id_invoice')
+      ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
+      ->select('product.id_product', 'rent.prod_quantity')
+      ->where('invoice.type', 'sewa')
+      ->whereDate('rent_date', '<=', $tanggal)
+      ->whereDate('deadline_date', '>=', $tanggal)
+      ->get();
+
+      foreach ($products as $product) {
+        $count = 0;
+        foreach ($rents as $rent) {
+          if ($product->id_product==$rent->id_product) {
+            $count = $count + $rent->prod_quantity;
+          }
+        }
+        $product->quantity = $product->quantity - $count;
+      }
+      return view('cek2',compact('products','tanggal'));
     }
 
     public function editKas(Request $request)

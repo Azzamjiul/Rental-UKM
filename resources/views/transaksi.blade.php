@@ -81,7 +81,7 @@
             <div class="card-body">
               <h4 id="total_price">Total: Rp 0</h4>
               <hr>
-                <form id="myForm">
+                <form id="myForm" autocomplete="off">
                   <div class="form-group">
                     <label for="nama_penyewa">Nama penyewa</label>
                     <input type="text" class="form-control" id="nama_penyewa" placeholder="Nama penyewa" required name="cust_name">
@@ -159,7 +159,7 @@
         </div>
         <div class="modal-body">
           <h3>Transaksi Pemesanan Berhasil!</h3>
-          <a href="#" class="btn btn-success see-invoice" target="_blank">Klik untuk melihat nota!</a>
+          <a href="#" class="btn btn-success see-invoice" target="_blank">Klik untuk melihat nota!</a><br>
           <a href="#" class="btn btn-success download-invoice" target="_blank">Klik untuk download nota!</a>
         </div>
       </div>
@@ -329,7 +329,7 @@
                 $(".after-transaction").modal('show');
                 invoice_id = data[0].id_invoice;
                 var url = '{{url('/lihat/nota')}}/' + invoice_id;
-                var url2 = '{{url('/lihat/nota')}}/' + invoice_id;
+                var url2 = '{{url('/download/nota')}}/' + invoice_id;
                 $(".see-invoice").attr('href', url);
                 $(".download-invoice").attr('href', url2);
               }

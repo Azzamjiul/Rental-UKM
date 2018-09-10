@@ -47,27 +47,24 @@
             <div class="col-lg-6 bg-white">
               <div class="form d-flex align-items-center">
                 <div class="content">
-                  <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
-                    @csrf
+                  @if (session('success'))
+                    <p style="color: #83ef2b">{{session('success')}}</p>
+                  @endif
+
+                  @if (session('error'))
+                    <p style="color: #f71c0c">{{session('error')}}</p>
+                  @endif
+                  <form method="post" class="form-validate" action="{{route('register.user')}}">
+                    {{ csrf_field() }}
                     <div class="form-group">
-                      <input id="login-username" type="text" name="email" required data-msg="Please enter your username" class="input-material">
+                      <input id="login-username" type="text" name="loginUsername" required data-msg="Please enter your username" class="input-material">
                       <label for="login-username" class="label-material">User Name</label>
-                      @if ($errors->has('email'))
-                      <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('email') }}</strong>
-                      </span>
-                      @endif
                     </div>
                     <div class="form-group">
-                      <input id="login-password" type="password" class="input-material {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" data-msg="Please enter your password" required>
+                      <input id="login-password" type="password" name="loginPassword" required data-msg="Please enter your password" class="input-material" minlength="6">
                       <label for="login-password" class="label-material">Password</label>
-                      @if ($errors->has('password'))
-                      <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('password') }}</strong>
-                      </span>
-                      @endif
                     </div>
-                    <button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
+                    <button type="submit" class="btn btn-primary">REGISTER</button>
                     <!-- This should be submit button but I replaced it with <a> for demo purposes-->
                   </form><!-- <a href="#" class="forgot-pass">Forgot Password?</a><br><small>Do not have an account? </small><a href="register.html" class="signup">Signup</a> -->
                 </div>

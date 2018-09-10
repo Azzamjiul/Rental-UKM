@@ -244,7 +244,14 @@
                   return meta.row + meta.settings._iDisplayStart + 1;
               }
             },
-            {data: "description", orderable: false},
+            {data: "description", orderable: false, render: function(data, type, row){
+              if(data.length > 30){
+                return data.substring(0,30)+" . . .";
+              }
+              else{
+                return data;
+              }
+            }},
             {data: "price", orderable: false, render: function(data, type, row){
               return 'Rp ' + data;
             }},
@@ -263,7 +270,12 @@
               },
             },
             {orderable: false, className : "text-center",render: function(data, type, row){
-                return "<button type='button' name='button' class='btn edit dataMod' data-toggle='modal' data-target='#modalEdit' data-types="+row.type+" data-deskripsi='"+row.description+"' data-price="+row.price+" data-id="+row.id_kas+"><i class='fa fa-pencil edit' aria-hidden='true'></i></button>&nbsp;<button data-id="+row.id_kas+" class='btn delete' type='button'><i class='fa fa-trash-o delete' aria-hidden='true'></i></button>";
+                // if ((row.description.replace(/ .*/,'')).toLowerCase()=="penjualan") {
+                //   return ""
+                // }
+                // else{
+                  return "<button type='button' name='button' class='btn edit dataMod' data-toggle='modal' data-target='#modalEdit' data-types="+row.type+" data-deskripsi='"+row.description+"' data-price="+row.price+" data-id="+row.id_kas+"><i class='fa fa-pencil edit' aria-hidden='true'></i></button>&nbsp;<button data-id="+row.id_kas+" class='btn delete' type='button'><i class='fa fa-trash-o delete' aria-hidden='true'></i></button>";                  
+                // }
               }
             },
         ]
@@ -274,7 +286,6 @@
       var id = $(this).data('id');
       var type = $(this).data('types');
       var deskripsi = $(this).data('deskripsi');
-      console.log(deskripsi);
       var price = $(this).data('price');
       $("#resMod").val(id);
       $(".type-kas").html(type);
@@ -285,7 +296,6 @@
 
   $(document).on('click', '.delete', function(){
     var id = $(this).data('id');
-    console.log(id);
     $("#deleteKas").val(id);
     alertify.confirm('Warning', "Anda yakin akan menghapus catatan kas ini?<br><br><h6 class='text-danger'>nb:Catatan yang telah dihapus tidak dapat dikembalikan!</h6>",
       function(){

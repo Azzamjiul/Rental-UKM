@@ -79,7 +79,7 @@
             </div>
           </div>
           <!-- Sidebar Navidation Menus-->
-          <span class="heading">Main</span>
+          <span class="heading">MENU</span>
           <ul class="list-unstyled">
                     <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"><i class="fa fa-handshake-o"></i>Transaksi </a>
                       <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
@@ -94,9 +94,7 @@
                     <li id="historis"><a href="{{route('historis')}}"> <i class="fa fa-address-book"></i>Historis </a></li>
                     <li id="check"><a href="{{route('cek.inventaris')}}"> <i class="fa fa-calendar"></i>Cek barang </a></li>
                     <li id="report"><a href="{{route('report')}}"> <i class="fa fa-file-pdf-o"></i>Report </a></li>
-                    <li><a href="login.html"> <i class="icon-interface-windows"></i>Login page </a></li>
           </ul>
-          <span class="heading">Extras</span>
         </nav>
         <div class="content-inner">
           @yield('content')

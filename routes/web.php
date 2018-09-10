@@ -29,7 +29,7 @@ Route::get('/report/invoices/download/{tahun}/{bulan}', 'PdfController@downloadP
 Route::get('/historis/get-historis', 'AdminController@getHistory')->name('get.history');
 Route::get('/log/get-kas', 'AdminController@getKas')->name('get.kas');
 Route::get('/cek/inventaris', 'AdminController@cekInventaris')->name('cek.inventaris');
-Route::get('/cek/inventaris/list', 'AdminController@getInventaris')->name('get.gods');
+Route::get('/cek/inventaris/list/{tanggal}', 'AdminController@getInventaris')->name('get.gods');
 Route::delete('/log/delete', 'AdminController@deleteKas')->name('log.deleteKas');
 Route::post('/log/edit', 'AdminController@editKas')->name('log.editKas');
 Route::post('/log/masuk', 'AdminController@pemasukan')->name('log.pemasukan');
@@ -41,6 +41,7 @@ Route::put('/update/barang', 'AdminController@updateProduct')->name('update.prod
 Route::get('/login', function(){
   return view('login');
 });
+
 Route::get('/transaksi', 'AdminController@transaksiPage')->name('transaksi');
 Route::post('/transaction', 'AdminController@newTransaction')->name('new.transaction');
 Route::get('/lihat/nota/{id}', 'PdfController@getPdfInvoice');
@@ -63,3 +64,7 @@ Route::post('/sell-item', 'AdminController@sellProducts')->name('new.transaction
 Route::get('/download/nota/{id}', 'PdfController@downloadPdfInvoice');
 Route::get('/download/nota-baru/{id}', 'PdfController@downloadPdfInvoicePelunasan');
 Route::get('/download/nota-jual-baru/{id}', 'PdfController@downloadPdfInvoicePelunasanJual');
+
+
+Route::post('/login/user', 'AdminController@login')->name('login.user');
+Route::post('/register/user', 'AdminController@register')->name('register.user');

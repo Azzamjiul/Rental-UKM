@@ -67,7 +67,7 @@
     </div>
     <div class="modal-body">
       <h3>Transaksi Pelunasan Berhasil!</h3>
-      <a href="#" class="btn btn-success see-invoice" target="_blank">Klik untuk melihat nota!</a>
+      <a href="#" class="btn btn-success see-invoice" target="_blank">Klik untuk melihat nota!</a><br>
       <a href="#" class="btn btn-success download-invoice" target="_blank">Klik untuk download nota!</a>
     </div>
   </div>
