@@ -259,18 +259,11 @@
                   return "<button class='btn btn-sm btn-success' style='cursor:context-menu;width:120px' disabled>Pemasukan</button>";
                 }else if(row.type == "pengeluaran"){
                   return "<button class='btn btn-sm btn-info' style='cursor:context-menu;width:120px' disabled>Pengeluaran</button>";
-                }else{
-                  return "<button class='btn btn-sm btn-primary' style='cursor:context-menu;width:120px' disabled>Peminjaman</button>";
                 }
               },
             },
             {orderable: false, className : "text-center",render: function(data, type, row){
-              if (row.type == "peminjaman"){
-                return "";
-              }
-              else{
-                return "<button type='button' name='button' class='btn edit dataMod' data-toggle='modal' data-target='#modalEdit' data-types="+row.type+" data-deskripsi="+row.description+" data-price="+row.price+" data-id="+row.id_kas+"><i class='fa fa-pencil edit' aria-hidden='true'></i></button>&nbsp;<button data-id="+row.id_kas+" class='btn delete' type='button'><i class='fa fa-trash-o delete' aria-hidden='true'></i></button>";
-              }
+                return "<button type='button' name='button' class='btn edit dataMod' data-toggle='modal' data-target='#modalEdit' data-types="+row.type+" data-deskripsi='"+row.description+"' data-price="+row.price+" data-id="+row.id_kas+"><i class='fa fa-pencil edit' aria-hidden='true'></i></button>&nbsp;<button data-id="+row.id_kas+" class='btn delete' type='button'><i class='fa fa-trash-o delete' aria-hidden='true'></i></button>";
               }
             },
         ]
@@ -279,9 +272,9 @@
 
   $(document).on('click', '.dataMod', function(){
       var id = $(this).data('id');
-      console.log(id);
       var type = $(this).data('types');
       var deskripsi = $(this).data('deskripsi');
+      console.log(deskripsi);
       var price = $(this).data('price');
       $("#resMod").val(id);
       $(".type-kas").html(type);

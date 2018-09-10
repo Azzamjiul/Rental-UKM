@@ -62,8 +62,8 @@
           <div class="col-8 col-md-3">
             <div class="card" id="reports" style="cursor: pointer;">
               <div class="card-body text-center">
-                <h5 class="d-none d-sm-block">PEMINJAMAN</h5>
-                <h6 class="d-block d-sm-none">PEMINJAMAN</h6>
+                <h5 class="d-none d-sm-block">TRANSAKSI</h5>
+                <h6 class="d-block d-sm-none">TRANSAKSI</h6>
                 <i class="big-icon fa fa-handshake-o"></i>
               </div>
             </div>

@@ -86,6 +86,7 @@
                         <li id="pembelian"><a href="{{url('/transaksi-jual-beli')}}">Penjualan Barang </a></li>
                         <li id="transaksi"><a href="{{route('transaksi')}}">Penyewaan Barang </a></li>
                         <li><a href="{{url('/pengembalian')}}">Pengembalian Barang</a></li>
+                        <li><a href="{{url('/pelunasan/pembelian')}}">Pelunasan Pembelian</a></li>
                       </ul>
                     </li>
                     <li id="inventaris"><a href="{{route('inventaris')}}"> <i class="fa fa-suitcase"></i>Inventaris </a></li>

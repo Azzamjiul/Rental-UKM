@@ -160,7 +160,7 @@
         <div class="modal-body">
           <h3>Transaksi Pemesanan Berhasil!</h3>
           <a href="#" class="btn btn-success see-invoice" target="_blank">Klik untuk melihat nota!</a>
-
+          <a href="#" class="btn btn-success download-invoice" target="_blank">Klik untuk download nota!</a>
         </div>
       </div>
   </div>
@@ -329,7 +329,9 @@
                 $(".after-transaction").modal('show');
                 invoice_id = data[0].id_invoice;
                 var url = '{{url('/lihat/nota')}}/' + invoice_id;
+                var url2 = '{{url('/lihat/nota')}}/' + invoice_id;
                 $(".see-invoice").attr('href', url);
+                $(".download-invoice").attr('href', url2);
               }
               $("#cart_body").text("");
               total_price = 0;

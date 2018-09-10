@@ -46,7 +46,7 @@ class PdfController extends Controller
             $report = DB::table('rent')
             ->leftJoin('invoice', 'rent.id_invoice', '=', 'invoice.id_invoice')
             ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
-            ->select('invoice.rent_date', 'invoice.cust_name', 'invoice.id_invoice', 'invoice.total_price','invoice.address','rent.prod_quantity', 'product.name')
+            ->select('invoice.rent_date', 'invoice.cust_name', 'invoice.id_invoice', 'invoice.total_price','invoice.address', 'invoice.type', 'rent.prod_quantity', 'product.name')
             ->where(DB::raw('YEAR(rent_date)'), '=', $tahun)
             ->get();
 
@@ -65,7 +65,7 @@ class PdfController extends Controller
             $report = DB::table('rent')
             ->leftJoin('invoice', 'rent.id_invoice', '=', 'invoice.id_invoice')
             ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
-            ->select('invoice.rent_date', 'invoice.cust_name', 'invoice.id_invoice', 'invoice.total_price','invoice.address','rent.prod_quantity', 'product.name')
+            ->select('invoice.rent_date', 'invoice.cust_name', 'invoice.id_invoice', 'invoice.total_price','invoice.address','invoice.type','rent.prod_quantity', 'product.name')
             ->where(DB::raw('MONTH(rent_date)'), '=', $bulan)
             ->where(DB::raw('YEAR(rent_date)'), '=', $tahun)
             ->get();
@@ -89,7 +89,7 @@ class PdfController extends Controller
             $report = DB::table('rent')
             ->leftJoin('invoice', 'rent.id_invoice', '=', 'invoice.id_invoice')
             ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
-            ->select('invoice.rent_date', 'invoice.cust_name', 'invoice.id_invoice', 'invoice.total_price','invoice.address','rent.prod_quantity', 'product.name')
+            ->select('invoice.rent_date', 'invoice.cust_name', 'invoice.id_invoice', 'invoice.total_price','invoice.address', 'invoice.type','rent.prod_quantity', 'product.name')
             ->where(DB::raw('YEAR(rent_date)'), '=', $tahun)
             ->get();
 
@@ -108,7 +108,7 @@ class PdfController extends Controller
             $report = DB::table('rent')
             ->leftJoin('invoice', 'rent.id_invoice', '=', 'invoice.id_invoice')
             ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
-            ->select('invoice.rent_date', 'invoice.cust_name', 'invoice.id_invoice', 'invoice.total_price','invoice.address','rent.prod_quantity', 'product.name')
+            ->select('invoice.rent_date', 'invoice.cust_name', 'invoice.id_invoice', 'invoice.total_price','invoice.address','invoice.type','rent.prod_quantity', 'product.name')
             ->where(DB::raw('MONTH(rent_date)'), '=', $bulan)
             ->where(DB::raw('YEAR(rent_date)'), '=', $tahun)
             ->get();
@@ -128,7 +128,7 @@ class PdfController extends Controller
         return $pdf->download("Laporan Peminjaman bulan $bulan $tahun.pdf");
     }
 
-    public function downloadPdfInvoice($id){
+    public function getPdfInvoice($id){
       $invoice = Invoice::find($id);
       $rents = Rent::where('id_invoice', $id)->get();
       $type = $invoice->type;
@@ -137,13 +137,45 @@ class PdfController extends Controller
       return $pdf->stream();
     }
 
-    public function downloadPdfInvoicePelunasan($id){
+    public function getPdfInvoicePelunasan($id){
       $invoice = Invoice::find($id);
       $type = $invoice->type;
       $rents = Rent::where('id_invoice', $invoice->ref_id)->get();
       $pdf = PDF::loadView('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type, 'new' => 1])->setPaper('a5');
       return $pdf->stream();
+    }
 
+    public function getPdfInvoicePelunasanJual($id){
+      $invoice = Invoice::find($id);
+      $type = $invoice->type;
+      $rents = Rent::where('id_invoice', $invoice->ref_id)->get();
+      $pdf = PDF::loadView('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type, 'new' => 1])->setPaper('a5');
+      return $pdf->stream();
+    }
+
+    public function downloadPdfInvoice($id){
+      $invoice = Invoice::find($id);
+      $rents = Rent::where('id_invoice', $id)->get();
+      $type = $invoice->type;
+
+      $pdf = PDF::loadView('pdf.invoice', compact('invoice', 'rents', 'type'))->setPaper('a5');
+      return $pdf->download("Nota $invoice->description.pdf");
+    }
+
+    public function downloadPdfInvoicePelunasan($id){
+      $invoice = Invoice::find($id);
+      $type = $invoice->type;
+      $rents = Rent::where('id_invoice', $invoice->ref_id)->get();
+      $pdf = PDF::loadView('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type, 'new' => 1])->setPaper('a5');
+      return $pdf->download("Nota $invoice->description.pdf");
+    }
+
+    public function downloadPdfInvoicePelunasanJual($id){
+      $invoice = Invoice::find($id);
+      $type = $invoice->type;
+      $rents = Rent::where('id_invoice', $invoice->ref_id)->get();
+      $pdf = PDF::loadView('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type, 'new' => 1])->setPaper('a5');
+      return $pdf->download("Nota $invoice->description.pdf");
     }
 
 }

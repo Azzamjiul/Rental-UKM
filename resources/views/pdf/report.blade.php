@@ -27,8 +27,9 @@
               <tr>
                 <th class="tg-3wr7">Nama<br></th>
                 <th class="tg-3wr7">Alamat<br></th>
-                <th class="tg-3wr7">Tgl Pesanan<br></th>
-                <th class="tg-3wr7">Macam/Jml Pesanan<br></th>
+                <th class="tg-3wr7">Tgl Transaksi<br></th>
+                <th class="tg-3wr7">Macam/Jml Barang<br></th>
+                <th class="tg-3wr7">Tipe<br></th>
                 <th class="tg-3wr7">Total<br></th>                
               </tr>
               <?php $index=0; ?>
@@ -37,20 +38,17 @@
               <tr>
                 <td class="tg-rv4w uppercase" width="15%">{{ $report[$temp]->cust_name }}</td>
                 <td class="tg-rv4w uppercase" width="30%">{{ $report[$temp]->address }}</td>
-                <td class="tg-rv4w" width="15%">{{ Carbon\Carbon::parse($report[$temp]->rent_date)->format('d M Y') }}</td>
+                <td class="tg-rv4w" width="13%">{{ Carbon\Carbon::parse($report[$temp]->rent_date)->format('d M Y') }}</td>
                 <td class="tg-rv4w uppercase" width="25%">
                   @for($j=0 ; $j < $sum[$i]->sum_invoice ; $j++)
                     - {{$report[$index]->name}} / {{$report[$index++]->prod_quantity}} <br>
                   @endfor
                 </td>
-                <td class="tg-rv4w" width="15%" align="right">{{ $report[$temp]->total_price }} </td>
+                <td class="tg-rv4w" width="7%" align="left" style="text-transform: capitalize;">{{ $report[$temp]->type }} </
+                <td class="tg-rv4w" width="10%" align="right">{{ $report[$temp]->total_price }} </td>
               </tr>
               @endfor
             </table>
         </body>
     </head>
 </html>
-SELECT invoice.id_invoice, COUNT(invoice.id_invoice)
-FROM invoice
-LEFt JOIN rent ON invoice.id_invoice = rent.id_invoice
-group by invoice.id_invoice;

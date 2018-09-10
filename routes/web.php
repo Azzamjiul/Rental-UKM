@@ -43,18 +43,23 @@ Route::get('/login', function(){
 });
 Route::get('/transaksi', 'AdminController@transaksiPage')->name('transaksi');
 Route::post('/transaction', 'AdminController@newTransaction')->name('new.transaction');
-Route::get('/lihat/nota/{id}', 'AdminController@invoice');
-Route::get('/lihat/nota-baru/{id}', 'AdminController@newInvoice');
+Route::get('/lihat/nota/{id}', 'PdfController@getPdfInvoice');
+Route::get('/lihat/nota-baru/{id}', 'PdfController@getPdfInvoicePelunasan');
+Route::get('/lihat/nota-jual-baru/{id}', 'PdfController@getPdfInvoicePelunasanJual');
 
 Route::get('/nota', function(){
   return view('pdf.invoice');
 });
 Route::get('/pengembalian', 'AdminController@pengembalianBarang');
+Route::get('/pelunasan/pembelian', 'AdminController@getPembelian');
 Route::get('/barang-yang-belum-dikembalikan', 'AdminController@getOnRentInvoices')->name('on.rent.invoices');
+Route::get('/jual-belum-lunas', 'AdminController@getJualBelumLunas')->name('get.jual.belum.lunas');
 Route::get('/items-on-rent', 'AdminController@getItemsOnRent')->name('get.items.on.rent');
 Route::put('/return-products', 'AdminController@returnProduct')->name('return.products');
 Route::put('/pay-fully', 'AdminController@payFully')->name('pay.fully');
+Route::put('/pay-sell-fully', 'AdminController@payFullySell')->name('pay.sell.fully');
 Route::get('/transaksi-jual-beli', 'AdminController@transaksiJualPage');
 Route::post('/sell-item', 'AdminController@sellProducts')->name('new.transaction.sell');
 Route::get('/download/nota/{id}', 'PdfController@downloadPdfInvoice');
 Route::get('/download/nota-baru/{id}', 'PdfController@downloadPdfInvoicePelunasan');
+Route::get('/download/nota-jual-baru/{id}', 'PdfController@downloadPdfInvoicePelunasanJual');

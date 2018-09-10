@@ -15,6 +15,13 @@
     .see:hover{
       transform: scale(1.1);
     }
+    .download{
+      color: red;
+      background-color: #eeeceb;
+    }
+    .download:hover{
+      transform: scale(1.1);
+    }
   </style>
 @endsection
 
@@ -118,13 +125,13 @@
                 return "Penjualan";
               }
             }},
-            {data: "total_price", className : "text-right"},
+            {data: "dp", className : "text-right"},
             {orderable: false, className : "text-center",render: function(data, type, row){
               if (row.ref_id != null) {
-                return "<a class='btn btn-sm see' target='_blank' href='lihat/nota-baru/"+row.id_invoice+"' role='button'><i class='fa fa-eye see' aria-hidden='true'></i></a>";
+                return "<a class='btn btn-sm see' target='_blank' href='lihat/nota-baru/"+row.id_invoice+"' role='button'><i class='fa fa-eye see' aria-hidden='true'></i></a><a class='btn btn-sm download' target='_blank' href='download/nota/"+row.id_invoice+"' role='button'><i class='fa fa-download download' aria-hidden='true'></i></a>";
 
               }else {
-                return "<a class='btn btn-sm see' target='_blank' href='lihat/nota/"+row.id_invoice+"' role='button'><i class='fa fa-eye see' aria-hidden='true'></i></a>";
+                return "<a class='btn btn-sm see' target='_blank' href='lihat/nota/"+row.id_invoice+"' role='button'><i class='fa fa-eye see' aria-hidden='true'></i></a>&nbsp;<a class='btn btn-sm download' target='_blank' href='download/nota/"+row.id_invoice+"' role='button'><i class='fa fa-download download' aria-hidden='true'></i></a>";
               }
               }
             },

@@ -8,14 +8,14 @@
 @section('content')
   <header class="page-header mb-3">
     <div class="container-fluid">
-      <h2>Pengembalian Barang</h2>
+      <h2>Pelunasan Pembelian</h2>
     </div>
 
   </header>
 
 <div class="container-fluid">
   <div class="alert alert-info mt-4">
-    <strong>Pengembalian</strong> adalah tempat mengembalikan barang serta melunaskan pembayaran penyewaan yang belum lunas.<br>
+    <strong>Pelunasan pembelian</strong> adalah tempat pelunasan pembelian yang belum lunas.<br>
   </div>
   <div class="card">
     <div class="card-body">
@@ -24,8 +24,7 @@
           <th>No</th>
 
           <th>ID Nota</th>
-          <th>Tanggal Peminjaman</th>
-          <th>Tanggal Pengembalian</th>
+          <th>Tanggal Pembelian</th>
           <th>Nama Penyewa</th>
           <th>NO HP Penyewa</th>
           <th>Aksi</th>
@@ -42,7 +41,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Barang yang dipinjam</h5>
+        <h5 class="modal-title">Barang yang dibeli</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -61,13 +60,13 @@
 <div class="modal-dialog modal-sm" role="document">
   <div class="modal-content ">
     <div class="modal-header">
-      <h5 class="modal-title">Barang yang dipinjam</h5>
+      <h5 class="modal-title"></h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <h3>Transaksi Pemesanan Berhasil!</h3>
+      <h3>Transaksi Pelunasan Berhasil!</h3>
       <a href="#" class="btn btn-success see-invoice" target="_blank">Klik untuk melihat nota!</a>
       <a href="#" class="btn btn-success download-invoice" target="_blank">Klik untuk download nota!</a>
     </div>
@@ -89,7 +88,7 @@ $(document).ready(function(){
     language: {
       searchPlaceholder: "Cari data"
     },
-    ajax: "{{route('on.rent.invoices')}}",
+    ajax: "{{route('get.jual.belum.lunas')}}",
     columns:[
       {
         render: function (data, type, row, meta) {
@@ -98,11 +97,6 @@ $(document).ready(function(){
       },
       {data: 'id_invoice'},
       {data: 'rent_date', render: function(data, type, row){
-        var options = {year: 'numeric', month: 'long', day: 'numeric' };
-        var today  = new Date(data);
-        return today.toLocaleDateString("id", options);
-        }},
-      {data: 'deadline_date', render: function(data, type, row){
         var options = {year: 'numeric', month: 'long', day: 'numeric' };
         var today  = new Date(data);
         return today.toLocaleDateString("id", options);
@@ -124,12 +118,12 @@ $(document).ready(function(){
         if (row.status == 2) {
           barang_sudah_kembali = 'disabled';
         }
-        return '<button type="button"name="button" class="btn btn-sm btn-info mr-1 see" id-invoice='+row.id_invoice+'>Info</button><button type="button" name="button" '+barang_sudah_kembali+' class="btn btn-sm btn-success return mr-1" id-invoice='+row.id_invoice+'>Kembalikan Barang</button><button type="button" name="button" class="btn btn-sm btn-primary mr-1 pay" '+button2+' '+button+' id-invoice='+row.id_invoice+' lunas='+lunas+'>Lunaskan</button>';
+        return '<button type="button"name="button" class="btn btn-sm btn-info mr-1 see" id-invoice='+row.id_invoice+'>Info</button><button type="button" name="button" class="btn btn-sm btn-primary mr-1 pay" '+button2+' '+button+' id-invoice='+row.id_invoice+' lunas='+lunas+'>Lunaskan</button>';
       }}
     ]
     });
 
-    //cari barang yang dipinjam
+    //cari barang yang dibeli
     $(document).on('click', '.see', function(){
       html_content = '';
       id_invoice = $(this).attr('id-invoice');
@@ -169,39 +163,17 @@ $(document).ready(function(){
         }
     });
 
-    $(document).on('click', '.return', function(){
-      id_invoice = $(this).attr('id-invoice');
-      alertify.confirm('Warning', "Mohon untuk mengecek kelengkapan barang. Apa sudah lengkap?",
-        function(){
-          $.ajax({
-            url: "{{route('return.products')}}",
-            method: "PUT",
-            data: {id_invoice},
-            success: data => {
-              alertify.success("Barang berhasil dikembalikan!")
-              table1.ajax.reload( null, false )
-            },
-            error: data => {
-              alert("Server Error");
-              console.log(data)
-            }
-          });
-        },
-        function(){
-      });
-    });
-
     $(document).on('click', '.pay', function(){
       id_invoice = $(this).attr('id-invoice');
 
       $.ajax({
-        url: '{{route('pay.fully')}}',
+        url: '{{route('pay.sell.fully')}}',
         data: {id_invoice},
         method: "PUT",
         success: data => {
           table1.ajax.reload( null, false )
-          var url = '{{url('/lihat/nota-baru')}}/' + data.invoice.id_invoice;
-          var url2 = '{{url('/download/nota-baru')}}/' + data.invoice.id_invoice;
+          var url = '{{url('/lihat/nota-jual-baru')}}/' + data.invoice.id_invoice;
+          var url2 = '{{url('/download/nota-jual-baru')}}/' + data.invoice.id_invoice;
           $(".see-invoice").attr('href', url);
           $(".download-invoice").attr('href', url2);
           $(".invoice").modal('show');

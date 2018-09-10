@@ -42,7 +42,7 @@ class AdminController extends Controller
     }
 
     public function getHistory(){
-      $packets = Invoice::select('id_invoice', 'rent_date','cust_name', 'total_price', 'type', 'ref_id')->orderBy('rent_date', 'asc')->get();
+      $packets = Invoice::select('id_invoice', 'rent_date','cust_name', 'dp', 'type', 'ref_id')->orderBy('rent_date', 'asc')->get();
       return response()->json(['data'=>$packets]);
     }
 
@@ -278,8 +278,25 @@ class AdminController extends Controller
       return view('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type, 'new' => 1]);
     }
 
+    public function newInvoiceSell($id){
+      $invoice = Invoice::find($id);
+      $type = $invoice->type;
+      $rents = Rent::where('id_invoice', $invoice->ref_id)->get();
+
+      return view('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type, 'new' => 1]);
+    }
+
     public function pengembalianBarang(){
       return view('pengembalian');
+    }
+
+    public function getPembelian(){
+      return view('pelunasan');
+    }
+
+    public function getJualBelumLunas(){
+      $invoices = Invoice::where('status', '<', 3)->where('type', 'jual')->get();
+      return response()->json(['data' => $invoices]);
     }
 
     public function getOnRentInvoices(){
@@ -294,6 +311,9 @@ class AdminController extends Controller
         //cek kalo sudah lunas
         $paid_fully = 0;
         if ($invoice->dp == $invoice->total_price) {
+          $paid_fully = 1;
+        }
+        if (Invoice::where('ref_id', $invoice->id_invoice)->first()) {
           $paid_fully = 1;
         }
       } catch (\Exception $e) {
@@ -368,7 +388,7 @@ class AdminController extends Controller
       try {
         $now = Carbon::now();
         $invoice = Invoice::find($request->id_invoice);
-        $invoice->status =$invoice->status + 1; //kalo stattus = 1 udah lunas, status = 2 berarti udak ngembaliin barang, status = 3 udah dua2nya
+        $invoice->status = 3; //kalo stattus = 3 udah lunas
 
         $new_invoice = Invoice::create([
           'id_invoice'=> 'ARTA-'.str_random(4),
