@@ -87,8 +87,25 @@
                 <td class="kosong"></td>
 
               </tr>
+              <tr>
+                <td class=""> Keterangan: {{$invoice->description}}</td>
+                <td class=""></td>
+                <td class="title" style="text-align: center"><strong>DISKON</strong></td>
+                <td class="barang">
+                  @php
+                    if ($invoice->discount != 0) {
+                      echo "Rp ".number_format(($invoice->discount),2,',','.');
+                    }
+                    else {
+                      echo "-";
+                    }
+                  @endphp
+
+                </td>
+              </tr>
+
             <tr>
-              <td class="">Keterangan: {{$invoice->description}}</td>
+              <td class=""></td>
               <td class=""></td>
               <td class="title" style="text-align: center"><strong>TOTAL HARGA</strong></td>
               <td class="barang">Rp {{number_format(($invoice->total_price),2,',','.')}}</td>
@@ -100,11 +117,12 @@
               <td class="title" style="text-align: center"><strong>UANG MUKA</strong></td>
               <td class="barang">
                 @php
+                if (!isset($new)) {
                   if ($invoice->dp == $invoice->total_price)
                     echo "LUNAS";
                   else
                     echo "Rp ".number_format(($invoice->dp),2,',','.');
-
+                }          
                 @endphp
 
               </td>

@@ -14,7 +14,7 @@
     }
     .see:hover{
       transform: scale(1.1);
-    }    
+    }
   </style>
 @endsection
 
@@ -47,7 +47,7 @@
 
 
   </div>
-  
+
   <div class="container-fluid">
     <div class="alert alert-info mt-4">
       <strong>Cek Barang</strong> untuk mengecek ketersediaan barang saat akan melayani penyewaan.<br>
@@ -82,10 +82,10 @@
         var yyyy = today.getFullYear();
           if(dd<10){
             dd='0'+dd
-          } 
+          }
           if(mm<10){
             mm='0'+mm
-          } 
+          }
 
         today = yyyy+'-'+mm+'-'+dd;
         document.getElementById("cek_tanggal").setAttribute("min", today);
@@ -93,6 +93,10 @@
   });
 
     $(document).on('click', '#tanggal', function(){
+      if (!$('#cek_tanggal').val().length) {
+        alert("Tanggal tidak boleh kosong!")
+        return false;
+      }
       var url2 = '{{url('/cek/inventaris/list')}}/' + $('#cek_tanggal').val();
       $("#tanggal").attr('href', url2);
     });

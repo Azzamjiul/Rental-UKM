@@ -94,7 +94,7 @@
                     <label for="address">No. Telepon</label>
                     <input type="text" class="angka form-control" id="cust_phone" placeholder="No. Telepon" name="cust_phone" required>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group" style="display: none" id="dp_field">
                     <label for="dp">Uang muka</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -112,7 +112,7 @@
                       <input type="text" class="angka form-control" id="cash" placeholder="Tunai" required name="cash">
                     </div>
                   </div>
-                  <div class="form-group">
+                  <div class="form-group" style="display: none" id="discount_field">
                     <label for="discount">Diskon</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -128,6 +128,8 @@
                   </div>
 
                 <button class="btn btn-primary" type="submit" name="button">Lanjutkan</button>
+                <button id="add_dp" type="button" class="btn btn-info" name="button">Bayar Uang Muka</button>
+                <button id="add_discount" type="button" class="btn btn-success" name="button">Tambahkan Diskon</button>
 
                 <input type="hidden" name="total_price_hidden" value="" id="total_price_hidden">
                 </form>
@@ -151,6 +153,7 @@
         </div>
         <div class="modal-body">
           <h3>Transaksi Pemesanan Berhasil!</h3>
+          <p id="change"></p>
           <a href="#" class="btn btn-success see-invoice" target="_blank">Klik untuk melihat nota!</a><br>
           <a href="#" class="btn btn-success download-invoice" target="_blank">Klik untuk download nota!</a>
         </div>
@@ -176,6 +179,33 @@
     var selected_products = [];
     var selected_products_objects = [];
     var invoice_id;
+    var diskon, dp = 0;
+
+    $("#add_discount").click(function(){
+      if (!diskon) {
+        $("#discount_field").css('display', 'block');
+        $("#add_discount").text('Hilangkan Diskon');
+        $("#discount").val('');
+        diskon = 1;
+      }else {
+        $("#discount_field").css('display', 'none');
+        $("#add_discount").text('Tambahkan Diskon');
+        diskon = 0;
+      }
+    })
+
+    $("#add_dp").click(function(){
+      if (!dp) {
+        $("#dp_field").css('display', 'block');
+        $("#add_dp").text('Hilangkan Uang Muka');
+        $("#dp_field").val('');
+        dp = 1;
+      }else {
+        $("#dp_field").css('display', 'none');
+        $("#add_dp").text('Tambahkan Uang Muka');
+        dp = 0;
+      }
+    })
 
     function Product(){
       this.name= '';
@@ -301,6 +331,22 @@
         return false;
       }
 
+      if (!dp) {
+        cash = parseInt($("#cash").val())
+        total_item_price = parseInt($("#total_price_hidden").val())
+        if (cash < total_item_price) {
+          alertify.error("Tunai tidak mencukupi untuk membayar barang!");
+          return false;
+        }
+      }else {
+        cash = parseInt($("#cash").val())
+        dp_amount = parseInt($("#dp").val())
+        if (cash < dp_amount) {
+          alertify.error("Tunai tidak mencukupi untuk membayar uang muka!");
+          return false;
+        }
+      }
+
       html_content = '';
       e.preventDefault();
       //cek bayar uang muka
@@ -308,6 +354,23 @@
       formData = new FormData(myForm);
 
       formData.append('products', JSON.stringify(selected_products_objects));
+
+      total_item_price = parseInt($("#total_price_hidden").val())
+      cash = parseInt($("#cash").val());
+
+      if (dp) {
+        dp_amount = parseInt($("#dp").val());
+        change = cash - dp_amount;
+      }else {
+        change = total_item_price - cash;
+      }
+
+
+      change = total_item_price - cash;
+
+      var	reverse = change.toString().slice(1).split('').reverse().join(''),
+        ribuan 	= reverse.match(/\d{1,3}/g);
+        ribuan	= ribuan.join('.').split('').reverse().join('');
 
       $.ajax({
           url: '{{route('new.transaction.sell')}}',
@@ -318,6 +381,7 @@
           dataType: 'JSON',
           success: data => {
               if (data.message == "success") {
+                $("#change").html("Kembalian: " + ribuan)
                 $(".after-transaction").modal('show');
                 invoice_id = data[0].id_invoice;
                 var url = '{{url('/lihat/nota')}}/' + invoice_id;
@@ -333,6 +397,8 @@
               $("form")[0].reset();
           },
           error: data => {
+            alert("Server Error")
+            console.log(data)
             newData = JSON.parse(data.responseText)
             alert(newData.message + ", file: " + newData.file
             + ", line: " + newData.line);

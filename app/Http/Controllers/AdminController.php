@@ -211,6 +211,7 @@ class AdminController extends Controller
 
       $ngutang = 0;
       $lunas = 1;
+      $discount = 0;
       try {
         $dp=$request->total_price_hidden;
         $discount = 0;
@@ -233,10 +234,10 @@ class AdminController extends Controller
           'address' => $request->address,
           'cust_phone' => $request->cust_phone,
           'dp' => $dp,
-          'total_price' => $request->total_price_hidden,
+          'total_price' => $request->total_price_hidden - $discount,
           'status' => $lunas, //1 berarti udah lunas
           'admin' => 'Penjual Arta',
-          'discount' => 0,
+          'discount' => $discount,
           'description' => $request->product_description,
           'type' => 'sewa'
         ]);
@@ -457,6 +458,7 @@ class AdminController extends Controller
 
         $ngutang = 0;
         $lunas = 1;
+        $discount = 0;
         try {
           $dp=$request->total_price_hidden;
           $discount = 0;
@@ -479,10 +481,10 @@ class AdminController extends Controller
             'address' => $request->address,
             'cust_phone' => $request->cust_phone,
             'dp' => $dp,
-            'total_price' => $request->total_price_hidden,
+            'total_price' => $request->total_price_hidden - $discount,
             'status' => $lunas, //1 berarti udah lunas
             'admin' => 'Penjual Arta',
-            'discount' => 0,
+            'discount' => $discount,
             'description' => $request->product_description,
             'type' => 'jual'
           ]);
