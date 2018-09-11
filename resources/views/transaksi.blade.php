@@ -268,7 +268,7 @@
       // return false;
     });
 
-    $(".add-to-cart").click(function(){
+    $(document).on('click','.add-to-cart', function(){
       id_product = $(this).attr('product-id');
       quantity = $("#product-quantity-id-" + id_product).text();
       quantity_chosen = $("#product-chosen-id-" + id_product).val();
