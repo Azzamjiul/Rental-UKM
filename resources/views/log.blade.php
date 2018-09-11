@@ -233,6 +233,7 @@
 
         table1 = $('#tableLog').DataTable({
         stateSave: true,
+        responsive: true,
         language: {
           searchPlaceholder: "Cari data"
         },
@@ -246,7 +247,7 @@
             },
             {data: "description", orderable: false, render: function(data, type, row){
               if(data.length > 30){
-                return data.substring(0,30)+" . . .";
+                return data.substring(0,38)+" . . .";
               }
               else{
                 return data;
@@ -274,7 +275,7 @@
                 //   return ""
                 // }
                 // else{
-                  return "<button type='button' name='button' class='btn edit dataMod' data-toggle='modal' data-target='#modalEdit' data-types="+row.type+" data-deskripsi='"+row.description+"' data-price="+row.price+" data-id="+row.id_kas+"><i class='fa fa-pencil edit' aria-hidden='true'></i></button>&nbsp;<button data-id="+row.id_kas+" class='btn delete' type='button'><i class='fa fa-trash-o delete' aria-hidden='true'></i></button>";                  
+                  return "<button type='button' name='button' class='btn edit dataMod' data-toggle='modal' data-target='#modalEdit' data-types="+row.type+" data-deskripsi='"+row.description+"' data-price="+row.price+" data-id="+row.id_kas+"><i class='fa fa-pencil edit' aria-hidden='true'></i></button>&nbsp;<button data-id="+row.id_kas+" class='btn delete' type='button'><i class='fa fa-trash-o delete' aria-hidden='true'></i></button>";
                 // }
               }
             },

@@ -414,6 +414,7 @@
 
     table1 = $('table.products').DataTable({
     stateSave: true,
+    responsive: true,
     language: {
       searchPlaceholder: "Cari barang ..."
     }

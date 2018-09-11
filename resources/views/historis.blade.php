@@ -100,6 +100,7 @@
 
         table1 = $('#tableHistoris').DataTable({
         stateSave: true,
+        responsive: true,
         language: {
           searchPlaceholder: "Cari data"
         },

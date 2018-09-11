@@ -14,7 +14,7 @@
     }
     .see:hover{
       transform: scale(1.1);
-    }    
+    }
   </style>
 @endsection
 
@@ -47,7 +47,7 @@
 
 
   </div>
-  
+
   <div class="container-fluid">
     <div class="alert alert-info mt-4">
       <strong>Cek Barang</strong> untuk mengecek ketersediaan barang saat akan melayani penyewaan.<br>
@@ -70,7 +70,7 @@
       </div>
     </div>
     <p class="text-info text-center">Barang yang tersedia / dapat disewakan pada {{ $tanggal}}</p><br>
-    
+
     <div class="row justify-content-center">
       <div class="col-12 col-md-12">
         <div class="table-responsive">
@@ -92,7 +92,7 @@
               @endforeach
             </tbody>
           </table>
-        </div>        
+        </div>
       </div>
     </div>
   </div>
@@ -108,10 +108,10 @@
         var yyyy = today.getFullYear();
           if(dd<10){
             dd='0'+dd
-          } 
+          }
           if(mm<10){
             mm='0'+mm
-          } 
+          }
 
         today = yyyy+'-'+mm+'-'+dd;
         document.getElementById("cek_tanggal").setAttribute("min", today);
@@ -127,6 +127,7 @@
 
     table1 = $('#tableBarang').DataTable({
         stateSave: true,
+        responsive: true,
         language: {
           searchPlaceholder: "Cari barang"
         },
