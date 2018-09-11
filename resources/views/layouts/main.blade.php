@@ -73,7 +73,15 @@
           <!-- Sidebar Header-->
           <div class="sidebar-header d-flex align-items-center">
             <div class="title">
-              <h1 class="h4">{{Auth::user()->email}}</h1>
+              <h1 class="h4">
+                <?php if (strlen(Auth::user()->email) > 20 ){
+                  echo strtok(Auth::user()->email, '@');
+                }
+                else{
+                  echo Auth::user()->email;
+                }
+                ?>
+              </h1>
               <p>Administrator</p>
             </div>
           </div>
