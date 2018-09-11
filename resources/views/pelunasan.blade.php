@@ -104,21 +104,7 @@ $(document).ready(function(){
       {data: 'cust_name'},
       {data: 'cust_phone'},
       {render: function(data, type, row){
-        button = '';
-        button2 = '';
-        lunas = 'belum'
-        barang_sudah_kembali = '';
-        if (row.dp == row.total_price) {
-          button2 = 'disabled'
-        }
-        if (row.status == 1) {
-          button = 'disabled'
-          lunas = 'sudah'
-        }
-        if (row.status == 2) {
-          barang_sudah_kembali = 'disabled';
-        }
-        return '<button type="button"name="button" class="btn btn-sm btn-info mr-1 see" id-invoice='+row.id_invoice+'>Info</button><button type="button" name="button" class="btn btn-sm btn-primary mr-1 pay" '+button2+' '+button+' id-invoice='+row.id_invoice+' lunas='+lunas+'>Lunaskan</button>';
+        return '<button type="button"name="button" class="btn btn-sm btn-info mr-1 see" id-invoice='+row.id_invoice+'>Info</button><button type="button" name="button" class="btn btn-sm btn-primary mr-1 pay" id-invoice='+row.id_invoice+' >Lunaskan</button>';
       }}
     ]
     });

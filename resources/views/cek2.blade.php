@@ -127,7 +127,7 @@
 
     table1 = $('#tableBarang').DataTable({
         stateSave: true,
-        responsive: true,
+        // responsive: true,
         language: {
           searchPlaceholder: "Cari barang"
         },

@@ -323,7 +323,7 @@ class AdminController extends Controller
     }
 
     public function getJualBelumLunas(){
-      $invoices = Invoice::where('status', '<', 3)->where('type', 'jual')->get();
+      $invoices = Invoice::where('status', '<', 1)->where('type', 'jual')->get();
       return response()->json(['data' => $invoices]);
     }
 

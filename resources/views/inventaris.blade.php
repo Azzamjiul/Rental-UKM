@@ -183,10 +183,10 @@
   $("#inventaris").addClass("active");
 
   $("#new_product").click( function() {
-    $('input[name=product_name]').val(" ");
-    $('input[name=product_price]').val(" ");
-    $('input[name=product_quantity]').val("0");
-    $('textarea[name=product_description]').val(" ");
+    $('input[name=product_name]').val();
+    $('input[name=product_price]').val();
+    $('input[name=product_quantity]').val();
+    $('textarea[name=product_description]').val();
     $('form').attr('action', '{{route('add.new.product')}}');
     $(".modal.product").modal('show');
   });

@@ -269,6 +269,7 @@
     });
 
     $(".add-to-cart").click(function(){
+      console.log("ds");
       id_product = $(this).attr('product-id');
       quantity = $("#product-quantity-id-" + id_product).text();
       quantity_chosen = $("#product-chosen-id-" + id_product).val();
