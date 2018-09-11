@@ -15,6 +15,11 @@ use Carbon\Carbon;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(){
 
     }
@@ -236,7 +241,7 @@ class AdminController extends Controller
           'dp' => $dp,
           'total_price' => $request->total_price_hidden - $discount,
           'status' => $lunas, //1 berarti udah lunas
-          'admin' => 'Penjual Arta',
+          'admin' => Auth::user()->email,
           'discount' => $discount,
           'description' => $request->product_description,
           'type' => 'sewa'
@@ -384,7 +389,7 @@ class AdminController extends Controller
           'discount' => 0,
           'status' => 3,
           'dp' => $invoice->total_price - $invoice->dp,
-          'admin' => 'Penjual Arta',
+          'admin' => Auth::user()->email,
           'description' => 'Pelunasan untuk ID Nota: '. $invoice->id_invoice,
           'type' => 'sewa'
         ]);
@@ -426,7 +431,7 @@ class AdminController extends Controller
           'discount' => 0,
           'status' => 3,
           'dp' => $invoice->total_price - $invoice->dp,
-          'admin' => 'Penjual Arta',
+          'admin' => Auth::user()->email,
           'description' => 'Pelunasan untuk ID Nota: '. $invoice->id_invoice,
           'type' => 'jual'
         ]);
@@ -483,7 +488,7 @@ class AdminController extends Controller
             'dp' => $dp,
             'total_price' => $request->total_price_hidden - $discount,
             'status' => $lunas, //1 berarti udah lunas
-            'admin' => 'Penjual Arta',
+            'admin' => Auth::user()->email,
             'discount' => $discount,
             'description' => $request->product_description,
             'type' => 'jual'

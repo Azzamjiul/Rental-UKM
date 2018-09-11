@@ -47,7 +47,7 @@
             <div class="col-lg-6 bg-white">
               <div class="form d-flex align-items-center">
                 <div class="content">
-                  <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
+                  <form method="POST" action="{{ url('/login') }}" aria-label="{{ __('Login') }}">
                     @csrf
                     <div class="form-group">
                       <input id="login-username" type="text" name="email" required data-msg="Please enter your username" class="input-material">
@@ -82,9 +82,7 @@
     <script src="{{asset('vendor/popper.js/umd/popper.min.js')}}"> </script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('vendor/jquery.cookie/jquery.cookie.js')}}"> </script>
-    <script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script>
     <script src="{{asset('vendor/jquery-validation/jquery.validate.min.js')}}"></script>
-    <script src="{{asset('js/charts-home.js')}}"></script>
     <!-- Main File-->
     <script src="{{asset('js/front.js')}}"></script>
   </body>

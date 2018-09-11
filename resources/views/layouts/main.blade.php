@@ -61,7 +61,7 @@
               </div>
               <!-- Navbar Menu -->
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
-                              <li class="nav-item"><a href="login.html" class="nav-link logout"> <span class="d-none d-sm-inline">Keluar</span><i class="fa fa-sign-out"></i></a></li>
+                              <li class="nav-item"><a href="#" onClick="logOut()" class="nav-link logout"> <span class="d-none d-sm-inline">Keluar</span><i class="fa fa-sign-out"></i></a></li>
               </ul>
             </div>
           </div>
@@ -72,10 +72,9 @@
         <nav class="side-navbar">
           <!-- Sidebar Header-->
           <div class="sidebar-header d-flex align-items-center">
-            <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
             <div class="title">
-              <h1 class="h4">Mark Stephen</h1>
-              <p>Web Designer</p>
+              <h1 class="h4">{{Auth::user()->email}}</h1>
+              <p>Administrator</p>
             </div>
           </div>
           <!-- Sidebar Navidation Menus-->
@@ -102,20 +101,27 @@
         </div>
       </div>
     </div>
+
+    <form class="logout-form" action="{{url('/logout')}}" method="post">
+        {{ csrf_field() }}
+    </form>
     <!-- JavaScript files-->
     <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('vendor/popper.js/umd/popper.min.js')}}"> </script>
     <script src="{{asset('vendor/bootstrap/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('vendor/jquery.cookie/jquery.cookie.js')}}"> </script>
-    <script src="{{asset('vendor/chart.js/Chart.min.js')}}"></script>
     <script src="{{asset('vendor/jquery-validation/jquery.validate.min.js')}}"></script>
-    <script src="{{asset('js/charts-home.js')}}"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.js"></script>
     <!-- Main File-->
     <script src="{{asset('js/front.js')}}"></script>
     <script src="{{asset('js/alertify.min.js')}}"></script>
 
+    <script type="text/javascript">
+      function logOut(){
+        $(".logout-form").submit();
+      }
+    </script>
 
     @yield('script')
   </body>

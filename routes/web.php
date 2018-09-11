@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'Auth\LoginController@showLogin');
 
 Auth::routes();
 
@@ -38,9 +36,6 @@ Route::post('/add/barang', 'AdminController@addProduct')->name('add.new.product'
 Route::delete('/delete/barang', 'AdminController@deleteProduct')->name('delete.product');
 Route::get('/find/barang', 'AdminController@findProduct')->name('find.product');
 Route::put('/update/barang', 'AdminController@updateProduct')->name('update.product');
-Route::get('/login', function(){
-  return view('login');
-});
 
 Route::get('/transaksi', 'AdminController@transaksiPage')->name('transaksi');
 Route::post('/transaction', 'AdminController@newTransaction')->name('new.transaction');
@@ -68,3 +63,6 @@ Route::get('/download/nota-jual-baru/{id}', 'PdfController@downloadPdfInvoicePel
 
 Route::post('/login/user', 'AdminController@login')->name('login.user');
 Route::post('/register/user', 'AdminController@register')->name('register.user');
+Route::get('/register', function(){
+  return view('auth.register');
+});

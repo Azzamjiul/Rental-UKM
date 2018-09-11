@@ -331,7 +331,7 @@
         }
     });
 
-    $("form").submit(e => {
+    $(".myForm").submit(e => {
 
       if (selected_products.length == 0) {
         alertify.error("Mohon untuk memilih barang.")
