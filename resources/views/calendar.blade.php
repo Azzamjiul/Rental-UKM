@@ -44,8 +44,6 @@
       </button>
     </div>
     @endif
-
-
   </div>
 
   <div class="container-fluid">
@@ -56,7 +54,20 @@
     </div>
   </div>
   <br>
-  <div class="container-fluid">
+  <div class="container-fluid" style="background-color: white">
+    <div class="row justify-content-center">
+      <div class="col-3" align="center">
+          <button type="button" id="navPrev" class="btn btn-info">Sebelum</button>
+      </div>
+      <div class="col-6" align="center">
+        <h2 id="nameMonth"></h2>
+        <h5 id="yearDate"></h5>
+      </div>
+      <div class="col-3" align="center">
+          <button type="button" id="navNext" class="btn btn-info">Sesuah</button>
+      </div>
+    </div><br>
+    <button type="button" id="navMonth" class="btn btn-warning">Back</button>
     <div class="row justify-content-center">
       <div class="col-12 col-md-8">
 <!--         <div class="table-responsive"> -->
@@ -86,28 +97,59 @@
 
 @section('script')
 <script src="{{asset('vendor/bower-components/underscore/underscore-min.js')}}"></script>
-<script src="{{asset('vendor/bower-components/bootstrap-calendar/js/language/id-ID.js')}}"></script>
 <script src="{{asset('vendor/bower-components/bootstrap-calendar/js/calendar.js')}}"></script>
 <script type="text/javascript">
   var calendar = $('#calendar').calendar({
     tmpl_path: "/rental-ukm/public/vendor/bower-components/bootstrap-calendar/tmpls/",
     events_source: "{{route('get.calendar.events')}}",
-    modal : "#events-modal", 
-    modal_type : "ajax", 
-    modal_title : function (e) { 
-      return e.title 
-    },
+    modal : "#events-modal",
+    modal_type : "iframe",
+    modal_title: function(event) { 
+      return "Rincian";
+    }
   });
 
+  var d = new Date();
+  var n = d.getMonth();
+  var y = d.getFullYear();
 
-  $(document).ready(function(){
+  const monthNames = ["JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI",
+    "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER"
+  ];
 
+  $("#nameMonth").html(monthNames[n]);
+  $("#yearDate").html(y);
 
+  $(document).on('click', '#navMonth', function(){
+    calendar.view('month');
   });
 
-    $(document).on('click', '#tanggal', function(){
+  $(document).on('click', '#navPrev', function(){
+    if (n==0) {
+      n=11;
+      y=y-1;
+      $("#yearDate").html(y);
+    }
+    else{
+      n=n-1;
+    }
+    $("#nameMonth").html(monthNames[n]);
 
-    });
+    calendar.navigate('prev');
+  });
+
+  $(document).on('click', '#navNext', function(){
+    if (n==11) {
+      n=0;
+      y=y+1;
+      $("#yearDate").html(y);
+    }
+    else{
+      n=n+1;
+    }
+    $("#nameMonth").html(monthNames[n]);
+    calendar.navigate('next');
+  });
 
 </script>
 @endsection

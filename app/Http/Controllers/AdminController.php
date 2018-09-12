@@ -570,7 +570,7 @@ class AdminController extends Controller
       $data = $data."<table style='width:100%'><tr><th>Barang</th><th>Jumlah</th></tr>";
 
       foreach ($packets as $row){
-        $data = $data."<tr><td>".$row->name." X</td>";
+        $data = $data."<tr><td>".$row->name."</td>";
         $data = $data."<td align='left'>".$row->prod_quantity." X</td></tr>";
       }
       $data = $data."</table>";
