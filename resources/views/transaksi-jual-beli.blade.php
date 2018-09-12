@@ -324,7 +324,7 @@
         }
     });
 
-    $(".myForm").submit(e => {
+    $("#myForm").submit(e => {
 
       if (selected_products.length == 0) {
         alertify.error("Mohon untuk memilih barang.")
@@ -368,9 +368,10 @@
 
       change = total_item_price - cash;
 
-      var	reverse = change.toString().slice(1).split('').reverse().join(''),
-        ribuan 	= reverse.match(/\d{1,3}/g);
-        ribuan	= ribuan.join('.').split('').reverse().join('');
+      // tak comment disek, soale pas submit ribuan is null
+      // var	reverse = change.toString().slice(1).split('').reverse().join(''),
+      //   ribuan 	= reverse.match(/\d{1,3}/g);
+      //   ribuan	= ribuan.join('.').split('').reverse().join('');
 
       $.ajax({
           url: '{{route('new.transaction.sell')}}',
@@ -381,7 +382,8 @@
           dataType: 'JSON',
           success: data => {
               if (data.message == "success") {
-                $("#change").html("Kembalian: " + ribuan)
+                // tak comment disek, soale pas submit ribuan is null
+                // $("#change").html("Kembalian: " + ribuan)
                 $(".after-transaction").modal('show');
                 invoice_id = data[0].id_invoice;
                 var url = '{{url('/lihat/nota')}}/' + invoice_id;

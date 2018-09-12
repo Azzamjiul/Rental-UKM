@@ -63,13 +63,13 @@
           <div class="card-body text-center">
             <h5 class="d-none d-sm-block">PILIH TANGGAL</h5>
             <h6 class="d-block d-sm-none">PILIH TANGGAL</h6>
-            <input type="date" class="form-control" id="cek_tanggal" required name="cek_tanggal">
+            <input type="date" class="form-control" id="cek_tanggal" required name="cek_tanggal" value="{{$tanggal}}">
             <a name="tanggal" href="" role="button" class="btn" id="tanggal"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></a>
           </div>
         </div>
       </div>
     </div>
-    <p class="text-info text-center">Barang yang tersedia / dapat disewakan pada {{ $tanggal}}</p><br>
+    <p class="text-info text-center">Barang yang tersedia / dapat disewakan pada {{ Carbon\Carbon::parse($tanggal)->format('d M Y') }}</p><br>
 
     <div class="row justify-content-center">
       <div class="col-12 col-md-12">
