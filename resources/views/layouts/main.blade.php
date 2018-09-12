@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="{{asset('css/alertify.default.css')}}">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" href="{{asset('vendor/bower-components/bootstrap-calendar/css/calendar.css')}}">
 
       @yield('style')
 
@@ -100,6 +101,7 @@
                     <li id="log"><a href="{{route('bukuBesar')}}"> <i class="fa fa-book"></i>Log </a></li>
                     <li id="historis"><a href="{{route('historis')}}"> <i class="fa fa-address-book"></i>Historis </a></li>
                     <li id="check"><a href="{{route('cek.inventaris')}}"> <i class="fa fa-calendar"></i>Cek barang </a></li>
+                    <li id="calendars"><a href="{{route('cek.calendar')}}"> <i class="fa fa-calendar"></i>Kalender </a></li>
                     <li id="report"><a href="{{route('report')}}"> <i class="fa fa-file-pdf-o"></i>Report </a></li>
           </ul>
         </nav>

@@ -61,6 +61,10 @@ Route::get('/download/nota-baru/{id}', 'PdfController@downloadPdfInvoicePelunasa
 Route::get('/download/nota-jual-baru/{id}', 'PdfController@downloadPdfInvoicePelunasanJual');
 
 
+Route::get('/calendar/list', 'AdminController@cekCalendar')->name('cek.calendar');
+Route::get('/calendar/list/events', 'AdminController@getEvents')->name('get.calendar.events');
+Route::get('/calendar/list/events/{id}', 'AdminController@getEventsDetail')->name('get.events.details');
+
 Route::post('/login/user', 'AdminController@login')->name('login.user');
 Route::post('/register/user', 'AdminController@register')->name('register.user');
 Route::get('/register', function(){
