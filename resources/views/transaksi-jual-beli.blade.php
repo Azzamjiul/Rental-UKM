@@ -351,6 +351,29 @@
         return false;
       }
 
+
+      if (diskon) {
+        discount_amount = parseInt($("#discount").val())
+        cash = parseInt($("#cash").val())
+        total_item_price = parseInt($("#total_price_hidden").val())
+        if (total_item_price - discount_amount > cash) {
+          alertify.error("Tunai tidak mencukupi untuk membayar barang!");
+          return false;
+        }
+        $("#total_price_hidden").val(total_price - discount_amount);
+      }
+
+      if (diskon && dp) {
+        discount_amount = parseInt($("#discount").val())
+        cash = parseInt($("#cash").val())
+        total_item_price = parseInt($("#total_price_hidden").val())
+
+        if (total_item_price - discount_amount > cash) {
+          alertify.error("Tunai tidak mencukupi untuk membayar uang muka!");
+
+        }
+      }
+
       if (!dp) {
         cash = parseInt($("#cash").val())
         total_item_price = parseInt($("#total_price_hidden").val())
@@ -366,6 +389,7 @@
           return false;
         }
       }
+
 
       html_content = '';
       e.preventDefault();
