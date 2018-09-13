@@ -51,7 +51,7 @@
                 <th class="tg-3wr7">Tipe<br></th>
                 <th class="tg-3wr7">Total<br></th>                
               </tr>
-              <?php $no=1; $index=0;?>
+              <?php $no=1; $index=0; $total=0?>
               @for($i=0 ; $i < count($sum) ; $i++)
               <?php $temp=$index; ?>
               <tr>
@@ -66,8 +66,20 @@
                 </td>
                 <td class="tg-rv4w" width="7%" align="left" style="text-transform: capitalize;">{{ $report[$temp]->type }} </
                 <td class="tg-rv4w" width="10%" align="right">{{ $report[$temp]->total_price }} </td>
+                @php
+                $total+=$report[$temp]->total_price;
+                @endphp
               </tr>
               @endfor
+              <tr>
+                <td class="tg-3wr7"> <br></td>
+                <td class="tg-3wr7"> <br></td>
+                <td class="tg-3wr7"> <br></td>
+                <td class="tg-3wr7"> <br></td>
+                <td class="tg-3wr7"> <br></td>
+                <td class="tg-3wr7"> <br></td>
+                <td class="tg-3wr7">Rp. {{$total}}<br></td>
+              </tr>
             </table>
         </body>
     </head>
