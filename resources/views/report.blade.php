@@ -14,7 +14,7 @@
 @section('content')
   <header class="page-header mb-2">
     <div class="container-fluid">
-      <h2>Log
+      <h2>Report
       </h2>
     </div>
   </header>
