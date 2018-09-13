@@ -27,7 +27,8 @@
     <link rel="stylesheet" href="{{asset('css/alertify.default.css')}}">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.dataTables.min.css">
-
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css"> --}}
       @yield('style')
 
       <style media="screen">
@@ -124,6 +125,8 @@
     <!-- Main File-->
     <script src="{{asset('js/front.js')}}"></script>
     <script src="{{asset('js/alertify.min.js')}}"></script>
+
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js" charset="utf-8"></script> --}}
 
     <script type="text/javascript">
       function logOut(){

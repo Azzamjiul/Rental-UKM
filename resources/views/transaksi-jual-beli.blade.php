@@ -48,7 +48,7 @@
                   <td id="product-price-id-{{$p->id_product}}">Rp {{$p->price}}</td>
                   <td align="center" id="product-quantity-id-{{$p->id_product}}">{{$p->quantity - $p->on_rent}}</td>
                   <td align="center">
-                    <input type="number" name="" value="1" min="1" max="{{$p->quantity - $p->on_rent}}" id="product-chosen-id-{{$p->id_product}}" style="width: 50%" class="angka">
+                    <input type="number" name="" required min="1" max="{{$p->quantity - $p->on_rent}}" id="product-chosen-id-{{$p->id_product}}" style="width: 50%" class="angka" value="1">
                     <button type="submit" name="button" class="btn btn-sm add-to-cart" product-id={{$p->id_product}}><i style="color: green" class="fa fa-shopping-cart" aria-hidden="true"></i></button>
                   </td>
                 </tr>
@@ -234,13 +234,26 @@
       }
     }
 
+
+    function findProduct(id_product){
+      for (var i = 0; i < selected_products.length; i++) {
+        if (selected_products[i] == id_product) {
+          return i;
+        }
+      }
+    }
+
     $(document).on('click', '.remove', function(){
+
+      console.log(selected_products)
+
+
       id_product = $(this).attr('id-product');
       amount = parseInt($("#in-cart-quantity-product-" + id_product).text());
       $("#t-row-" + id_product).remove();
       price = parseInt($("#product-price-id-" + id_product).text().slice(2));
 
-      index = selected_products.indexOf(parseInt(id_product));
+      index = findProduct(id_product);
       selected_products.splice(index, 1);
       total_price -= (amount*price);
 
@@ -261,11 +274,17 @@
       // return false;
     });
 
+
     $(document).on('click','.add-to-cart', function(){
       id_product = $(this).attr('product-id');
       quantity = $("#product-quantity-id-" + id_product).text();
+
+
+      prod_obj = $("#product-chosen-id-" + id_product)
       quantity_chosen = $("#product-chosen-id-" + id_product).val();
       product_name = $("#product-name-id-" + id_product).text();
+      console.log(quantity_chosen)
+      console.log(prod_obj)
 
       if (parseInt(quantity_chosen) > $("#product-chosen-id-" + id_product).attr('max')) {
         // console.log("max is " + $("#product-chosen-id-" + id_product).attr('max'))
@@ -279,6 +298,7 @@
 
       price = parseInt($("#product-price-id-" + id_product).text().slice(2)) * parseInt(quantity_chosen);
       total_price+=price;
+
 
       //cek udah ada di cart belum?
       if (selected_products.includes(id_product)) {
@@ -315,7 +335,7 @@
       $("#product-chosen-id-" + id_product).val(1)
       $("#total_price").text("Total: Rp " + ribuan);
       $("#total_price_hidden").val(total_price);
-      console.log(selected_products_objects);
+      // console.log(selected_products_objects);
     });
 
     $.ajaxSetup({
@@ -358,6 +378,8 @@
       total_item_price = parseInt($("#total_price_hidden").val())
       cash = parseInt($("#cash").val());
 
+      change = 0;
+
       if (dp) {
         dp_amount = parseInt($("#dp").val());
         change = cash - dp_amount;
@@ -366,12 +388,10 @@
       }
 
 
-      change = total_item_price - cash;
-
       // tak comment disek, soale pas submit ribuan is null
-      // var	reverse = change.toString().slice(1).split('').reverse().join(''),
-      //   ribuan 	= reverse.match(/\d{1,3}/g);
-      //   ribuan	= ribuan.join('.').split('').reverse().join('');
+      var	reverse = change.toString().slice(1).split('').reverse().join(''),
+        ribuan 	= reverse.match(/\d{1,3}/g);
+        ribuan	= ribuan.join('.').split('').reverse().join('');
 
       $.ajax({
           url: '{{route('new.transaction.sell')}}',
@@ -383,7 +403,7 @@
           success: data => {
               if (data.message == "success") {
                 // tak comment disek, soale pas submit ribuan is null
-                // $("#change").html("Kembalian: " + ribuan)
+                $("#change").html("Kembalian: " + ribuan)
                 $(".after-transaction").modal('show');
                 invoice_id = data[0].id_invoice;
                 var url = '{{url('/lihat/nota')}}/' + invoice_id;
@@ -411,7 +431,6 @@
 
     table1 = $('table.products').DataTable({
     stateSave: true,
-    responsive: true,
     language: {
       searchPlaceholder: "Cari barang ..."
     }
