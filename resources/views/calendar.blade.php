@@ -100,7 +100,7 @@
 <script src="{{asset('vendor/bower-components/bootstrap-calendar/js/calendar.js')}}"></script>
 <script type="text/javascript">
   var calendar = $('#calendar').calendar({
-    tmpl_path: "/rental-ukm/public/vendor/bower-components/bootstrap-calendar/tmpls/",
+    tmpl_path:"{{asset('vendor/bower-components/bootstrap-calendar/tmpls')}}"+"/",
     events_source: "{{route('get.calendar.events')}}",
     modal : "#events-modal",
     modal_type : "iframe",
