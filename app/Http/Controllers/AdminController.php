@@ -49,6 +49,10 @@ class AdminController extends Controller
       return view('cek');
     }
 
+    public function cekCalendar(Request $request){
+      return view('calendar');
+    }
+
     public function getHistory(){
       $packets = Invoice::select('id_invoice', 'rent_date','cust_name', 'dp', 'type', 'ref_id')->orderBy('rent_date', 'asc')->get();
       return response()->json(['data'=>$packets]);
@@ -232,7 +236,7 @@ class AdminController extends Controller
 
         $now =  Carbon::now();
         $invoice = Invoice::create([
-          'id_invoice' => 'ARTA-'.str_random(4),
+          'id_invoice' => 'ARTA-'.time(),
           'invoice_date' => $now, //timezone jakarta/.
           'rent_date' => $request->start_date,
           'deadline_date' => $request->end_date,
@@ -378,7 +382,7 @@ class AdminController extends Controller
         $invoice->status =$invoice->status + 1; //kalo stattus = 1 udah lunas, status = 2 berarti udak ngembaliin barang, status = 3 udah dua2nya
 
         $new_invoice = Invoice::create([
-          'id_invoice'=> 'ARTA-'.str_random(4),
+          'id_invoice'=> 'ARTA-'.time(),
           'invoice_date' => Carbon::now(),
           'ref_id' => $invoice->id_invoice,
           'rent_date'=> $invoice->rent_date,
@@ -420,7 +424,7 @@ class AdminController extends Controller
         $invoice->status = 3; //kalo stattus = 3 udah lunas
 
         $new_invoice = Invoice::create([
-          'id_invoice'=> 'ARTA-'.str_random(4),
+          'id_invoice'=> 'ARTA-'.time(),
           'invoice_date' => Carbon::now(),
           'ref_id' => $invoice->id_invoice,
           'rent_date'=> $invoice->rent_date,
@@ -479,7 +483,7 @@ class AdminController extends Controller
 
           $now =  Carbon::now();
           $invoice = Invoice::create([
-            'id_invoice' => 'ARTA-'.str_random(4),
+            'id_invoice' => 'ARTA-'.time(),
             'invoice_date' => $now, //timezone jakarta/.
             'rent_date' => $now,
             'deadline_date' => $now,
@@ -534,6 +538,45 @@ class AdminController extends Controller
 
         }
         return response()->json(['message'=>'success', $invoice, $products], 201);
+    }
+
+    public function getEvents(){
+      $packets = Invoice::select('id_invoice', 'cust_name', 'deadline_date', 'rent_date')->where('type', 'sewa')->where('ref_id', NULL)->get();
+
+      $out = array();
+      $i=1;
+      foreach($packets as $row) {
+          $out[] = array(
+              'id' => $i,
+              'title' => 'Batas Pengembalian barang oleh '.$row->cust_name,
+              'class' => 'event-success',
+              'url' => 'list/events/'.$row->id_invoice,
+              'start' => strtotime($row->deadline_date) . '000',
+              'end' => strtotime($row->deadline_date) .'000'
+          );
+      }
+      return json_encode(array('success' => 1, 'result' => $out));
+//      return response()->json(['data'=>$packets]);
+    }
+
+    public function getEventsDetail($id){
+      $packets = DB::table('rent')
+      ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
+      ->select('rent.prod_quantity', 'product.name')
+      ->where('rent.id_invoice', $id)
+      ->get();
+
+      $data = "";
+      $data = $data."<table style='width:100%'><tr><th>Barang</th><th>Jumlah</th></tr>";
+
+      foreach ($packets as $row){
+        $data = $data."<tr><td>".$row->name."</td>";
+        $data = $data."<td align='left'>".$row->prod_quantity." X</td></tr>";
+      }
+      $data = $data."</table>";
+
+      return $data;
+//      return response()->json(['data'=>$packets]);
     }
 
 }
