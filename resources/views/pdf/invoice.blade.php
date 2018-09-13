@@ -88,7 +88,7 @@
 
               </tr>
               <tr>
-                <td class=""> Keterangan: {{$invoice->description}}</td>
+                <td class=""> Keterangan: {{$invoice->description. " ". $invoice->address}} </td>
                 <td class=""></td>
                 <td class="title" style="text-align: center"><strong>DISKON</strong></td>
                 <td class="barang">
@@ -122,7 +122,7 @@
                     echo "LUNAS";
                   else
                     echo "Rp ".number_format(($invoice->dp),2,',','.');
-                }          
+                }
                 @endphp
 
               </td>
