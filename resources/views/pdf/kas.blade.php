@@ -49,7 +49,7 @@
                 <th class="tg-3wr7">Pemasukan<br></th>
                 <th class="tg-3wr7">Pengeluaran<br></th>
               </tr>
-              <?php $no=1; ?>
+              <?php $no=1; $masuk=0; $keluar=0 ?>
               @foreach ($kas as $u)
               <tr>
                 <td class="tg-rv4w" width="5%" align="center">{{ $no++ }} </td>
@@ -58,12 +58,25 @@
                 @if($u->type=="pemasukan" or $u->type=="peminjaman")
                   <td class="tg-rv4w" width="14%" align="right">{{ $u->price }} </td>
                   <td class="tg-rv4w" width="14%" align="center"> - </td>                  
+                  @php
+                    $masuk+=$u->price;
+                  @endphp
                 @else
                   <td class="tg-rv4w" width="14%" align="center"> - </td>                  
                   <td class="tg-rv4w" width="14%" align="right">{{ $u->price }} </td>
+                  @php
+                    $keluar+=$u->price;
+                  @endphp
                 @endif
               </tr>
               @endforeach
+              <tr>
+                <td class="tg-3wr7"> <br></td>
+                <td class="tg-3wr7"> <br></td>
+                <td class="tg-3wr7"> <br></td>
+                <td class="tg-3wr7">Rp. {{$masuk}}<br></td>
+                <td class="tg-3wr7">Rp. {{$keluar}}<br></td>
+              </tr>
             </table>
         </body>
     </head>

@@ -561,10 +561,14 @@ class AdminController extends Controller
 
     public function getEventsDetail($id){
       $packets = DB::table('rent')
+      ->leftJoin('invoice', 'rent.id_invoice', '=', 'invoice.id_invoice')
       ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
       ->select('rent.prod_quantity', 'product.name')
       ->where('rent.id_invoice', $id)
+      ->where('invoice.status',"<", 2)
       ->get();
+
+      $inv = Invoice::select('cust_name', 'address','deadline_date', 'rent_date', 'cust_phone', 'cust_name')->where('id_invoice', $id)->first();
 
       $data = "";
       $data = $data."<table style='width:100%'><tr><th>Barang</th><th>Jumlah</th></tr>";
@@ -573,8 +577,12 @@ class AdminController extends Controller
         $data = $data."<tr><td>".$row->name."</td>";
         $data = $data."<td align='left'>".$row->prod_quantity." X</td></tr>";
       }
-      $data = $data."</table>";
+      $data = $data."</table><br><br>";
 
+      $data = $data."Nama : ".$inv->cust_name."<br>";
+      $data = $data."No Hp : ".$inv->cust_phone."<br>";
+      $data = $data."Alamat : ".$inv->address."<br>";
+      $data = $data."Peminjaman Tgl : ".date_format(date_create($inv->rent_date),'d-M-Y')."<br>";
       return $data;
 //      return response()->json(['data'=>$packets]);
     }
