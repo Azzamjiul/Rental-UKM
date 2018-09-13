@@ -21,7 +21,7 @@
 @section('content')
   <header class="page-header mb-2">
     <div class="container-fluid">
-      <h2>Cek ketersediaan barang
+      <h2>Cek Kalender
       </h2>
     </div>
   </header>
@@ -48,9 +48,7 @@
 
   <div class="container-fluid">
     <div class="alert alert-info mt-4">
-      <strong>Cek Barang</strong> untuk mengecek ketersediaan barang saat akan melayani penyewaan.<br>
-      harap mengecek ketersediaan barang sebelum ke menu transaksi!<br>
-      list hanya untuk produk yang disewakan!
+      <strong>Cek Kalender</strong> untuk melihat dan sebagai <strong>reminder</strong> tentang batas akhir peminjaman.<br>
     </div>
   </div>
   <br>
