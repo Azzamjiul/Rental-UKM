@@ -134,7 +134,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="#" method="POST" autocomplete="off">
+        <form action="#" method="POST" autocomplete="off" id="productForm">
           {{ csrf_field() }}
           <input type="hidden" name="_method" value="" id="method">
           <input type="hidden" name="id_product" value="" id="id_product">
@@ -146,7 +146,7 @@
             <label for="product_description">Keterangan barang</label>
             <textarea class="form-control" id="product_description" required placeholder="Keterangan barang" name="product_description"></textarea>
           </div>
-          <div class="form-group">
+          <div class="form-group" id="type_field">
             <label for="type">Tipe barang</label><br>
             <select class="" name="type" id="type">
               <option value="jual">Jual</option>
@@ -160,7 +160,7 @@
               <div class="input-group-prepend">
                 <div class="input-group-text">Rp</div>
               </div>
-              <input type="text" class="form-control" id="product_price" required placeholder="Harga sewa" name="product_price">
+              <input type="text" class="form-control angka" id="product_price" required placeholder="Harga sewa" name="product_price">
             </div>
           </div>
           <div class="form-group">
@@ -180,14 +180,21 @@
 
 @section('script')
 <script type="text/javascript">
+  (function(b){var c={allowFloat:false,allowNegative:false};b.fn.numericInput=function(e){var f=b.extend({},c,e);var d=f.allowFloat;var g=f.allowNegative;this.keypress(function(j){var i=j.which;var h=b(this).val();if(i>0&&(i<48||i>57)){if(d==true&&i==46){if(g==true&&a(this)==0&&h.charAt(0)=="-"){return false}if(h.match(/[.]/)){return false}}else{if(g==true&&i==45){if(h.charAt(0)=="-"){return false}if(a(this)!=0){return false}}else{if(i==8){return true}else{return false}}}}else{if(i>0&&(i>=48&&i<=57)){if(g==true&&h.charAt(0)=="-"&&a(this)==0){return false}}}});return this};function a(d){if(d.selectionStart){return d.selectionStart}else{if(document.selection){d.focus();var f=document.selection.createRange();if(f==null){return 0}var e=d.createTextRange(),g=e.duplicate();e.moveToBookmark(f.getBookmark());g.setEndPoint("EndToStart",e);return g.text.length}}return 0}}(jQuery));
+
+  $(function() {
+     $(".angka").numericInput({ allowFloat: true, allowNegative: false });
+  });
+
   $("#inventaris").addClass("active");
 
   $("#new_product").click( function() {
-    $('input[name=product_name]').val();
-    $('input[name=product_price]').val();
-    $('input[name=product_quantity]').val();
-    $('textarea[name=product_description]').val();
-    $('form').attr('action', '{{route('add.new.product')}}');
+    $('input[name=product_name]').val('');
+    $('input[name=product_price]').val('');
+    $('input[name=product_quantity]').val('');
+    $('textarea[name=product_description]').val('');
+    $("#type_field").css('display', 'block');
+    $('#productForm').attr('action', '{{route('add.new.product')}}');
     $(".modal.product").modal('show');
   });
 
@@ -205,6 +212,7 @@
   //fetch data produk ketika mau edit
   $(".edit").click( function(){
     id_product = $(this).attr('product-id');
+    $("#type_field").css('display', 'none');
     $.ajax({
       url: '{{route('find.product')}}',
       dataType: 'json',
@@ -218,7 +226,7 @@
         $("#type").val(data.type);
         $(".modal.product").modal('show');
         $("input#id_product").val(data.id_product)
-        $('form').attr('action', '{{route('update.product')}}');
+        $('#productForm').attr('action', '{{route('update.product')}}');
         $('form #method').val('PUT');
       },
       error: data => {

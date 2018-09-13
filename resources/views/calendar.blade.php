@@ -52,24 +52,29 @@
     </div>
   </div>
   <br>
-  <div class="container-fluid" style="background-color: white">
-    <div class="row justify-content-center">
-      <div class="col-3" align="center">
-          <button type="button" id="navPrev" class="btn btn-info">Sebelum</button>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body">
+
+        <div class="row justify-content-center">
+          <div class="col-3" align="center">
+              <button type="button" id="navPrev" class="btn btn-info">Sebelum</button>
+          </div>
+          <div class="col-6" align="center">
+            <h2 id="nameMonth"></h2>
+            <h5 id="yearDate"></h5>
+          </div>
+          <div class="col-3" align="center">
+              <button type="button" id="navNext" class="btn btn-info">Sesuah</button>
+          </div>
+        </div><br>
+        {{-- <button type="button" id="navMonth" class="btn btn-warning">Back</button> --}}
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-8">
+    <!--         <div class="table-responsive"> -->
+              <div id="calendar"></div>
       </div>
-      <div class="col-6" align="center">
-        <h2 id="nameMonth"></h2>
-        <h5 id="yearDate"></h5>
-      </div>
-      <div class="col-3" align="center">
-          <button type="button" id="navNext" class="btn btn-info">Sesuah</button>
-      </div>
-    </div><br>
-    <button type="button" id="navMonth" class="btn btn-warning">Back</button>
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-8">
-<!--         <div class="table-responsive"> -->
-          <div id="calendar"></div>
+    </div>
 <!--         </div> -->
       </div>
     </div>
@@ -97,12 +102,15 @@
 <script src="{{asset('vendor/bower-components/underscore/underscore-min.js')}}"></script>
 <script src="{{asset('vendor/bower-components/bootstrap-calendar/js/calendar.js')}}"></script>
 <script type="text/javascript">
+
+  $("#calendars").addClass("active");
+
   var calendar = $('#calendar').calendar({
     tmpl_path:"{{asset('vendor/bower-components/bootstrap-calendar/tmpls')}}"+"/",
     events_source: "{{route('get.calendar.events')}}",
     modal : "#events-modal",
     modal_type : "iframe",
-    modal_title: function(event) { 
+    modal_title: function(event) {
       return "Rincian";
     }
   });

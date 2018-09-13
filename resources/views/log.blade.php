@@ -223,6 +223,9 @@
          $(".angka").numericInput({ allowFloat: true, allowNegative: false });
       });
 
+      $("#log").addClass("active");
+
+
         var table1;
 
         $.ajaxSetup({

@@ -90,6 +90,9 @@
          $(".angka").numericInput({ allowFloat: true, allowNegative: false });
       });
 
+      $("#historis").addClass("active");
+
+
         var table1;
 
         $.ajaxSetup({

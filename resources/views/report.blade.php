@@ -44,8 +44,8 @@
   <div class="container-fluid">
     <div class="alert alert-info mt-4">
       Report adalah laporan untuk melihat data pemasukan/pengeluaran serta data peminjaman.<br>
-      <strong>Log</strong> adalah data arus peminjaman dan pengeluaran uang.<br>
-      <strong>Peminjaman</strong> adalah data peminjaman
+      <strong>Log</strong> adalah data arus pemasukan dan pengeluaran uang.<br>
+      <strong>Transaksi</strong> adalah data peminjaman dan penjualan
     </div>
     <section class="list-produk">
       <div class="container-fluid">
@@ -193,6 +193,7 @@
 @section('script')
 <script type="text/javascript">
   $(document).ready(function(){
+    $("#report").addClass("active");
 
   });
 

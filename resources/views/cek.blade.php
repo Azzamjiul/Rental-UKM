@@ -79,6 +79,9 @@
 <script type="text/javascript">
   $(document).ready(function(){
 
+    $("#check").addClass("active");
+
+
         var today = new Date();
         var dd = today.getDate();
         var mm = today.getMonth()+1;
