@@ -62,7 +62,7 @@
   </div>
   <br>
   <div class="container-fluid">
-    <div class="table-responsive">
+    <div class="">
       <table id="tableHistoris" class="table table-striped">
         <thead>
           <tr>

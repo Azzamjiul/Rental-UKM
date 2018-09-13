@@ -347,43 +347,48 @@
         return false;
       }
 
-      if (diskon) {
-        discount_amount = parseInt($("#discount").val())
-        cash = parseInt($("#cash").val())
-        total_item_price = parseInt($("#total_price_hidden").val())
-        if (total_item_price - discount_amount > cash) {
-          alertify.error("Tunai tidak mencukupi untuk membayar barang!");
-          return false;
-        }
-        $("#total_price_hidden").val(total_price - discount_amount);
-      }
 
-      if (diskon && dp) {
-        discount_amount = parseInt($("#discount").val())
-        cash = parseInt($("#cash").val())
-        total_item_price = parseInt($("#total_price_hidden").val())
+            if (diskon && dp) {
+              dp_amount = parseInt($("#dp").val())
+              discount_amount = parseInt($("#discount").val())
+              cash = parseInt($("#cash").val())
+              total_item_price = parseInt($("#total_price_hidden").val())
 
-        if (total_item_price - discount_amount > cash) {
-          alertify.error("Tunai tidak mencukupi untuk membayar uang muka!");
+              if (cash < dp_amount) {
+                console.log("hihi")
+                alertify.error("Tunai tidak mencukupi untuk membayar uang muka!");
+                return false;
+              }
+            }
 
-        }
-      }
+            else if (diskon) {
+              discount_amount = parseInt($("#discount").val())
+              cash = parseInt($("#cash").val())
+              total_item_price = parseInt($("#total_price_hidden").val())
+              if (total_item_price - discount_amount > cash) {
+                alertify.error("Tunai tidak mencukupi untuk membayar barang!");
+                return false;
+              }
+              console.log("ok")
+              // $("#total_price_hidden").val(parseInt(total_price) - parseInt(discount_amount));
+            }
 
-      if (!dp) {
-        cash = parseInt($("#cash").val())
-        total_item_price = parseInt($("#total_price_hidden").val())
-        if (cash < total_item_price) {
-          alertify.error("Tunai tidak mencukupi untuk membayar barang!");
-          return false;
-        }
-      }else {
-        cash = parseInt($("#cash").val())
-        dp_amount = parseInt($("#dp").val())
-        if (cash < dp_amount) {
-          alertify.error("Tunai tidak mencukupi untuk membayar uang muka!");
-          return false;
-        }
-      }
+            else if (dp){
+              cash = parseInt($("#cash").val())
+              dp_amount = parseInt($("#dp").val())
+              if (cash < dp_amount) {
+                alertify.error("Tunai tidak mencukupi untuk membayar uang muka!");
+                return false;
+              }
+            }
+            else {
+              cash = parseInt($("#cash").val())
+              total_item_price = parseInt($("#total_price_hidden").val())
+              if (cash < total_item_price) {
+                alertify.error("Tunai tidak mencukupi untuk membayar barang!");
+                return false;
+              }
+            }
 
       html_content = '';
       e.preventDefault();
@@ -397,16 +402,30 @@
       total_item_price = parseInt($("#total_price_hidden").val())
       cash = parseInt($("#cash").val());
       change = 0;
-      if (dp) {
+      change = total_item_price - cash;
+
+
+      if(diskon && dp){
+        diskon_amount = parseInt($("#discount").val())
+        dp_amount = parseInt($("#dp").val());
+
+        change = cash - dp_amount;
+      }
+      else if (dp) {
         dp_amount = parseInt($("#dp").val());
         change = cash - dp_amount;
-      }else {
+      }
+      else if (diskon) {
+        diskon_amount = parseInt($("#discount").val())
+        change = cash - total_item_price - diskon_amount;
+      }
+      else {
         change = total_item_price - cash;
       }
-      // tak comment disek, soale pas submit ribuan is null
-      var	reverse = change.toString().slice(1).split('').reverse().join(''),
-        ribuan 	= reverse.match(/\d{1,3}/g);
-        ribuan	= ribuan.join('.').split('').reverse().join('');
+
+
+      ribuan = "Rp " + Math.abs(change).toString();
+
 
       $.ajax({
           url: '{{route('new.transaction')}}',

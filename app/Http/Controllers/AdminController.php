@@ -72,8 +72,8 @@ class AdminController extends Controller
       ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
       ->select('product.id_product', 'rent.prod_quantity')
       ->where('invoice.type', 'sewa')
-      ->whereDate('rent_date', '<=', $tanggal_awal)
-      ->whereDate('deadline_date', '>=', $tanggal_akhir)
+      ->whereDate('rent_date', '>=', $tanggal_awal)
+      ->whereDate('deadline_date', '<=', $tanggal_akhir)
       ->get();
 
       foreach ($products as $product) {
@@ -220,18 +220,28 @@ class AdminController extends Controller
     public function newTransaction(Request $request){
 
       $ngutang = 0;
-      $lunas = 1;
+      $lunas = 0;
       $discount = 0;
       try {
         $dp=$request->total_price_hidden;
         $discount = 0;
-        if ($request->dp != null || $request->dp > 0) {
+        if (($request->dp != null || $request->dp > 0 )&&( $request->discount != null || $request->discount>0)) {
+          $dp = $request->dp;
+          $discount = $request->discount;
+          $ngutang = 1;
+        }
+        elseif ($request->dp != null || $request->dp > 0) {
           $dp = $request->dp;
           $ngutang = 1;
           $lunas = 0;
         }
-        if ($request->discount != null || $request->discount > 0) {
-          $discount = $request->$discount;
+        elseif ($request->discount != null || $request->discount > 0) {
+          $discount = $request->discount;
+          $dp = $request->total_price_hidden - $discount;
+        }
+
+        if ($request->total_price_hidden - $discount == $dp) {
+          $lunas = 1;
         }
 
         $now =  Carbon::now();
@@ -273,7 +283,7 @@ class AdminController extends Controller
           $pemasukan = $dp;
           $desc = 'Uang Muka';
         }else {
-          $pemasukan = $request->total_price_hidden;
+          $pemasukan = $request->total_price_hidden - $discount;
           $desc = 'Lunas';
         }
 
@@ -328,7 +338,9 @@ class AdminController extends Controller
     }
 
     public function getJualBelumLunas(){
-      $invoices = Invoice::where('status', '<', 1)->where('type', 'jual')->get();
+      $invoices = Invoice::where('type', 'jual')->where('status', '0')->get();
+      $flag = 0;
+
       return response()->json(['data' => $invoices]);
     }
 
@@ -346,7 +358,8 @@ class AdminController extends Controller
         if ($invoice->dp == $invoice->total_price) {
           $paid_fully = 1;
         }
-        if (Invoice::where('ref_id', $invoice->id_invoice)->first()) {
+        $lunas = Invoice::where('ref_id', $invoice->id_invoice)->first();
+        if ($lunas) {
           $paid_fully = 1;
         }
       } catch (\Exception $e) {
@@ -467,19 +480,31 @@ class AdminController extends Controller
     public function sellProducts(Request $request){
 
         $ngutang = 0;
-        $lunas = 1;
+        $lunas = 0;
         $discount = 0;
         try {
           $dp=$request->total_price_hidden;
           $discount = 0;
-          if ($request->dp != null || $request->dp > 0) {
+          if (($request->dp != null || $request->dp > 0 )&&( $request->discount != null || $request->discount>0)) {
+            $dp = $request->dp;
+            $discount = $request->discount;
+            $ngutang = 1;
+            $lunas = 0;
+          }
+          elseif ($request->dp != null || $request->dp > 0) {
             $dp = $request->dp;
             $ngutang = 1;
             $lunas = 0;
           }
-          if ($request->discount != null || $request->discount > 0) {
-            $discount = $request->$discount;
+          elseif ($request->discount != null || $request->discount > 0) {
+            $discount = $request->discount;
+            $dp = $request->total_price_hidden - $discount;
           }
+          if ($request->total_price_hidden - $discount == $dp) {
+            $lunas = 1;
+          }
+
+          // return $request->all();
 
           $now =  Carbon::now();
           $invoice = Invoice::create([
@@ -520,7 +545,7 @@ class AdminController extends Controller
             $pemasukan = $dp;
             $desc = 'Uang Muka';
           }else {
-            $pemasukan = $request->total_price_hidden;
+            $pemasukan = $request->total_price_hidden - $discount;
             $desc = 'Lunas';
           }
 

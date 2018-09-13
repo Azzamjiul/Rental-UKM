@@ -123,15 +123,12 @@ $(document).ready(function(){
           for (var i = 0; i < data[0].length; i++) {
             html_content += "<li>"+ data[0][i].prod_quantity +"x " +data[0][i].product.name+"</li>";
           }
-          if (data.lunas == 1) {
-            $("#status").text("LUNAS")
-          }else {
             var	reverse = (data[1].total_price-data[1].dp).toString().split('').reverse().join(''),
               ribuan 	= reverse.match(/\d{1,3}/g);
               ribuan	= ribuan.join('.').split('').reverse().join('');
             $("#status").text("BELUM LUNAS | SISA Rp " + ribuan)
 
-          }
+
           $("#list-products").html(html_content);
           $(".modal.info").modal('show')
 

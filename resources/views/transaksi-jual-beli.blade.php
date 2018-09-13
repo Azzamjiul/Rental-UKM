@@ -185,7 +185,7 @@
       if (!diskon) {
         $("#discount_field").css('display', 'block');
         $("#add_discount").text('Hilangkan Diskon');
-        $("#discount").val('');
+        $("#discount").val(0);
         diskon = 1;
       }else {
         $("#discount_field").css('display', 'none');
@@ -198,7 +198,7 @@
       if (!dp) {
         $("#dp_field").css('display', 'block');
         $("#add_dp").text('Hilangkan Uang Muka');
-        $("#dp_field").val('');
+        $("#dp_field").val(0);
         dp = 1;
       }else {
         $("#dp_field").css('display', 'none');
@@ -352,36 +352,33 @@
       }
 
 
-      if (diskon) {
-        discount_amount = parseInt($("#discount").val())
-        cash = parseInt($("#cash").val())
-        total_item_price = parseInt($("#total_price_hidden").val())
-        if (total_item_price - discount_amount > cash) {
-          alertify.error("Tunai tidak mencukupi untuk membayar barang!");
-          return false;
-        }
-        $("#total_price_hidden").val(total_price - discount_amount);
-      }
 
       if (diskon && dp) {
+        dp_amount = parseInt($("#dp").val())
         discount_amount = parseInt($("#discount").val())
         cash = parseInt($("#cash").val())
         total_item_price = parseInt($("#total_price_hidden").val())
 
-        if (total_item_price - discount_amount > cash) {
+        if (cash < dp_amount) {
+          console.log("hihi")
           alertify.error("Tunai tidak mencukupi untuk membayar uang muka!");
-
+          return false;
         }
       }
 
-      if (!dp) {
+      else if (diskon) {
+        discount_amount = parseInt($("#discount").val())
         cash = parseInt($("#cash").val())
         total_item_price = parseInt($("#total_price_hidden").val())
-        if (cash < total_item_price) {
+        if (total_item_price - discount_amount > cash) {
           alertify.error("Tunai tidak mencukupi untuk membayar barang!");
           return false;
         }
-      }else {
+        console.log("ok")
+        // $("#total_price_hidden").val(parseInt(total_price) - parseInt(discount_amount));
+      }
+
+      else if (dp){
         cash = parseInt($("#cash").val())
         dp_amount = parseInt($("#dp").val())
         if (cash < dp_amount) {
@@ -389,6 +386,15 @@
           return false;
         }
       }
+      else {
+        cash = parseInt($("#cash").val())
+        total_item_price = parseInt($("#total_price_hidden").val())
+        if (cash < total_item_price) {
+          alertify.error("Tunai tidak mencukupi untuk membayar barang!");
+          return false;
+        }
+      }
+
 
 
       html_content = '';
@@ -401,21 +407,37 @@
 
       total_item_price = parseInt($("#total_price_hidden").val())
       cash = parseInt($("#cash").val());
+      console.log(total_item_price)
 
       change = 0;
 
-      if (dp) {
+      change = total_item_price - cash;
+
+      if(diskon && dp){
+        diskon_amount = parseInt($("#discount").val())
+        dp_amount = parseInt($("#dp").val());
+
+        change = cash - dp_amount;
+      }
+      else if (dp) {
         dp_amount = parseInt($("#dp").val());
         change = cash - dp_amount;
-      }else {
+      }
+      else if (diskon) {
+        diskon_amount = parseInt($("#discount").val())
+        change = cash - total_item_price - diskon_amount;
+      }
+      else {
         change = total_item_price - cash;
       }
 
 
+      console.log("change is" + parseInt(change))
+
+
+        ribuan = "Rp " + Math.abs(change).toString();
       // tak comment disek, soale pas submit ribuan is null
-      var	reverse = change.toString().slice(1).split('').reverse().join(''),
-        ribuan 	= reverse.match(/\d{1,3}/g);
-        ribuan	= ribuan.join('.').split('').reverse().join('');
+
 
       $.ajax({
           url: '{{route('new.transaction.sell')}}',
@@ -440,7 +462,7 @@
               $("#total_price").text("Total: Rp 0");
               selected_products_objects.splice(0,selected_products_objects.length);
               selected_products.splice(0,selected_products.length);
-              $("form")[0].reset();
+              $('#myForm').trigger("reset");
           },
           error: data => {
             alert("Server Error")
