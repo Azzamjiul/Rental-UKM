@@ -183,6 +183,21 @@
        $(".angka").numericInput({ allowFloat: true, allowNegative: false });
     });
 
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1;
+    var yyyy = today.getFullYear();
+      if(dd<10){
+        dd='0'+dd
+      }
+      if(mm<10){
+        mm='0'+mm
+      }
+
+    today = yyyy+'-'+mm+'-'+dd;
+    document.getElementById("start_date").setAttribute("min", today);
+    document.getElementById("end_date").setAttribute("min", today);
+
     var selected_products = [];
     var selected_products_objects = [];
     var invoice_id;
