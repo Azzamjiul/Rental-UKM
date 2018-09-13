@@ -241,13 +241,22 @@
       }
     }
 
+    function findProduct(id_product){
+      for (var i = 0; i < selected_products.length; i++) {
+        if (selected_products[i] == id_product) {
+          return i;
+        }
+      }
+    }
+
+
     $(document).on('click', '.remove', function(){
       id_product = $(this).attr('id-product');
       amount = parseInt($("#in-cart-quantity-product-" + id_product).text());
       $("#t-row-" + id_product).remove();
       price = parseInt($("#product-price-id-" + id_product).text().slice(2));
 
-      index = selected_products.indexOf(parseInt(id_product));
+      index = findProduct(id_product);
       selected_products.splice(index, 1);
       total_price -= (amount*price);
 
@@ -365,7 +374,7 @@
 
       total_item_price = parseInt($("#total_price_hidden").val())
       cash = parseInt($("#cash").val());
-
+      change = 0;
       if (dp) {
         dp_amount = parseInt($("#dp").val());
         change = cash - dp_amount;
@@ -373,9 +382,9 @@
         change = total_item_price - cash;
       }
       // tak comment disek, soale pas submit ribuan is null
-      // var	reverse = change.toString().slice(1).split('').reverse().join(''),
-      //   ribuan 	= reverse.match(/\d{1,3}/g);
-      //   ribuan	= ribuan.join('.').split('').reverse().join('');
+      var	reverse = change.toString().slice(1).split('').reverse().join(''),
+        ribuan 	= reverse.match(/\d{1,3}/g);
+        ribuan	= ribuan.join('.').split('').reverse().join('');
 
       $.ajax({
           url: '{{route('new.transaction')}}',
@@ -387,7 +396,7 @@
           success: data => {
               if (data.message == "success") {
                 // tak comment disek, soale pas submit ribuan is null
-                // $("#change").html("Kembalian: " + ribuan)
+                $("#change").html("Kembalian: " + ribuan)
                 $(".after-transaction").modal('show');
                 invoice_id = data[0].id_invoice;
                 var url = '{{url('/lihat/nota')}}/' + invoice_id;
@@ -415,7 +424,6 @@
 
     table1 = $('table.products').DataTable({
     stateSave: true,
-    responsive: true,
     language: {
       searchPlaceholder: "Cari barang ..."
     }

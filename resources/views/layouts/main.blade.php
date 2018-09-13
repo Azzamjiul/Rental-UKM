@@ -127,6 +127,8 @@
     <script src="{{asset('js/front.js')}}"></script>
     <script src="{{asset('js/alertify.min.js')}}"></script>
 
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js" charset="utf-8"></script> --}}
+
     <script type="text/javascript">
       function logOut(){
         $(".logout-form").submit();

@@ -63,7 +63,10 @@
           <div class="card-body text-center">
             <h5 class="d-none d-sm-block">PILIH TANGGAL</h5>
             <h6 class="d-block d-sm-none">PILIH TANGGAL</h6>
-            <input type="date" class="form-control" id="cek_tanggal" required name="cek_tanggal">
+            <label for="">Tanggal awal: </label>
+            <input type="date" class="form-control" id="cek_tanggal1" required name="cek_tanggal">
+            <label for="">Tanggal akhir: </label>
+            <input type="date" class="form-control" id="cek_tanggal2" required name="cek_tanggal">
             <a name="tanggal" href="" role="button" class="btn" id="tanggal"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></a>
           </div>
         </div>
@@ -88,16 +91,21 @@
           }
 
         today = yyyy+'-'+mm+'-'+dd;
-        document.getElementById("cek_tanggal").setAttribute("min", today);
+        document.getElementById("cek_tanggal1").setAttribute("min", today);
+        document.getElementById("cek_tanggal2").setAttribute("min", today);
 
   });
 
     $(document).on('click', '#tanggal', function(){
-      if (!$('#cek_tanggal').val().length) {
+      if (!$('#cek_tanggal1').val().length) {
         alert("Tanggal tidak boleh kosong!")
         return false;
       }
-      var url2 = '{{url('/cek/inventaris/list')}}/' + $('#cek_tanggal').val();
+      if (!$('#cek_tanggal2').val().length) {
+        alert("Tanggal tidak boleh kosong!")
+        return false;
+      }
+      var url2 = '{{url('/cek/inventaris/list')}}/' + $('#cek_tanggal1').val() +"/" +$('#cek_tanggal2').val();
       $("#tanggal").attr('href', url2);
     });
 

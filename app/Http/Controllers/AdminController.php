@@ -63,7 +63,7 @@ class AdminController extends Controller
       return response()->json(['data'=>$packets]);
     }
 
-    public function getInventaris($tanggal){
+    public function getInventaris($tanggal_awal, $tanggal_akhir){
       $products  = Product::select('id_product','quantity','name', 'price')->where('type', 'sewa')->get();
       $data = $products;
 
@@ -72,8 +72,8 @@ class AdminController extends Controller
       ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
       ->select('product.id_product', 'rent.prod_quantity')
       ->where('invoice.type', 'sewa')
-      ->whereDate('rent_date', '<=', $tanggal)
-      ->whereDate('deadline_date', '>=', $tanggal)
+      ->whereDate('rent_date', '<=', $tanggal_awal)
+      ->whereDate('deadline_date', '>=', $tanggal_akhir)
       ->get();
 
       foreach ($products as $product) {
@@ -85,7 +85,7 @@ class AdminController extends Controller
         }
         $product->quantity = $product->quantity - $count;
       }
-      return view('cek2',compact('products','tanggal'));
+      return view('cek2',compact('products','tanggal_awal','tanggal_akhir'));
     }
 
     public function editKas(Request $request)

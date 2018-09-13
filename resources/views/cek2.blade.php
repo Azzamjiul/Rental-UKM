@@ -63,13 +63,17 @@
           <div class="card-body text-center">
             <h5 class="d-none d-sm-block">PILIH TANGGAL</h5>
             <h6 class="d-block d-sm-none">PILIH TANGGAL</h6>
-            <input type="date" class="form-control" id="cek_tanggal" required name="cek_tanggal" value="{{$tanggal}}">
+            <label for="">Tanggal awal</label>
+            <input type="date" class="form-control" id="cek_tanggal1" required name="cek_tanggal" value="{{$tanggal_awal}}">
+            <label for="">Tanggal akhir: </label>
+            <input type="date" class="form-control" id="cek_tanggal2" required name="cek_tanggal" value="{{$tanggal_akhir}}">
+
             <a name="tanggal" href="" role="button" class="btn" id="tanggal"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i></a>
           </div>
         </div>
       </div>
     </div>
-    <p class="text-info text-center">Barang yang tersedia / dapat disewakan pada {{ Carbon\Carbon::parse($tanggal)->format('d M Y') }}</p><br>
+    <p class="text-info text-center">Barang yang tersedia / dapat disewakan pada sampai dengan {{ Carbon\Carbon::parse($tanggal_awal)->format('d M Y') }} - {{ Carbon\Carbon::parse($tanggal_akhir)->format('d M Y') }}</p><br>
 
     <div class="row justify-content-center">
       <div class="col-12 col-md-12">
@@ -114,15 +118,22 @@
           }
 
         today = yyyy+'-'+mm+'-'+dd;
-        document.getElementById("cek_tanggal").setAttribute("min", today);
-
+        document.getElementById("cek_tanggal1").setAttribute("min", today);
+        document.getElementById("cek_tanggal2").setAttribute("min", today);
   });
 
-    $(document).on('click', '#tanggal', function(){
-      var url2 = '{{url('cek/inventaris/list')}}/' + $('#cek_tanggal').val();
-      $("#tanggal").attr('href', url2);
-    });
-
+  $(document).on('click', '#tanggal', function(){
+    if (!$('#cek_tanggal1').val().length) {
+      alert("Tanggal tidak boleh kosong!")
+      return false;
+    }
+    if (!$('#cek_tanggal2').val().length) {
+      alert("Tanggal tidak boleh kosong!")
+      return false;
+    }
+    var url2 = '{{url('/cek/inventaris/list')}}/' + $('#cek_tanggal1').val() +"/" +$('#cek_tanggal2').val();
+    $("#tanggal").attr('href', url2);
+  });
     var table1;
 
     table1 = $('#tableBarang').DataTable({
