@@ -103,7 +103,8 @@
                 <small>Rp. {{$p->price}}</small>
                  <br><small>
                   Sisa stok: {{$p->quantity - $p->on_rent}}/{{$p->quantity}}
-                </small>
+                </small><br>
+                <small>Tipe barang: {{$p->type}}</small>
               </div>
               <form class="" action="{{route('delete.product')}}" method="post" id="form-id-{{$p->id_product}}">
                 {{ csrf_field() }}
@@ -153,7 +154,6 @@
               <option value="sewa">Sewa</option>
             </select>
           </div>
-          <?php // TODO: dikasi regex rupiah!! ?>
           <div class="form-group">
             <label for="product_price">Harga jual/ sewa</label>
             <div class="input-group">
