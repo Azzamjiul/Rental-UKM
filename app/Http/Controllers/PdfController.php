@@ -25,7 +25,7 @@ class PdfController extends Controller
             $kas = Kas::where(DB::raw('MONTH(date)'), '=', $bulan)->where(DB::raw('YEAR(date)'), '=', $tahun)->get();
             $pdf = PDF::loadView('pdf.kas',compact('kas','bulan','tahun'))->setPaper('a4');
         }
-            return $pdf->stream();
+            return $pdf->stream("Laporan Kas.pdf");
     }
 
     public function downloadPdfKas($tahun, $bulan){
@@ -81,7 +81,7 @@ class PdfController extends Controller
 
             $pdf = PDF::loadView('pdf.report',compact('report','tahun','sum','bulan'))->setPaper('a4');
         }
-        return $pdf->stream();
+        return $pdf->stream("Laporan Transaksi.pdf");
     }
 
     public function downloadPdfInvoices($tahun, $bulan){
@@ -134,7 +134,7 @@ class PdfController extends Controller
       $type = $invoice->type;
 
       $pdf = PDF::loadView('pdf.invoice', compact('invoice', 'rents', 'type'))->setPaper('a5');
-      return $pdf->stream();
+      return $pdf->stream("Invoice $id.pdf");
     }
 
     public function getPdfInvoicePelunasan($id){
@@ -142,7 +142,7 @@ class PdfController extends Controller
       $type = $invoice->type;
       $rents = Rent::where('id_invoice', $invoice->ref_id)->get();
       $pdf = PDF::loadView('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type, 'new' => 1])->setPaper('a5');
-      return $pdf->stream();
+      return $pdf->stream("Invoice Pelunasan sewa $id.pdf");
     }
 
     public function getPdfInvoicePelunasanJual($id){
@@ -150,7 +150,7 @@ class PdfController extends Controller
       $type = $invoice->type;
       $rents = Rent::where('id_invoice', $invoice->ref_id)->get();
       $pdf = PDF::loadView('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type, 'new' => 1])->setPaper('a5');
-      return $pdf->stream();
+      return $pdf->stream("Invoice Pelunasan sewa $id.pdf");
     }
 
     public function downloadPdfInvoice($id){

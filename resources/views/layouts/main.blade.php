@@ -75,7 +75,7 @@
           <div class="sidebar-header d-flex align-items-center">
             <div class="title">
               <h1 class="h4">
-                <?php if (strlen(Auth::user()->email) > 20 ){
+                <?php if (strlen(Auth::user()->email) > 10 ){
                   echo strtok(Auth::user()->email, '@');
                 }
                 else{

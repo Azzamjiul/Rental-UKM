@@ -64,7 +64,7 @@ class AdminController extends Controller
     }
 
     public function getInventaris($tanggal_awal, $tanggal_akhir){
-      $products  = Product::select('id_product','quantity','name', 'price')->where('type', 'sewa')->get();
+      $products  = Product::select('id_product','quantity','name', 'price')->where('type', 'sewa')->where('deleted',0)->get();
       $data = $products;
 
       $rents = DB::table('rent')
@@ -72,8 +72,8 @@ class AdminController extends Controller
       ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
       ->select('product.id_product', 'rent.prod_quantity')
       ->where('invoice.type', 'sewa')
-      ->whereDate('rent_date', '>=', $tanggal_awal)
-      ->whereDate('deadline_date', '<=', $tanggal_akhir)
+      ->whereDate('rent_date', '<=', $tanggal_awal)
+      ->whereDate('deadline_date', '>=', $tanggal_akhir)
       ->get();
 
       foreach ($products as $product) {
