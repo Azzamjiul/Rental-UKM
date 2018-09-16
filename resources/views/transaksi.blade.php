@@ -363,30 +363,30 @@
       }
 
 
-            if (diskon && dp) {
-              dp_amount = parseInt($("#dp").val())
-              discount_amount = parseInt($("#discount").val())
-              cash = parseInt($("#cash").val())
-              total_item_price = parseInt($("#total_price_hidden").val())
+      if (diskon && dp) {
+        dp_amount = parseInt($("#dp").val())
+        discount_amount = parseInt($("#discount").val())
+        cash = parseInt($("#cash").val())
+        total_item_price = parseInt($("#total_price_hidden").val())
 
-              if (cash < dp_amount) {
-                console.log("hihi")
-                alertify.error("Tunai tidak mencukupi untuk membayar uang muka!");
-                return false;
-              }
-            }
+        if (cash < dp_amount) {
+          console.log("hihi")
+          alertify.error("Tunai tidak mencukupi untuk membayar uang muka!");
+          return false;
+        }
+      }
 
-            else if (diskon) {
-              discount_amount = parseInt($("#discount").val())
-              cash = parseInt($("#cash").val())
-              total_item_price = parseInt($("#total_price_hidden").val())
-              if (total_item_price - discount_amount > cash) {
-                alertify.error("Tunai tidak mencukupi untuk membayar barang!");
-                return false;
-              }
-              console.log("ok")
-              // $("#total_price_hidden").val(parseInt(total_price) - parseInt(discount_amount));
-            }
+      else if (diskon) {
+        discount_amount = parseInt($("#discount").val())
+        cash = parseInt($("#cash").val())
+        total_item_price = parseInt($("#total_price_hidden").val())
+        if (total_item_price - discount_amount > cash) {
+          alertify.error("Tunai tidak mencukupi untuk membayar barang!");
+          return false;
+        }
+        console.log("ok")
+        // $("#total_price_hidden").val(parseInt(total_price) - parseInt(discount_amount));
+      }
 
             else if (dp){
               cash = parseInt($("#cash").val())
@@ -433,6 +433,9 @@
       else if (diskon) {
         diskon_amount = parseInt($("#discount").val())
         change = total_item_price - diskon_amount - cash;
+        console.log(total_item_price)
+        console.log(diskon_amount)
+        console.log(cash)
 
       }
       else {
