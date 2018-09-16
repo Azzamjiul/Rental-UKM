@@ -425,7 +425,7 @@
       }
       else if (diskon) {
         diskon_amount = parseInt($("#discount").val())
-        change = cash - total_item_price - diskon_amount;
+        change = total_item_price - diskon_amount - cash;
       }
       else {
         change = total_item_price - cash;
