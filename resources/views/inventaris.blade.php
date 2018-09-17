@@ -196,6 +196,7 @@
     $("#type_field").css('display', 'block');
     $('#productForm').attr('action', '{{route('add.new.product')}}');
     $(".modal.product").modal('show');
+    $('form #method').val('POST');
   });
 
   $(".delete").click( function() {
