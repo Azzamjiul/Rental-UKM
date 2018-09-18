@@ -20,7 +20,7 @@ class ProductTable extends Migration
             $table->integer('on_rent')->default(0);
             $table->text('name');
             $table->text('description');
-            $table->double('price', 10, 2);
+            $table->double('price', 15, 2);
             $table->text('category');
             $table->string('type', 15);
             $table->integer('deleted')->default(0);

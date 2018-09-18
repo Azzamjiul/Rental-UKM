@@ -17,7 +17,7 @@ class KasTable extends Migration
             $table->increments('id_kas');
             $table->dateTime('date');
             $table->string('type', 256);
-            $table->double('price', 10, 2);
+            $table->double('price', 15, 2);
             $table->text('description');
         });
     }

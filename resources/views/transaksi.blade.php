@@ -92,7 +92,7 @@
                   </div>
                   <div class="form-group">
                     <label for="address">No. Telepon</label>
-                    <input type="text" class="angka form-control" id="cust_phone" placeholder="No. Telepon" name="cust_phone" required>
+                    <input type="text" class="form-control" id="cust_phone" placeholder="No. Telepon" name="cust_phone" required>
                   </div>
                   <div class="form-group">
                     <label for="start_date">Terhitung mulai</label>
@@ -177,11 +177,8 @@
 <script type="text/javascript">
   $(document).ready(function(){
 
-    (function(b){var c={allowFloat:false,allowNegative:false};b.fn.numericInput=function(e){var f=b.extend({},c,e);var d=f.allowFloat;var g=f.allowNegative;this.keypress(function(j){var i=j.which;var h=b(this).val();if(i>0&&(i<48||i>57)){if(d==true&&i==46){if(g==true&&a(this)==0&&h.charAt(0)=="-"){return false}if(h.match(/[.]/)){return false}}else{if(g==true&&i==45){if(h.charAt(0)=="-"){return false}if(a(this)!=0){return false}}else{if(i==8){return true}else{return false}}}}else{if(i>0&&(i>=48&&i<=57)){if(g==true&&h.charAt(0)=="-"&&a(this)==0){return false}}}});return this};function a(d){if(d.selectionStart){return d.selectionStart}else{if(document.selection){d.focus();var f=document.selection.createRange();if(f==null){return 0}var e=d.createTextRange(),g=e.duplicate();e.moveToBookmark(f.getBookmark());g.setEndPoint("EndToStart",e);return g.text.length}}return 0}}(jQuery));
+    $( '.angka').mask('0.000.000.000.000', {reverse: true});
 
-    $(function() {
-       $(".angka").numericInput({ allowFloat: true, allowNegative: false });
-    });
 
     var today = new Date();
     var dd = today.getDate();
@@ -362,6 +359,7 @@
         return false;
       }
 
+      $("#cash").val($("#cash").val().split('.').join(""))
 
       if (diskon && dp) {
         dp_amount = parseInt($("#dp").val())
