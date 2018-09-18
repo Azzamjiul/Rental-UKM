@@ -467,7 +467,8 @@
               $("#total_price").text("Total: Rp 0");
               selected_products_objects.splice(0,selected_products_objects.length);
               selected_products.splice(0,selected_products.length);
-              $("form")[0].reset();
+              $('#myForm').trigger("reset");
+
           },
           error: data => {
             alert("Server Error")
