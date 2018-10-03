@@ -167,10 +167,20 @@
             @endif
 
             <tr>
-            <td>{{$invoice->cust_name}}
-              <br><br>Penyewa </td>
-            <td><br><br>Kauman, {{date_format(date_create($invoice->invoice_date), 'd-m-Y')}}</td>
-
+              <td>Penyewa 
+                <br><br><br><br>{{$invoice->cust_name}}
+              </td>
+              <td>Kasir
+                <br><br><br><br>{{$invoice->admin}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                
+              </td>
+              <td>
+                <br>Kauman, {{date_format(date_create($invoice->invoice_date), 'd-m-Y')}}
+              </td>
             </tr>
           </tbody>
         </table>

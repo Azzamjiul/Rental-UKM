@@ -46,7 +46,7 @@ class PdfController extends Controller
             $report = DB::table('rent')
             ->leftJoin('invoice', 'rent.id_invoice', '=', 'invoice.id_invoice')
             ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
-            ->select('invoice.rent_date', 'invoice.cust_name', 'invoice.id_invoice', 'invoice.total_price','invoice.address', 'invoice.type', 'rent.prod_quantity', 'product.name')
+            ->select('invoice.rent_date', 'invoice.cust_name', 'invoice.admin', 'invoice.id_invoice', 'invoice.total_price','invoice.address', 'invoice.type', 'rent.prod_quantity', 'product.name')
             ->where(DB::raw('YEAR(rent_date)'), '=', $tahun)
             ->get();
 
@@ -65,7 +65,7 @@ class PdfController extends Controller
             $report = DB::table('rent')
             ->leftJoin('invoice', 'rent.id_invoice', '=', 'invoice.id_invoice')
             ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
-            ->select('invoice.rent_date', 'invoice.cust_name', 'invoice.id_invoice', 'invoice.total_price','invoice.address','invoice.type','rent.prod_quantity', 'product.name')
+            ->select('invoice.rent_date', 'invoice.cust_name', 'invoice.admin', 'invoice.id_invoice', 'invoice.total_price','invoice.address','invoice.type','rent.prod_quantity', 'product.name')
             ->where(DB::raw('MONTH(rent_date)'), '=', $bulan)
             ->where(DB::raw('YEAR(rent_date)'), '=', $tahun)
             ->get();
@@ -89,7 +89,7 @@ class PdfController extends Controller
             $report = DB::table('rent')
             ->leftJoin('invoice', 'rent.id_invoice', '=', 'invoice.id_invoice')
             ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
-            ->select('invoice.rent_date', 'invoice.cust_name', 'invoice.id_invoice', 'invoice.total_price','invoice.address', 'invoice.type','rent.prod_quantity', 'product.name')
+            ->select('invoice.rent_date', 'invoice.cust_name', 'invoice.admin', 'invoice.id_invoice', 'invoice.total_price','invoice.address', 'invoice.type','rent.prod_quantity', 'product.name')
             ->where(DB::raw('YEAR(rent_date)'), '=', $tahun)
             ->get();
 
@@ -108,7 +108,7 @@ class PdfController extends Controller
             $report = DB::table('rent')
             ->leftJoin('invoice', 'rent.id_invoice', '=', 'invoice.id_invoice')
             ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
-            ->select('invoice.rent_date', 'invoice.cust_name', 'invoice.id_invoice', 'invoice.total_price','invoice.address','invoice.type','rent.prod_quantity', 'product.name')
+            ->select('invoice.rent_date', 'invoice.cust_name', 'invoice.admin', 'invoice.id_invoice', 'invoice.total_price','invoice.address','invoice.type','rent.prod_quantity', 'product.name')
             ->where(DB::raw('MONTH(rent_date)'), '=', $bulan)
             ->where(DB::raw('YEAR(rent_date)'), '=', $tahun)
             ->get();
