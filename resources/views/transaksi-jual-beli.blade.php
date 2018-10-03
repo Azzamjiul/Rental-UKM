@@ -102,9 +102,10 @@
                       </div>
                       <input type="text" class="angka form-control" id="dp" placeholder="Uang muka" name="dp">
                     </div>
+                    <small class="text-danger">kosongi jika pembayaran langsung lunas</small>
                   </div>
                   <div class="form-group">
-                    <label for="cash">Tunai</label>
+                    <label for="cash">Tunai (uang yang anda terima)</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">Rp</div>
@@ -113,13 +114,14 @@
                     </div>
                   </div>
                   <div class="form-group" style="display: none" id="discount_field">
-                    <label for="discount">Diskon</label>
+                    <label for="discount">Diskon (diskon yang anda berikan)</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">Rp</div>
                       </div>
                       <input type="text" class="angka form-control" id="discount" placeholder="Opsional" name="discount">
                     </div>
+                    <small class="text-danger">kosongi jika tidak ada diskon</small>
                   </div>
 
                   <div class="form-group">
@@ -127,12 +129,17 @@
                     <textarea class="form-control" id="product_description" placeholder="Opsional" name="product_description"></textarea>
                   </div>
 
-                <button class="btn btn-primary" type="submit" name="button">Lanjutkan</button>
-                <button id="add_dp" type="button" class="btn btn-info" name="button">Bayar Uang Muka</button>
-                <button id="add_discount" type="button" class="btn btn-success" name="button">Tambahkan Diskon</button>
+                <button id="add_dp" type="button" class="btn btn-sm btn-info mb-2" name="button">Bayar Uang Muka</button>
+                <button id="add_discount" type="button" class="btn btn-sm btn-success mb-2" name="button">Tambahkan Diskon</button>
+                <button class="btn btn-primary btn-sm mb-2" type="submit" name="button">Lanjutkan</button>
 
                 <input type="hidden" name="total_price_hidden" value="" id="total_price_hidden">
                 </form>
+                <br>
+                <div class="alert alert-primary" role="alert">
+                  <small>1. klik 'Bayar uang muka' jika pembeli hanya membayar sebagian<br>
+                  2. klik 'Tambahkan diskon' jika anda memberi diskon<br>3. klik Lanjutkan jika transaksi sudah benar</small>
+                </div>
             </div>
           </div>
         </div>
@@ -170,8 +177,7 @@
 <script type="text/javascript">
   $(document).ready(function(){
 
-    $( '.angka').mask('0.000.000.000.000', {reverse: true});
-
+    $('.angka').mask('0.000.000.000.000', {reverse: true});
 
     var selected_products = [];
     var selected_products_objects = [];
@@ -349,7 +355,8 @@
       }
 
       $("#cash").val($("#cash").val().split('.').join(""))
-
+      $("#dp").val($("#dp").val().split('.').join(""))
+      $("#discount").val($("#discount").val().split('.').join(""))
 
       if (diskon && dp) {
         dp_amount = parseInt($("#dp").val())

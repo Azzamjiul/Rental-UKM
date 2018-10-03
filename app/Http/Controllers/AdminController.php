@@ -54,7 +54,7 @@ class AdminController extends Controller
     }
 
     public function getHistory(){
-      $packets = Invoice::select('id_invoice', 'rent_date','cust_name', 'dp', 'type', 'ref_id')->orderBy('rent_date', 'asc')->get();
+      $packets = Invoice::select('id_invoice', 'rent_date','cust_name', 'dp', 'type', 'ref_id')->orderBy('rent_date', 'desc')->get();
       return response()->json(['data'=>$packets]);
     }
 

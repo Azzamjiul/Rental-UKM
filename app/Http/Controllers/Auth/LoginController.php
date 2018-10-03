@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/transaksi';
+    protected $redirectTo = '/calendar/list';
 
     /**
      * Create a new controller instance.
@@ -43,6 +43,6 @@ class LoginController extends Controller
     }
 
     public function authenticated(Request $request, $user){
-      return redirect('/transaksi');
+      return redirect('/calendar/list');
     }
 }
