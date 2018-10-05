@@ -22,10 +22,10 @@ class InvoiceTable extends Migration
             $table->string('cust_name', 255);
             $table->string('cust_phone', 14);
             $table->text('address');
-            $table->double('total_price', 15, 2);
-            $table->double('discount', 15, 2);
+            $table->double('total_price', 20, 2);
+            $table->double('discount', 20, 2);
             $table->integer('status')->default(0);
-            $table->double('dp', 15, 2);
+            $table->double('dp', 20, 2);
             $table->string('admin', 255);
             $table->text('description')->nullable();
             $table->string('type', 15);

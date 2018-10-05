@@ -18,7 +18,7 @@ class RentTable extends Migration
             // $table->integer('id_invoice');
             // $table->integer('id_product');
             $table->integer('prod_quantity');
-            $table->double('sum_price', 15, 2);
+            $table->double('sum_price', 20, 2);
         });
     }
 

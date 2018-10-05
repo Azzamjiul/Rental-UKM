@@ -11,6 +11,7 @@ use App\Kas;
 use App\Rent;
 use App\User;
 use App\Invoice;
+use App\QueueUpdateStock;
 use DateTime;
 use Carbon\Carbon;
 
@@ -216,7 +217,7 @@ class AdminController extends Controller
       $products = Product::where('deleted', 0)->get();
       return response()->json(['data' => $products], 200);
     }
-
+    //this is for renting products
     public function newTransaction(Request $request){
 
       $ngutang = 0;
@@ -274,9 +275,21 @@ class AdminController extends Controller
             'prod_quantity' => $products[$i]->chose,
             'sum_price' => $products[$i]->chose * $products[$i]->price
           ]);
-          $p = Product::find($products[$i]->id_product);
-          $p->on_rent = $p->on_rent + $products[$i]->chose;
-          $p->save();
+          //check if rent date is today
+          if (date_format(date_create($request->start_date), 'd-m-Y') == date_format(Carbon::now(), 'd-m-Y')) {
+            $p = Product::find($products[$i]->id_product);
+            $p->on_rent = $p->on_rent + $products[$i]->chose;
+            $p->save();
+          }else {  //else put in queue
+            QueueUpdateStock::create([
+              'id_product' => $products[$i]->id_product,
+              'quantity' => $products[$i]->chose,
+              'rent_date' => $request->start_date
+            ]);
+          }
+
+
+
         }
         $pemasukan = 0;
         if ($ngutang) {
@@ -610,6 +623,45 @@ class AdminController extends Controller
       $data = $data."Peminjaman Tgl : ".date_format(date_create($inv->rent_date),'d-M-Y')."<br>";
       return $data;
 //      return response()->json(['data'=>$packets]);
+    }
+
+    public function accountsPage(){
+      $users = User::all();
+      return view('accounts', ['accounts' => $users]);
+    }
+
+    public function getUserData(Request $request){
+      $user = User::find($request->user_id);
+      return response()->json($user);
+    }
+
+    public function newUser(Request $request){
+      try {
+        User::create([
+          'name' => $request->name,
+          'email' => $request->email,
+          'password' => bcrypt($request->password)
+        ]);
+        return response()->json(['message' => 'ok'], 201);
+      } catch (\Exception $e) {
+        return response()->json("Server error.", 500);
+      }
+    }
+
+    public function updateUser(Request $request){
+      try {
+        $user = User::find($request->user_id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($request->password != null) {
+          $user->password = bcrypt($request->password);
+        }
+        $user->save();
+        return response()->json(['message' => 'ok'], 200);
+      } catch (\Exception $e) {
+        return response()->json('Server error.', 500);
+      }
+
     }
 
 }

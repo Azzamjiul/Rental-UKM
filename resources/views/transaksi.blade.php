@@ -206,6 +206,7 @@
     var selected_products_objects = [];
     var invoice_id;
     var diskon, dp = 0;
+    var stocks_of_products = []
 
     $("#add_discount").click(function(){
       if (!diskon) {

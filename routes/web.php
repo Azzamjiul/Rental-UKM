@@ -67,6 +67,10 @@ Route::get('/calendar/list/events/{id}', 'AdminController@getEventsDetail')->nam
 
 Route::post('/login/user', 'AdminController@login')->name('login.user');
 Route::post('/register/user', 'AdminController@register')->name('register.user');
+Route::get('/accounts', 'AdminController@accountsPage');
 Route::get('/register', function(){
   return view('auth.register');
 });
+Route::get('/get/user', 'AdminController@getUserData');
+Route::post('/new/user', 'AdminController@newUser');
+Route::put('/update/user', 'AdminController@updateUser');
