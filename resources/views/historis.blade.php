@@ -62,6 +62,14 @@
   </div>
   <br>
   <div class="container-fluid">
+    <div class="form-group">
+      <label for="kertasSize">Ukuran Kertas (default A5)</label>
+      <select class="custom-select" id="kertasSize" name="kertasSize">
+        <option selected value="a5">A5</option>
+        <option value="a4">A4</option>
+        <option value="a6">A6</option>
+      </select>
+    </div>
     <div class="">
       <table id="tableHistoris" class="table table-striped">
         <thead>
@@ -94,7 +102,8 @@
 
 
         var table1;
-
+        var kertas = $("#kertasSize").val();
+        console.log(kertas);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -132,10 +141,10 @@
             {data: "dp", className : "text-right"},
             {orderable: false, className : "text-center",render: function(data, type, row){
               if (row.ref_id != null) {
-                return "<a class='btn see' target='_blank' href='lihat/nota-baru/"+row.id_invoice+"' role='button'><i class='fa fa-eye see' aria-hidden='true'></i></a>  <a class='btn download' target='_blank' href='download/nota/"+row.id_invoice+"' role='button'><i class='fa fa-download download' aria-hidden='true'></i></a>";
+                return "<a class='btn btn-sm see' target='_blank' href='lihat/nota-baru/"+row.id_invoice+"/"+kertas+"' role='button'><i class='fa fa-eye see' aria-hidden='true'></i></a>  <a class='btn btn-sm download' target='_blank' href='download/nota/"+row.id_invoice+"/"+kertas+"' role='button'><i class='fa fa-download download' aria-hidden='true'></i></a>";
 
               }else {
-                return "<a class='btn see' target='_blank' href='lihat/nota/"+row.id_invoice+"' role='button'><i class='fa fa-eye see' aria-hidden='true'></i></a>  <a class='btn download' target='_blank' href='download/nota/"+row.id_invoice+"' role='button'><i class='fa fa-download download' aria-hidden='true'></i></a>";
+                return "<a class='btn btn-sm see' target='_blank' href='lihat/nota/"+row.id_invoice+"/"+kertas+"' role='button'><i class='fa fa-eye see' aria-hidden='true'></i></a>  <a class='btn btn-sm download' target='_blank' href='download/nota/"+row.id_invoice+"/"+kertas+"' role='button'><i class='fa fa-download download' aria-hidden='true'></i></a>";
               }
               }
             },

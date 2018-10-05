@@ -36,8 +36,15 @@
               <td>{{$account->name}}</td>
               <td>{{$account->email}}</td>
               <td>
-                <button type="button" name="button" class="btn btn-info mr-2 edit" account-id="{{$account->id}}">Edit</button>
-                <button type="button" name="button" class="btn btn-danger delete" account-id="{{$account->id}}">Hapus</button>
+              <form class="" action="{{route('delete.user')}}" method="post" id="form-id-{{$account->id}}">
+                {{ csrf_field() }}
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="id_account" value="{{$account->id}}">
+              </form>
+                <button type="button" name="button" class="btn btn-sm btn-info mr-2 edit" account-id="{{$account->id}}">Edit</button>
+                @if(Auth::user()->id != $account->id )
+                <button type="button" name="button" class="btn btn-sm btn-danger delete" account-id="{{$account->id}}">Hapus</button>
+                @endif
               </td>
             </tr>
           @endforeach
@@ -50,7 +57,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 id="title"></h5>
+          <h5 id="title">Edit akun</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -104,6 +111,7 @@
     $(".edit").click(function(){
       user_id = $(this).attr('account-id');
       method = "PUT";
+      $("#title").html("Edit Akun");
       url = "{{url('/update/user')}}";
       $.ajax({
         url: '{{url('/get/user')}}',
@@ -123,8 +131,9 @@
     $("#new_account").click(function(){
       $("#form_user")[0].reset();
       $(".modal").modal('show');
+      $("#title").html("Tambah Akun");
       method = "POST";
-      url = '{{url('/new/user')}}';
+      url = "{{url('/new/user')}}";
     });
 
     $("#save").click(function(e){
@@ -157,6 +166,16 @@
         }
       })
     });
+
+    $(".delete").click( function() {
+      id_account = $(this).attr('account-id');
+      alertify.confirm('Warning', "Anda yakin akan menghapus akun ini?<br>Akun yang telah dihapus tidak dapat kembali!",
+        function(){
+          $("#form-id-" + id_account).submit();
+        },
+        function(){
+      });
+    })
 
   });
 

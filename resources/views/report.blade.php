@@ -120,6 +120,13 @@
                         <?php } ?>
                       </select>
                     </div>
+                    <div class="form-group">
+                      <label for="kertasLog">Ukuran Kertas</label>
+                      <select class="custom-select" id="kertasLog" name="kertasLog">
+                        <option selected value="a3">A3</option>
+                        <option value="a4">A4</option>
+                      </select>
+                    </div>
                     <div align="center">
                       <a class="btn btn-outline-primary" role="button" id="seeLog"><i class="fa fa-eye"></i></a>
                       <a class="btn btn-outline-primary" role="button" id="downloadLog"><i class="fa fa-download"></i></a>
@@ -177,6 +184,13 @@
                         <?php } ?>
                       </select>
                     </div>
+                    <div class="form-group">
+                      <label for="kertasReport">Ukuran Kertas</label>
+                      <select class="custom-select" id="kertasReport" name="kertasReport">
+                        <option selected value="a3">A3</option>
+                        <option value="a4">A4</option>
+                      </select>
+                    </div>
                     <div align="center">
                       <a class="btn btn-outline-primary" role="button" id="seeReport"><i class="fa fa-eye"></i></a>
                       <a class="btn btn-outline-primary" role="button" id="downloadReport"><i class="fa fa-download"></i></a>
@@ -206,22 +220,22 @@
   });
 
   $("#seeLog").click( () => {
-    var redirect= window.location.href+ "/kas/" + $("#tahunLog").val() + "/" + $("#bulanLog").val();
+    var redirect= window.location.href+ "/kas/" + $("#tahunLog").val() + "/" + $("#bulanLog").val() + "/" + $("#kertasLog").val();
     window.open(redirect);
   });
 
   $("#downloadLog").click( () => {
-    var redirect= window.location.href+ "/kas/download/" + $("#tahunLog").val() + "/" + $("#bulanLog").val();
+    var redirect= window.location.href+ "/kas/download/" + $("#tahunLog").val() + "/" + $("#bulanLog").val() + "/" + $("#kertasLog").val();
     window.open(redirect);
   });
 
   $("#seeReport").click( () => {
-    var redirect= window.location.href+ "/invoices/" + $("#tahunReport").val() + "/" + $("#bulanReport").val();
+    var redirect= window.location.href+ "/invoices/" + $("#tahunReport").val() + "/" + $("#bulanReport").val() + "/" + $("#kertasReport").val();
     window.open(redirect);
   });
 
   $("#downloadReport").click( () => {
-    var redirect= window.location.href+ "/invoices/download/" + $("#tahunReport").val() + "/" + $("#bulanReport").val();
+    var redirect= window.location.href+ "/invoices/download/" + $("#tahunReport").val() + "/" + $("#bulanReport").val() + "/" + $("#kertasReport").val();
     window.open(redirect);
   });
 </script>
