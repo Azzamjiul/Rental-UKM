@@ -27,6 +27,7 @@
   <div class="container-fluid">
     <div class="alert alert-info mt-4">
       <strong>Penyewaan</strong> adalah tempat menyewa barang. Pilih barang yang diinginkan oleh penyewa, lalu isi data disebelah kanan.<br>
+      <small>Stock produk akan berganti jika pada tanggal tersebut disewa.</small>
     </div>
     <div class="row">
       <div class="col-md-7">
@@ -64,6 +65,10 @@
           <div class="card">
             <table class="table">
               <thead>
+                <div class="alert alert-primary" role="alert">
+                  <small>1. klik 'Bayar uang muka' jika pembeli hanya membayar sebagian<br>
+                  2. klik 'Tambahkan diskon' jika anda memberi diskon<br>3. klik Lanjutkan jika transaksi sudah benar</small>
+                </div>
                 <tr>
                   <th scope="col">NAMA BARANG</th>
                   <th scope="col">JUMLAH BARANG</th>
@@ -71,8 +76,6 @@
                 </tr>
               </thead>
               <tbody id="cart_body">
-
-
 
 
 
@@ -143,10 +146,6 @@
                 <input type="hidden" name="total_price_hidden" value="" id="total_price_hidden">
                 </form>
                 <br>
-                <div class="alert alert-primary" role="alert">
-                  <small>1. klik 'Bayar uang muka' jika pembeli hanya membayar sebagian<br>
-                  2. klik 'Tambahkan diskon' jika anda memberi diskon<br>3. klik Lanjutkan jika transaksi sudah benar</small>
-                </div>
             </div>
           </div>
         </div>
@@ -184,12 +183,21 @@
 <script type="text/javascript">
   $(document).ready(function(){
 
+    //global variables
     var selected_products = [];
     var selected_products_objects = [];
     var invoice_id;
     var diskon, dp = 0;
-    var stocks_of_products = []
-    var products_with_stocks = []
+    var stocks_of_products = [];
+    var products_with_stocks = [];
+    var total_price = 0;
+
+    function Product(){
+      this.name= '';        //name of the product
+      this.id_product= '';  //id of product
+      this.price = '';      //price of single product
+      this.chose = 0;       //quantity chosen in cart
+    }
 
    $( '.angka').mask('0.000.000.000.000', {reverse: true});
 
@@ -232,16 +240,14 @@
         $("#add_dp").text('Tambahkan Uang Muka');
         dp = 0;
       }
-    })
+    });
 
-    function Product(){
-      this.name= '';
-      this.id_product= '';
-      this.price = '';
-      this.chose = 0;
+    function convertToRupiah(angka){
+      var rupiah = '';
+      var angkarev = angka.toString().split('').reverse().join('');
+      for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
+      return rupiah.split('',rupiah.length-1).reverse().join('');
     }
-
-    var total_price = 0;
 
     function searchProducts(id_prod, quantity){
       for (var i = 0; i < selected_products_objects.length; i++) {
@@ -269,12 +275,20 @@
       }
     }
 
+    // function findProductsInCartToUpdateStock()
+
     // TODO: Dynamic product stocks!
     $("input[type='date']").change(function(){
       var start_date = $("#start_date").val();
       var end_date = $("#end_date").val();
 
+      //dates cannot be empty
       if (!start_date.length || !end_date.length) {
+        return false;
+      }
+
+      if (new Date(start_date) > new Date(end_date)) {
+        alert("Tanggal awal tidak boleh melebihi tanggal akhir!");
         return false;
       }
 
@@ -286,10 +300,10 @@
           products_with_stocks = []
           products_with_stocks.push(data);
           console.log(products_with_stocks);
-          updateStock(products_with_stocks)
+          updateStock(products_with_stocks);
         },
         error: function(data){
-
+          alertify.error("Server error.");
         }
 
       });
@@ -298,7 +312,30 @@
 
     function updateStock(prods){
       for (var i = 0; i < prods[0].length; i++) {
+        if (i < selected_products_objects.length) {
+          if (selected_products_objects[i].id_product == prods[0][i].id_product) {
+            //check if returned quantity from server is less
+            if (prods[0][i].quantity < selected_products_objects[i].chose) {
+              selected_products_objects[i].chose = prods[0][i].quantity; //set chosen in-cart as number of quantity
+              total_price -= (prods[0][i].quantity * prods[0][i].price); //set new
 
+              var	reverse = total_price.toString().split('').reverse().join(''),
+                ribuan 	= reverse.match(/\d{1,3}/g);
+                ribuan	= ribuan.join('.').split('').reverse().join('');
+
+              $("#in-cart-quantity-product-" + selected_products_objects[i].id_product).text(prods[0][i].quantity);
+              $("#total_price").text("Total: Rp " + ribuan);
+              $("#total_price_hidden").val(total_price);
+
+            }
+            quantity_in_cart =   parseInt($("#in-cart-quantity-product-" + selected_products_objects[i].id_product).text());
+            if (quantity_in_cart == null) {
+              quantity_in_cart = 0;
+            }
+            $("#product-quantity-id-" + selected_products_objects[i].id_product).text(prods[0][i].quantity - quantity_in_cart);
+            $("#product-chosen-id-" + selected_products_objects[i].id_product).attr('max', prods[0][i].quantity - quantity_in_cart);
+          }
+        }
       }
     }
 
@@ -352,22 +389,19 @@
 
       //cek udah ada di cart belum?
       if (selected_products.includes(id_product)) {
-        // console.log("1")
+        //add chosen product quantity in cart
         searchProducts(id_product, parseInt(quantity_chosen));
-        // product.chose += parseInt(quantity_chosen);
         incart_quantity = $("#in-cart-quantity-product-"+id_product).text();
         $("#in-cart-quantity-product-"+id_product).text(parseInt(incart_quantity) + parseInt(quantity_chosen));
-        console.log("udah pernah")
       }else {
         selected_products.push(id_product);
-
+        //instantiate new Product object
         product = new Product();
         product.id_product = id_product;
         product.name = product_name;
         product.chose += parseInt(quantity_chosen);
         product.price = $("#product-price-id-" + id_product).text().slice(2);
         selected_products_objects.push(product);
-        // console.log("quantity chosen ", quantity_chosen)
 
         html = '<tr id="t-row-'+id_product+'">'+
           '<td>'+product_name+'</td>'+
@@ -385,7 +419,6 @@
       $("#product-chosen-id-" + id_product).val(1)
       $("#total_price").text("Total: Rp " + ribuan);
       $("#total_price_hidden").val(total_price);
-      console.log(selected_products_objects);
     });
 
     $.ajaxSetup({
@@ -412,7 +445,6 @@
         total_item_price = parseInt($("#total_price_hidden").val())
 
         if (cash < dp_amount) {
-          console.log("hihi")
           alertify.error("Tunai tidak mencukupi untuk membayar uang muka!");
           return false;
         }
@@ -484,9 +516,8 @@
         change = total_item_price - cash;
       }
 
-
-      ribuan = "Rp " + Math.abs(change).toString();
-
+      change = convertToRupiah(Math.abs(change));
+      ribuan = "Rp " + change.toString();
 
       $.ajax({
           url: '{{route('new.transaction')}}',

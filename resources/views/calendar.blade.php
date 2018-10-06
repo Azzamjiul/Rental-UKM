@@ -58,14 +58,14 @@
 
         <div class="row justify-content-center">
           <div class="col-3" align="center">
-              <button type="button" id="navPrev" class="btn btn-info">Sebelum</button>
+              <button type="button" id="navPrev" class="btn btn-info">Sebelumnya</button>
           </div>
           <div class="col-6" align="center">
             <h2 id="nameMonth"></h2>
             <h5 id="yearDate"></h5>
           </div>
           <div class="col-3" align="center">
-              <button type="button" id="navNext" class="btn btn-info">Sesuah</button>
+              <button type="button" id="navNext" class="btn btn-info">Selanjutnya</button>
           </div>
         </div><br>
         {{-- <button type="button" id="navMonth" class="btn btn-warning">Back</button> --}}

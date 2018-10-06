@@ -257,7 +257,7 @@ class AdminController extends Controller
           'dp' => $dp,
           'total_price' => $request->total_price_hidden - $discount,
           'status' => $lunas, //1 berarti udah lunas
-          'admin' => Auth::user()->email,
+          'admin' => Auth::user()->name,
           'discount' => $discount,
           'description' => $request->product_description,
           'type' => 'sewa'
@@ -420,7 +420,7 @@ class AdminController extends Controller
           'discount' => 0,
           'status' => 3,
           'dp' => $invoice->total_price - $invoice->dp,
-          'admin' => Auth::user()->email,
+          'admin' => Auth::user()->name,
           'description' => 'Pelunasan untuk ID Nota: '. $invoice->id_invoice,
           'type' => 'sewa'
         ]);
@@ -462,7 +462,7 @@ class AdminController extends Controller
           'discount' => 0,
           'status' => 3,
           'dp' => $invoice->total_price - $invoice->dp,
-          'admin' => Auth::user()->email,
+          'admin' => Auth::user()->name,
           'description' => 'Pelunasan untuk ID Nota: '. $invoice->id_invoice,
           'type' => 'jual'
         ]);
@@ -531,7 +531,7 @@ class AdminController extends Controller
             'dp' => $dp,
             'total_price' => $request->total_price_hidden - $discount,
             'status' => $lunas, //1 berarti udah lunas
-            'admin' => Auth::user()->email,
+            'admin' => Auth::user()->name,
             'discount' => $discount,
             'description' => $request->product_description,
             'type' => 'jual'

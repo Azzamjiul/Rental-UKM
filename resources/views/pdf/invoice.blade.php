@@ -167,7 +167,7 @@
             @endif
 
             <tr>
-              <td>Penyewa 
+              <td>Penyewa
                 <br><br><br><br>{{$invoice->cust_name}}
               </td>
               <td>Kasir
@@ -176,10 +176,10 @@
             </tr>
             <tr>
               <td>
-                
+
               </td>
               <td>
-                <br>Kauman, {{date_format(date_create($invoice->invoice_date), 'd-m-Y')}}
+                <br>Kauman, {{date_format(date_create($invoice->invoice_date), 'd/m/Y')}}
               </td>
             </tr>
           </tbody>
