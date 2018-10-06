@@ -65,7 +65,7 @@
                   @endfor
                 </td>
                 <td class="tg-rv4w" width="7%" align="left" style="text-transform: capitalize;">{{ $report[$temp]->type }} </
-                <td class="tg-rv4w" width="10%" align="right">{{ $report[$temp]->total_price }} </td>
+                <td class="tg-rv4w" width="10%" align="right">{{"Rp." . number_format(($report[$temp]->total_price),2,',','.')}} </td>
                 @php
                 $total+=$report[$temp]->total_price;
                 @endphp
@@ -78,7 +78,7 @@
                 <td class="tg-3wr7"> <br></td>
                 <td class="tg-3wr7"> <br></td>
                 <td class="tg-3wr7"> <br></td>
-                <td class="tg-3wr7">Rp. {{$total}}<br></td>
+                <td class="tg-3wr7">{{"Rp." . number_format(($total),2,',','.')}}<br></td>
               </tr>
             </table>
         </body>

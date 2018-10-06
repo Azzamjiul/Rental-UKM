@@ -269,7 +269,7 @@
               }
             }},
             {data: "price", orderable: false, render: function(data, type, row){
-              return 'Rp ' + data;
+              return 'Rp ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ',00';
             }},
             {data: "date", render: function(data, type, row){
               var options = {hour:'numeric',minute:'numeric', year: 'numeric', month: 'long', day: 'numeric' };

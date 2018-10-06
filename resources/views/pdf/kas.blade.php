@@ -56,7 +56,7 @@
                 <td class="tg-rv4w" width="15%" align="center">{{ Carbon\Carbon::parse($u->date)->format('d M Y') }}</td>
                 <td class="tg-rv4w uppercase" width="54%">{{ $u->description }}</td>
                 @if($u->type=="pemasukan" or $u->type=="peminjaman")
-                  <td class="tg-rv4w" width="14%" align="right">{{ $u->price }} </td>
+                  <td class="tg-rv4w" width="14%" align="right">{{"Rp." . number_format(($u->price),2,',','.')}} </td>
                   <td class="tg-rv4w" width="14%" align="center"> - </td>                  
                   @php
                     $masuk+=$u->price;
@@ -74,8 +74,8 @@
                 <td class="tg-3wr7"> <br></td>
                 <td class="tg-3wr7"> <br></td>
                 <td class="tg-3wr7"> <br></td>
-                <td class="tg-3wr7">Rp. {{$masuk}}<br></td>
-                <td class="tg-3wr7">Rp. {{$keluar}}<br></td>
+                <td class="tg-3wr7">{{"Rp." . number_format(($masuk),2,',','.')}}<br></td>
+                <td class="tg-3wr7">{{"Rp." . number_format(($keluar),2,',','.')}}<br></td>
               </tr>
             </table>
         </body>

@@ -106,6 +106,7 @@
                     <li id="accounts"><a href="{{url('/accounts')}}"> <i class="fa fa-user"></i>Akun </a></li>
 
           </ul>
+          <small style="position: fixed; bottom: 0; cursor: default;">&nbsp;Developed with &#10084; 2018</small>
         </nav>
         <div class="content-inner">
           @yield('content')
