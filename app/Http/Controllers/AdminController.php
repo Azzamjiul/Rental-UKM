@@ -661,7 +661,17 @@ class AdminController extends Controller
       } catch (\Exception $e) {
         return response()->json('Server error.', 500);
       }
+    }
 
+    public function deleteUser(Request $request){
+      try {
+        User::where('id', $request->id_account)->delete();
+      } catch (\Exception $e) {
+        return redirect('/accounts')->with('error', 'Akun gagal
+        dihapus!');
+      }
+      return redirect('/accounts')->with('success', 'Akun berhasil
+      dihapus!');
     }
 
     public function getProductStocksforTransaction(Request $request){

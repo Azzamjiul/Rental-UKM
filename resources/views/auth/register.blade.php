@@ -47,6 +47,7 @@
             <div class="col-lg-6 bg-white">
               <div class="form d-flex align-items-center">
                 <div class="content">
+                <h2>Register</h2><br>
                   @if (session('success'))
                     <p style="color: #83ef2b">{{session('success')}}</p>
                   @endif

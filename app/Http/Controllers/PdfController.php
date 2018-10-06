@@ -16,32 +16,32 @@ class PdfController extends Controller
 
     }
 
-    public function getPdfKas($tahun, $bulan){
+    public function getPdfKas($tahun, $bulan, $kertas){
         if ($bulan=="all") {
             $kas = Kas::where(DB::raw('YEAR(date)'), '=', $tahun)->get();
-            $pdf = PDF::loadView('pdf.kas',compact('kas','tahun'))->setPaper('a4');
+            $pdf = PDF::loadView('pdf.kas',compact('kas','tahun'))->setPaper($kertas);
         }
         else{
             $kas = Kas::where(DB::raw('MONTH(date)'), '=', $bulan)->where(DB::raw('YEAR(date)'), '=', $tahun)->get();
-            $pdf = PDF::loadView('pdf.kas',compact('kas','bulan','tahun'))->setPaper('a4');
+            $pdf = PDF::loadView('pdf.kas',compact('kas','bulan','tahun'))->setPaper($kertas);
         }
             return $pdf->stream("Laporan Kas.pdf");
     }
 
-    public function downloadPdfKas($tahun, $bulan){
+    public function downloadPdfKas($tahun, $bulan, $kertas){
         if ($bulan=="all") {
             $kas = Kas::where(DB::raw('YEAR(date)'), '=', $tahun)->get();
-            $pdf = PDF::loadView('pdf.kas',compact('kas','tahun'))->setPaper('a4');
+            $pdf = PDF::loadView('pdf.kas',compact('kas','tahun'))->setPaper($kertas);
         }
         else{
             $kas = Kas::where(DB::raw('MONTH(date)'), '=', $bulan)->where(DB::raw('YEAR(date)'), '=', $tahun)->get();
-            $pdf = PDF::loadView('pdf.kas',compact('kas','bulan','tahun'))->setPaper('a4');
+            $pdf = PDF::loadView('pdf.kas',compact('kas','bulan','tahun'))->setPaper($kertas);
         }
 
         return $pdf->download("Laporan Kas bulan $bulan $tahun.pdf");
     }
 
-    public function getPdfInvoices($tahun, $bulan){
+    public function getPdfInvoices($tahun, $bulan, $kertas){
         if ($bulan=="all") {
             $report = DB::table('rent')
             ->leftJoin('invoice', 'rent.id_invoice', '=', 'invoice.id_invoice')
@@ -58,7 +58,7 @@ class PdfController extends Controller
             ->where(DB::raw('YEAR(rent_date)'), '=', $tahun)
             ->get();
 
-            $pdf = PDF::loadView('pdf.report',compact('report','tahun','sum'))->setPaper('a4');
+            $pdf = PDF::loadView('pdf.report',compact('report','tahun','sum'))->setPaper($kertas);
 
         }
         else{
@@ -79,12 +79,12 @@ class PdfController extends Controller
             ->where(DB::raw('YEAR(rent_date)'), '=', $tahun)
             ->get();
 
-            $pdf = PDF::loadView('pdf.report',compact('report','tahun','sum','bulan'))->setPaper('a4');
+            $pdf = PDF::loadView('pdf.report',compact('report','tahun','sum','bulan'))->setPaper($kertas);
         }
         return $pdf->stream("Laporan Transaksi.pdf");
     }
 
-    public function downloadPdfInvoices($tahun, $bulan){
+    public function downloadPdfInvoices($tahun, $bulan, $kertas){
         if ($bulan=="all") {
             $report = DB::table('rent')
             ->leftJoin('invoice', 'rent.id_invoice', '=', 'invoice.id_invoice')
@@ -101,7 +101,7 @@ class PdfController extends Controller
             ->where(DB::raw('YEAR(rent_date)'), '=', $tahun)
             ->get();
 
-            $pdf = PDF::loadView('pdf.report',compact('report','tahun','sum'))->setPaper('a4');
+            $pdf = PDF::loadView('pdf.report',compact('report','tahun','sum'))->setPaper($kertas);
 
         }
         else{
@@ -122,26 +122,26 @@ class PdfController extends Controller
             ->where(DB::raw('YEAR(rent_date)'), '=', $tahun)
             ->get();
 
-            $pdf = PDF::loadView('pdf.report',compact('report','tahun','sum','bulan'))->setPaper('a4');
+            $pdf = PDF::loadView('pdf.report',compact('report','tahun','sum','bulan'))->setPaper($kertas);
         }
 
         return $pdf->download("Laporan Peminjaman bulan $bulan $tahun.pdf");
     }
 
-    public function getPdfInvoice($id){
+    public function getPdfInvoice($id, $kertas){
       $invoice = Invoice::find($id);
       $rents = Rent::where('id_invoice', $id)->get();
       $type = $invoice->type;
 
-      $pdf = PDF::loadView('pdf.invoice', compact('invoice', 'rents', 'type'))->setPaper('a5');
+      $pdf = PDF::loadView('pdf.invoice', compact('invoice', 'rents', 'type'))->setPaper($kertas);
       return $pdf->stream("Invoice $id.pdf");
     }
 
-    public function getPdfInvoicePelunasan($id){
+    public function getPdfInvoicePelunasan($id, $kertas){
       $invoice = Invoice::find($id);
       $type = $invoice->type;
       $rents = Rent::where('id_invoice', $invoice->ref_id)->get();
-      $pdf = PDF::loadView('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type, 'new' => 1])->setPaper('a5');
+      $pdf = PDF::loadView('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type, 'new' => 1])->setPaper($kertas);
       return $pdf->stream("Invoice Pelunasan sewa $id.pdf");
     }
 
@@ -153,20 +153,20 @@ class PdfController extends Controller
       return $pdf->stream("Invoice Pelunasan sewa $id.pdf");
     }
 
-    public function downloadPdfInvoice($id){
+    public function downloadPdfInvoice($id, $kertas){
       $invoice = Invoice::find($id);
       $rents = Rent::where('id_invoice', $id)->get();
       $type = $invoice->type;
 
-      $pdf = PDF::loadView('pdf.invoice', compact('invoice', 'rents', 'type'))->setPaper('a5');
+      $pdf = PDF::loadView('pdf.invoice', compact('invoice', 'rents', 'type'))->setPaper($kertas);
       return $pdf->download("Nota $invoice->description.pdf");
     }
 
-    public function downloadPdfInvoicePelunasan($id){
+    public function downloadPdfInvoicePelunasan($id, $kertas){
       $invoice = Invoice::find($id);
       $type = $invoice->type;
       $rents = Rent::where('id_invoice', $invoice->ref_id)->get();
-      $pdf = PDF::loadView('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type, 'new' => 1])->setPaper('a5');
+      $pdf = PDF::loadView('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type, 'new' => 1])->setPaper($kertas);
       return $pdf->download("Nota $invoice->description.pdf");
     }
 
