@@ -74,3 +74,4 @@ Route::get('/register', function(){
 Route::get('/get/user', 'AdminController@getUserData');
 Route::post('/new/user', 'AdminController@newUser');
 Route::put('/update/user', 'AdminController@updateUser');
+Route::get('/get/product-stocks', 'AdminController@getProductStocksforTransaction');

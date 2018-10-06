@@ -96,7 +96,7 @@
                   </div>
                   <div class="form-group">
                     <label for="start_date">Terhitung mulai</label>
-                    <input type="date" class="form-control" id="start_date" required name="start_date">
+                    <input type="date" class="form-control" id="start_date" required name="start_date" value="{{date('Y-m-d')}}">
                   </div>
                   <div class="form-group">
                     <label for="end_date">Terhitung sampai</label>
@@ -184,8 +184,14 @@
 <script type="text/javascript">
   $(document).ready(function(){
 
-   $( '.angka').mask('0.000.000.000.000', {reverse: true});
+    var selected_products = [];
+    var selected_products_objects = [];
+    var invoice_id;
+    var diskon, dp = 0;
+    var stocks_of_products = []
+    var products_with_stocks = []
 
+   $( '.angka').mask('0.000.000.000.000', {reverse: true});
 
     var today = new Date();
     var dd = today.getDate();
@@ -201,12 +207,6 @@
     today = yyyy+'-'+mm+'-'+dd;
     document.getElementById("start_date").setAttribute("min", today);
     document.getElementById("end_date").setAttribute("min", today);
-
-    var selected_products = [];
-    var selected_products_objects = [];
-    var invoice_id;
-    var diskon, dp = 0;
-    var stocks_of_products = []
 
     $("#add_discount").click(function(){
       if (!diskon) {
@@ -269,6 +269,39 @@
       }
     }
 
+    // TODO: Dynamic product stocks!
+    $("input[type='date']").change(function(){
+      var start_date = $("#start_date").val();
+      var end_date = $("#end_date").val();
+
+      if (!start_date.length || !end_date.length) {
+        return false;
+      }
+
+      $.ajax({
+        url: '{{url('/get/product-stocks')}}',
+        data: {start_date, end_date},
+        method: "GET",
+        success: function(data){
+          products_with_stocks = []
+          products_with_stocks.push(data);
+          console.log(products_with_stocks);
+          updateStock(products_with_stocks)
+        },
+        error: function(data){
+
+        }
+
+      });
+
+    });
+
+    function updateStock(prods){
+      for (var i = 0; i < prods[0].length; i++) {
+
+      }
+    }
+
 
     $(document).on('click', '.remove', function(){
       id_product = $(this).attr('id-product');
@@ -303,6 +336,7 @@
       quantity_chosen = $("#product-chosen-id-" + id_product).val();
       product_name = $("#product-name-id-" + id_product).text();
 
+      //quantity chosen cannot be more than available products
       if (parseInt(quantity_chosen) > $("#product-chosen-id-" + id_product).attr('max')) {
         // console.log("max is " + $("#product-chosen-id-" + id_product).attr('max'))
         return false;
@@ -396,22 +430,22 @@
         // $("#total_price_hidden").val(parseInt(total_price) - parseInt(discount_amount));
       }
 
-            else if (dp){
-              cash = parseInt($("#cash").val())
-              dp_amount = parseInt($("#dp").val())
-              if (cash < dp_amount) {
-                alertify.error("Tunai tidak mencukupi untuk membayar uang muka!");
-                return false;
-              }
-            }
-            else {
-              cash = parseInt($("#cash").val())
-              total_item_price = parseInt($("#total_price_hidden").val())
-              if (cash < total_item_price) {
-                alertify.error("Tunai tidak mencukupi untuk membayar barang!");
-                return false;
-              }
-            }
+      else if (dp){
+        cash = parseInt($("#cash").val())
+        dp_amount = parseInt($("#dp").val())
+        if (cash < dp_amount) {
+          alertify.error("Tunai tidak mencukupi untuk membayar uang muka!");
+          return false;
+        }
+      }
+      else {
+        cash = parseInt($("#cash").val())
+        total_item_price = parseInt($("#total_price_hidden").val())
+        if (cash < total_item_price) {
+          alertify.error("Tunai tidak mencukupi untuk membayar barang!");
+          return false;
+        }
+      }
 
       html_content = '';
       e.preventDefault();

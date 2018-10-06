@@ -664,4 +664,29 @@ class AdminController extends Controller
 
     }
 
+    public function getProductStocksforTransaction(Request $request){
+      $products  = Product::select('id_product','quantity','name', 'price')->where('type', 'sewa')->where('deleted',0)->get();
+      $data = $products;
+
+      $rents = DB::table('rent')
+      ->leftJoin('invoice', 'rent.id_invoice', '=', 'invoice.id_invoice')
+      ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
+      ->select('product.id_product', 'rent.prod_quantity')
+      ->where('invoice.type', 'sewa')
+      ->whereDate('rent_date', '<=', $request->start_date)
+      ->whereDate('deadline_date', '>=', $request->end_date)
+      ->get();
+
+      foreach ($products as $product) {
+        $count = 0;
+        foreach ($rents as $rent) {
+          if ($product->id_product==$rent->id_product) {
+            $count = $count + $rent->prod_quantity;
+          }
+        }
+        $product->quantity = $product->quantity - $count;
+      }
+      return response()->json($products);
+    }
+
 }
