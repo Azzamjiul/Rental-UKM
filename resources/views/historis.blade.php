@@ -124,7 +124,7 @@
                   return meta.row + meta.settings._iDisplayStart + 1;
               }
             },
-            {data: "cust_name", orderable: false},
+            {data: "cust_name"},
             {data: "rent_date", render: function(data, type, row){
               var options = {year: 'numeric', month: 'long', day: 'numeric' };
               var today  = new Date(data);
@@ -138,7 +138,9 @@
                 return "Penjualan";
               }
             }},
-            {data: "dp", className : "text-right"},
+            {data: "dp", className : "text-right", orderable: false, render: function(data, type, row){
+              return 'Rp ' + data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ',00';
+            }},
             {orderable: false, className : "text-center",render: function(data, type, row){
               if (row.ref_id != null) {
                 return "<a class='btn btn-sm see' target='_blank' href='lihat/nota-baru/"+row.id_invoice+"/"+kertas+"' role='button'><i class='fa fa-eye see' aria-hidden='true'></i></a>  <a class='btn btn-sm download' target='_blank' href='download/nota/"+row.id_invoice+"/"+kertas+"' role='button'><i class='fa fa-download download' aria-hidden='true'></i></a>";

@@ -113,10 +113,10 @@
                       </div>
                       <input type="text" class="angka form-control" id="dp" placeholder="Uang muka" name="dp">
                     </div>
-                    <small class="text-danger">kosongi jika pembayaran langsung lunas</small>
+                    <small class="text-danger">Kosongi jika pembayaran langsung lunas</small>
                   </div>
                   <div class="form-group">
-                    <label for="cash">Tunai (uang yang anda terima)</label>
+                    <label for="cash">Tunai (Uang yang anda terima)</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">Rp</div>
@@ -125,14 +125,14 @@
                     </div>
                   </div>
                   <div class="form-group" style="display: none" id="discount_field">
-                    <label for="discount">Diskon (diskon yang anda berikan)</label>
+                    <label for="discount">Diskon (Diskon yang anda berikan)</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">Rp</div>
                       </div>
                       <input type="text" class="angka form-control" id="discount" placeholder="Opsional" name="discount">
                     </div>
-                    <small class="text-danger">kosongi jika tidak ada diskon</small>
+                    <small class="text-danger">Kosongi jika tidak ada diskon</small>
                   </div>
 
                   <div class="form-group">
@@ -528,12 +528,11 @@
           dataType: 'JSON',
           success: data => {
               if (data.message == "success") {
-                // tak comment disek, soale pas submit ribuan is null
                 $("#change").html("Kembalian: " + ribuan)
                 $(".after-transaction").modal('show');
                 invoice_id = data[0].id_invoice;
-                var url = '{{url('/lihat/nota')}}/' + invoice_id;
-                var url2 = '{{url('/download/nota')}}/' + invoice_id;
+                var url = '{{url('/lihat/nota')}}/' + invoice_id + '/a5';
+                var url2 = '{{url('/download/nota')}}/' + invoice_id + '/a5';
                 $(".see-invoice").attr('href', url);
                 $(".download-invoice").attr('href', url2);
               }
