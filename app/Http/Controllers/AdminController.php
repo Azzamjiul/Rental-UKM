@@ -19,7 +19,7 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     public function index(){
@@ -640,7 +640,8 @@ class AdminController extends Controller
         User::create([
           'name' => $request->name,
           'email' => $request->email,
-          'password' => bcrypt($request->password)
+          'password' => bcrypt($request->password),
+          'role' => $request->role
         ]);
         return response()->json(['message' => 'ok'], 201);
       } catch (\Exception $e) {
@@ -653,6 +654,7 @@ class AdminController extends Controller
         $user = User::find($request->user_id);
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->role = $request->role;
         if ($request->password != null) {
           $user->password = bcrypt($request->password);
         }

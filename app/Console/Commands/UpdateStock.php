@@ -53,6 +53,7 @@ class UpdateStock extends Command
         Log::info("Stock products succesfuly updated from laravel command on ". Carbon::now());
       } catch (\Exception $e) {
         Log::error("Stock products cannot be updated from laravel command on ". Carbon::now());
+        Log::error($e->getMessage());
       }
 
 

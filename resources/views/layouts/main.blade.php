@@ -103,7 +103,10 @@
                     <li id="check"><a href="{{route('cek.inventaris')}}"> <i class="fa fa-clock-o"></i>Cek barang </a></li>
                     <li id="calendars"><a href="{{route('cek.calendar')}}"> <i class="fa fa-calendar"></i>Kalender </a></li>
                     <li id="report"><a href="{{route('report')}}"> <i class="fa fa-file-pdf-o"></i>Report </a></li>
-                    <li id="accounts"><a href="{{url('/accounts')}}"> <i class="fa fa-user"></i>Akun </a></li>
+
+                    @if (Auth::user()->role == 1)
+                      <li id="accounts"><a href="{{url('/accounts')}}"> <i class="fa fa-user"></i>Akun </a></li>
+                    @endif
 
           </ul>
         </nav>

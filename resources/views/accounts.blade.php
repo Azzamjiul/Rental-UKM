@@ -26,6 +26,7 @@
 
           <th>Nama</th>
           <th>Email</th>
+          <th>Info</th>
           <th>Aksi</th>
         </thead>
         <tbody>
@@ -34,7 +35,18 @@
             <tr>
               <td>{{$account->id}}</td>
               <td>{{$account->name}}</td>
+
               <td>{{$account->email}}</td>
+              <td>
+                @php
+                  if ($account->role == 1) {
+                    echo "Akun Admin";
+                  }else {
+                    echo "Akun Biasa";
+                  }
+                @endphp
+
+              </td>
               <td>
               <form class="" action="{{route('delete.user')}}" method="post" id="form-id-{{$account->id}}">
                 {{ csrf_field() }}
@@ -76,6 +88,13 @@
             <div class="form-group">
               <label for="password">Password: </label>
               <input class="form-control" type="password" name="password" value="" id="password">
+            </div>
+            <div class="form-group">
+              <label for="">Tipe Akun: </label><br>
+              <select class="" name="role" id="account_type">
+                <option value="1">Akun Admin</option>
+                <option value="2">Akun Biasa</option>
+              </select>
             </div>
 
             <input type="hidden" id="user_id" name="user_id" value="">
@@ -120,6 +139,7 @@
           $("#name").val(data.name);
           $("#email").val(data.email);
           $("#user_id").val(data.id);
+          $("#account_type").val(data.role);
           $(".modal").modal('show');
         },
         error: function(){
