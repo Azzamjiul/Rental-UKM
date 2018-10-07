@@ -1,7 +1,11 @@
 @extends('layouts.main')
 
 @section('style')
-
+  <style media="screen">
+    .card:hover{
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.12), 0 2px 4px 0 rgba(0,0,0,0.08);
+    }
+  </style>
 @endsection
 
 
@@ -16,6 +20,7 @@
 <div class="container-fluid">
   <div class="alert alert-info mt-4">
     <strong>Manajemen Akun</strong> adalah tempat mengatur akun sistem online.<br>
+    <small><strong>Akun admin</strong> dapat mengedit akun lainnya, <strong>Akun biasa</strong> tidak dapat membuka menu akun</small>
   </div>
   <div class="card">
     <div class="card-body">
@@ -96,7 +101,6 @@
                 <option value="2">Akun Biasa</option>
               </select>
             </div>
-
             <input type="hidden" id="user_id" name="user_id" value="">
 
         </div>

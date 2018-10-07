@@ -89,6 +89,7 @@
                       Cara penggunaan
                       <ol>
                         <li>Pilih bulan dan tahun</li>
+                        <li>Pilih ukuran kertas</li>
                         <li>Anda dapat hanya melihat maupun download file</li>
                         <li>Enjoy!</li>
                       </ol>
@@ -153,6 +154,7 @@
                       Cara penggunaan
                       <ol>
                         <li>Pilih bulan dan tahun</li>
+                        <li>Pilih ukuran kertas</li>
                         <li>Anda dapat hanya melihat maupun download file</li>
                         <li>Enjoy!</li>
                       </ol>

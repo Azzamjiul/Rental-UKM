@@ -59,7 +59,7 @@
 
       </div>
       <div class="col-md-5">
-        <h3>Keranjang</h3>
+        <h3>Keranjang <i class="fa fa-shopping-cart" aria-hidden="true"></i></h3>
         <div class="cart">
           <div class="card">
             <table class="table">
