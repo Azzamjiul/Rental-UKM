@@ -24,8 +24,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        //runs every midnight
         $schedule->command('update:stock')
-                 ->daily();
+                 ->daily()
+                 ->timezone('Asia/Jakarta');
     }
 
     /**
