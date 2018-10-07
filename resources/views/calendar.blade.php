@@ -55,26 +55,29 @@
   <div class="container-fluid">
     <div class="card">
       <div class="card-body">
-
         <div class="row justify-content-center">
-          <div class="col-3" align="center">
+          <div class="col-3 d-none d-sm-block" align="center">
               <button type="button" id="navPrev" class="btn btn-info">Sebelumnya</button>
           </div>
-          <div class="col-6" align="center">
+          <div class="col-6 d-none d-sm-block" align="center">
             <h2 id="nameMonth"></h2>
             <h5 id="yearDate"></h5>
           </div>
-          <div class="col-3" align="center">
+          <div class="col-3 d-none d-sm-block" align="center">
               <button type="button" id="navNext" class="btn btn-info">Selanjutnya</button>
           </div>
-        </div><br>
-        {{-- <button type="button" id="navMonth" class="btn btn-warning">Back</button> --}}
+          <div class="col-6 d-block d-sm-none" align="center">
+            Kalender hanya bisa dilihat di layar ukuran diatas 576px
+          </div>
+        </div>
+        <br>
+<!--         <button type="button" id="navMonth" class="btn btn-warning">Back</button> -->
         <div class="row justify-content-center">
-          <div class="col-12 col-md-8">
+          <div class="col-12 col-md-10 d-none d-sm-block">
     <!--         <div class="table-responsive"> -->
               <div id="calendar"></div>
-      </div>
-    </div>
+          </div>
+        </div>
 <!--         </div> -->
       </div>
     </div>
