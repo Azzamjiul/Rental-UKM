@@ -688,8 +688,8 @@ class AdminController extends Controller
       ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
       ->select('product.id_product', 'rent.prod_quantity')
       ->where('invoice.type', 'sewa')
-      ->whereBetween('invoice.rent_date', [date($tanggal_awal).' 00:00:00', date($tanggal_akhir).' 00:00:00'])
-      ->orWhereBetween('invoice.deadline_date', [date($tanggal_awal).' 00:00:00', date($tanggal_akhir).' 00:00:00'])
+      ->whereBetween('invoice.rent_date', [date($request->start_date).' 00:00:00', date($request->end_date).' 00:00:00'])
+      ->orWhereBetween('invoice.deadline_date', [date($request->start_date).' 00:00:00', date($request->end_date).' 00:00:00'])
       ->get();
 
       foreach ($products as $product) {
