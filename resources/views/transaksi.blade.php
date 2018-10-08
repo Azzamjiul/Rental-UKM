@@ -531,8 +531,8 @@
                 $("#change").html("Kembalian: " + ribuan)
                 $(".after-transaction").modal('show');
                 invoice_id = data[0].id_invoice;
-                var url = '{{url('/lihat/nota')}}/' + invoice_id + '/a5';
-                var url2 = '{{url('/download/nota')}}/' + invoice_id + '/a5';
+                var url = '{{url('/lihat/nota')}}/' + invoice_id;
+                var url2 = '{{url('/download/nota')}}/' + invoice_id;
                 $(".see-invoice").attr('href', url);
                 $(".download-invoice").attr('href', url2);
               }

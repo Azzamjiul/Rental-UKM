@@ -40,9 +40,9 @@ Route::group(['middleware' => ['signed_in']], function(){
 
   Route::get('/transaksi', 'AdminController@transaksiPage')->name('transaksi');
   Route::post('/transaction', 'AdminController@newTransaction')->name('new.transaction');
-  Route::get('/lihat/nota/{id}/{kertas}', 'PdfController@getPdfInvoice');
-  Route::get('/lihat/nota-baru/{id}/{kertas}', 'PdfController@getPdfInvoicePelunasan');
-  Route::get('/lihat/nota-jual-baru/{id}/{kertas}', 'PdfController@getPdfInvoicePelunasanJual');
+  Route::get('/lihat/nota/{id}', 'PdfController@getPdfInvoice');
+  Route::get('/lihat/nota-baru/{id}', 'PdfController@getPdfInvoicePelunasan');
+  Route::get('/lihat/nota-jual-baru/{id}', 'PdfController@getPdfInvoicePelunasanJual');
 
   Route::get('/nota', function(){
     return view('pdf.invoice');
@@ -57,9 +57,9 @@ Route::group(['middleware' => ['signed_in']], function(){
   Route::put('/pay-sell-fully', 'AdminController@payFullySell')->name('pay.sell.fully');
   Route::get('/transaksi-jual-beli', 'AdminController@transaksiJualPage');
   Route::post('/sell-item', 'AdminController@sellProducts')->name('new.transaction.sell');
-  Route::get('/download/nota/{id}/{kertas}', 'PdfController@downloadPdfInvoice');
-  Route::get('/download/nota-baru/{id}/{kertas}', 'PdfController@downloadPdfInvoicePelunasan');
-  Route::get('/download/nota-jual-baru/{id}/{kertas}', 'PdfController@downloadPdfInvoicePelunasanJual');
+  Route::get('/download/nota/{id}', 'PdfController@downloadPdfInvoice');
+  Route::get('/download/nota-baru/{id}', 'PdfController@downloadPdfInvoicePelunasan');
+  Route::get('/download/nota-jual-baru/{id}', 'PdfController@downloadPdfInvoicePelunasanJual');
 
 
   Route::get('/calendar/list', 'AdminController@cekCalendar')->name('cek.calendar');
