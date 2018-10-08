@@ -110,6 +110,9 @@ $(document).ready(function(){
       {data: 'cust_name'},
       {data: 'cust_phone'},
       {render: function(data, type, row){
+        var options = {year: 'numeric', month: 'long', day: 'numeric' };
+        var rentDay  = new Date(row.rent_date);
+        var today  = new Date();
         button = '';
         button2 = '';
         lunas = 'belum'
@@ -120,6 +123,9 @@ $(document).ready(function(){
         if (row.status == 1) {
           button = 'disabled'
           lunas = 'sudah'
+        }
+        if (today.toLocaleDateString("id", options)<rentDay.toLocaleDateString("id", options)) {
+          barang_sudah_kembali = 'disabled';
         }
         if (row.status == 2) {
           barang_sudah_kembali = 'disabled';
