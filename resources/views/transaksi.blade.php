@@ -311,9 +311,17 @@
     });
 
     function updateStock(prods){
-      for (var i = 0; i < prods[0].length; i++) {
-        if (i < selected_products_objects.length) {
-          if (selected_products_objects[i].id_product == prods[0][i].id_product) {
+      //prods[0].length 15
+      //selected_products_objects.length 4
+      var index_of_selected_products = [];
+
+      for (var i = 0; i < selected_products_objects.length; i++) {
+        index_of_selected_products.push(selected_products_objects[i].id_product);
+      }
+
+      if (selected_products_objects.length) {
+        for (var i = 0; i < prods[0].length; i++) {
+          if (i < index_of_selected_products.length && index_of_selected_products[i].id_product == prods[0][i].id_product) {
             //check if returned quantity from server is less
             if (prods[0][i].quantity < selected_products_objects[i].chose) {
               selected_products_objects[i].chose = prods[0][i].quantity; //set chosen in-cart as number of quantity
@@ -332,10 +340,23 @@
             if (quantity_in_cart == null) {
               quantity_in_cart = 0;
             }
-            $("#product-quantity-id-" + selected_products_objects[i].id_product).text(prods[0][i].quantity - quantity_in_cart);
+            console.log(prods[0][i].quantity - quantity_in_cart)
             $("#product-chosen-id-" + selected_products_objects[i].id_product).attr('max', prods[0][i].quantity - quantity_in_cart);
           }
+
         }
+      }
+
+
+
+      for (var i = 0; i < prods[0].length; i++) {
+        quantity_in_cart =   parseInt($("#in-cart-quantity-product-" + prods[0][i].id_product).text());
+        if (!quantity_in_cart) {
+          quantity_in_cart = 0;
+        }
+        console.log(quantity_in_cart)
+        $("#product-quantity-id-" + prods[0][i].id_product).text(prods[0][i].quantity - quantity_in_cart);
+        
       }
     }
 

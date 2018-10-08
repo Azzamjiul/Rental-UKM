@@ -18,6 +18,7 @@ class QueueUpdateStocks extends Migration
           $table->unsignedInteger('id_product');
           $table->integer('quantity');
           $table->dateTime('rent_date');
+          $table->dateTime('deadline_date');
           $table->integer('status')->default(0);
       });
     }
