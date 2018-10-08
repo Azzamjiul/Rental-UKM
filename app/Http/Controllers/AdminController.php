@@ -73,8 +73,10 @@ class AdminController extends Controller
       ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
       ->select('product.id_product', 'rent.prod_quantity')
       ->where('invoice.type', 'sewa')
-      ->whereDate('rent_date', '<=', $tanggal_awal)
-      ->whereDate('deadline_date', '>=', $tanggal_akhir)
+      ->whereBetween('invoice.rent_date', [date($tanggal_awal).' 00:00:00', date($tanggal_akhir).' 00:00:00'])
+      ->orWhereBetween('invoice.deadline_date', [date($tanggal_awal).' 00:00:00', date($tanggal_akhir).' 00:00:00'])
+      // ->whereDate('rent_date', '<=', $tanggal_awal)
+      // ->whereDate('deadline_date', '>=', $tanggal_akhir)
       ->get();
 
       foreach ($products as $product) {
@@ -284,7 +286,8 @@ class AdminController extends Controller
             QueueUpdateStock::create([
               'id_product' => $products[$i]->id_product,
               'quantity' => $products[$i]->chose,
-              'rent_date' => $request->start_date
+              'rent_date' => $request->start_date,
+              'deadline_date' => $request->end_date
             ]);
           }
 
@@ -685,8 +688,8 @@ class AdminController extends Controller
       ->leftJoin('product', 'rent.id_product', '=', 'product.id_product')
       ->select('product.id_product', 'rent.prod_quantity')
       ->where('invoice.type', 'sewa')
-      ->whereDate('rent_date', '<=', $request->start_date)
-      ->whereDate('deadline_date', '>=', $request->end_date)
+      ->whereBetween('invoice.rent_date', [date($tanggal_awal).' 00:00:00', date($tanggal_akhir).' 00:00:00'])
+      ->orWhereBetween('invoice.deadline_date', [date($tanggal_awal).' 00:00:00', date($tanggal_akhir).' 00:00:00'])
       ->get();
 
       foreach ($products as $product) {

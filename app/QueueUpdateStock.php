@@ -8,7 +8,7 @@ class QueueUpdateStock extends Model
 {
   protected $fillable = [
       'id_product', 'quantity',
-      'rent_date', 'status',
+      'rent_date', 'status', 'deadline_date'
   ];
 
   protected $table = 'queue_update_stock';
