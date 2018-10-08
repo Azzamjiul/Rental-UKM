@@ -128,20 +128,22 @@ class PdfController extends Controller
         return $pdf->download("Laporan Peminjaman bulan $bulan $tahun.pdf");
     }
 
-    public function getPdfInvoice($id, $kertas){
+
+
+    public function getPdfInvoice($id){
       $invoice = Invoice::find($id);
       $rents = Rent::where('id_invoice', $id)->get();
       $type = $invoice->type;
 
-      $pdf = PDF::loadView('pdf.invoice', compact('invoice', 'rents', 'type'))->setPaper($kertas);
+      $pdf = PDF::loadView('pdf.invoice', compact('invoice', 'rents', 'type'))->setPaper('a5');
       return $pdf->stream("Invoice $id.pdf");
     }
 
-    public function getPdfInvoicePelunasan($id, $kertas){
+    public function getPdfInvoicePelunasan($id){
       $invoice = Invoice::find($id);
       $type = $invoice->type;
       $rents = Rent::where('id_invoice', $invoice->ref_id)->get();
-      $pdf = PDF::loadView('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type, 'new' => 1])->setPaper($kertas);
+      $pdf = PDF::loadView('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type, 'new' => 1])->setPaper('a5');
       return $pdf->stream("Invoice Pelunasan sewa $id.pdf");
     }
 
@@ -153,20 +155,20 @@ class PdfController extends Controller
       return $pdf->stream("Invoice Pelunasan sewa $id.pdf");
     }
 
-    public function downloadPdfInvoice($id, $kertas){
+    public function downloadPdfInvoice($id){
       $invoice = Invoice::find($id);
       $rents = Rent::where('id_invoice', $id)->get();
       $type = $invoice->type;
 
-      $pdf = PDF::loadView('pdf.invoice', compact('invoice', 'rents', 'type'))->setPaper($kertas);
+      $pdf = PDF::loadView('pdf.invoice', compact('invoice', 'rents', 'type'))->setPaper('a5');
       return $pdf->download("Nota $invoice->description.pdf");
     }
 
-    public function downloadPdfInvoicePelunasan($id, $kertas){
+    public function downloadPdfInvoicePelunasan($id){
       $invoice = Invoice::find($id);
       $type = $invoice->type;
       $rents = Rent::where('id_invoice', $invoice->ref_id)->get();
-      $pdf = PDF::loadView('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type, 'new' => 1])->setPaper($kertas);
+      $pdf = PDF::loadView('pdf.invoice', ['invoice' => $invoice, 'rents' => $rents,  'type' => $type, 'new' => 1])->setPaper('a5');
       return $pdf->download("Nota $invoice->description.pdf");
     }
 

@@ -57,7 +57,7 @@
   <div class="container-fluid">
     <div class="alert alert-info mt-4">
       Berikut adalah list barang yang terdaftar di sistem.<br>
-      Untuk <strong>edit</strong> klik tombol warna oren.<br>
+      Untuk <strong>edit</strong> klik tombol warna jingga.<br>
       Untuk <strong>hapus</strong> klik tombol warna merah.
     </div>
   </div>
